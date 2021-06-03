@@ -1,0 +1,424 @@
+---
+title: Consecrated life today comparision of general health characteristics between non clerial and clerial samples 
+author:
+  - name: Dana Jaksickova
+    affil: 1,\ddagger,*
+  - name: Klara Malinakova
+    affil: 1,\ddagger,
+    orcid: 0000-0001-6939-1204
+  - name: Lukas Novak
+    affil: 1,\ddagger,
+    orcid: 0000-0002-7582-2098
+  - name: Peter Tavel
+    affil: 1,\ddagger,
+    orcid: 0000-0001-7072-001X
+affiliation:
+  - num: 1
+    address: |
+      Palacky University Olomouc - 
+      Social Health Institute
+      Correspondence Univerzitni 244/22, 771 11, Olomouc, Czech Republic
+    email: dana.jaksickova@oushi.upol.cz
+# firstnote to eighthnote
+firstnote: |
+  Current address: Updated affiliation
+secondnote: |
+  These authors contributed equally to this work.
+correspondence: |
+  dana.jaksickova@oushi.upol.cz; Tel.: +XX-000-00-0000.
+journal: ijerph
+type: article
+status: accept
+bibliography: mybibfile.bib
+appendix: appendix.tex
+simplesummary: |
+  A Simple summary goes here.
+abstract: |
+  dfdfdf
+keywords: |
+  keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
+  to the article, yet reasonably common within the subject discipline.).
+acknowledgement: |
+  All sources of funding of the study should be disclosed. Please clearly 
+  indicate grants that you have received in support of your research work. 
+  Clearly state if you received funds for covering the costs to publish in open 
+  access.
+authorcontributions: |
+  For research articles with several authors, a short paragraph specifying their 
+  individual contributions must be provided. The following statements should be 
+  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the 
+  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
+  reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
+  limited to those who have contributed substantially to the work reported.
+conflictsofinterest: |
+  Declare conflicts of interest or state 'The authors declare no conflict of 
+  interest.' Authors must identify and declare any personal circumstances or
+  interest that may be perceived as inappropriately influencing the
+  representation or interpretation of reported research results. Any role of the
+  funding sponsors in the design of the study; in the collection, analyses or 
+  interpretation of data in the writing of the manuscript, or in the decision to 
+  publish the results must be declared in this section. If there is no role, 
+  please state 'The founding sponsors had no role in the design of the study; 
+  in the collection, analyses, or interpretation of data; in the writing of the 
+  manuscript, an in the decision to publish the results'.
+sampleavailability: |
+  Data used for the analysis in this study as well as the code are publically avalible nad can be found on the Open Scienfe Network webside (https://osf.io/ad6b3/).
+abbreviations:
+  - short: MDPI
+    long: Multidisciplinary Digital Publishing Institute
+  - short: DOAJ
+    long: Directory of open access journals
+  - short: TLA
+    long: Three letter acronym
+  - short: LD 
+    long: linear dichroism
+  - short: MSE
+    long: Mean Square Error
+output: rticles::mdpi_article
+---
+```{r pcgs, include=FALSE}
+set.seed(8448923)
+packages=c("psych","dplyr","lavaan","base","foreign","Routliers","MVN","parameters", "EFA.MRFA","RGenData","semPlot","psycho","apa","corx","effectsize","qwraps2","finalfit","ggstatsplot","dunn.test","devtools","rticles","ICC.Sample.Size","tidyverse","magrittr","osfr","expss","gtsummary","huxtable","equaltestMI","haven","rcompanion","ufs") 
+
+# Install packages not yet installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages], repos = "https://cran.r-project.org/")
+}
+# Packages loading
+invisible(lapply(packages, library, character.only = TRUE))
+#________________________________________________________________________-
+# instal MissMach currently not on the CRAN
+miss.mach.url= "https://cran.r-project.org/src/contrib/Archive/MissMech/MissMech_1.0.2.tar.gz"
+Miss.Pack=any(rownames(installed.packages()) == "MissMech")
+if (any(Miss.Pack == FALSE)) {
+  install.packages(miss.mach.url, repos=NULL, type="source")
+}
+library(MissMech)
+#________________________________________________________________________-
+# instal citr currently not on the CRAN
+Miss.Pack=any(rownames(installed.packages()) == "citr")
+if (any(Miss.Pack == FALSE)) {
+  devtools::install_github("crsh/citr")
+}
+library("citr")
+#________________________________________________________________________-
+# install papaja currently not on the CRAN
+Miss.Pack=any(rownames(installed.packages()) == "papaja")
+if (any(Miss.Pack == FALSE)) {
+  devtools::install_github("crsh/papaja")
+}
+library("papaja")
+#________________________________________________________________________-
+```
+
+```{r data loading - REP dataset 2016, include=FALSE}
+data.rep = read_sav(paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.sav"))
+
+data.rep=read_excel(path = paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.xlsx"))
+#(....................................................................................)
+
+# recording variable
+data.rep = data.rep %>% 
+  mutate(marital_status_all_groups = recode_factor(marital_status_all_groups,
+                                                   "1" = "Single",
+                                                   "2" = "Married",
+                                                   "3" = "Divorced",
+                                                   "4" = "Widow/widower",
+                                                   "5" = "Unmarried mate"),
+         sex = recode_factor(sex,
+                             "1" = "Female",
+                             "2" = "Male"),
+         economical_status_all_groups = recode_factor(economical_status_all_groups,
+                                                      "1" = "Student",
+                                                      "2" = "Invalid pensioner",
+                                                      "3" = "Employed",
+                                                      "4" = "In houshold",
+                                                      "5" = "Unemployed",
+                                                      "6" = "Pensioner"),
+         education = recode_factor(education,
+                                   "1" = "Basic school",
+                                   "2" = "Vocational school or non-maturity highschool", 
+                                   "3" = "High school",
+                                   "4" = "University"),
+         Faith = recode_factor(Faith,
+                               "1" = "Yes, I am a member of church",
+                               "2" = "Yes, but I am not a member of a church",
+                               "3" = "No",
+                               "4" = "No, I am convinced atheist"))
+
+
+
+deseases.nam.rep = data.rep %>% select(
+c("IHD", "IHD_other_healthy","hypertension",
+  "hypertension_other_healthy", "stroke", "CHPD", 
+"CHPD_other_healthy", "asthma", "asthma_other_healthy", "cancer", 
+"cancer_other_healthy", "diabetes", "diabetes_other_healthy", 
+"obesity", "obesity_other_healthy", "artritis", "artritis_other_healthy", 
+"back_pain", "backpain_other_healthy", "GD_ulcus", "GDulcus_other_healthy", 
+"IBD", "IBDonly", "IBD_other_healthy", "ekzema", "ekzema_other_healthy", 
+"allergy", "allergy_other_healthy", "migrena", "migrena_other_healthy", 
+"pain_unclear_origin", "painunclear_other_healthy", "pelvic_pain", 
+"pelvicpain_other_healthy", "depression_anxiety", "depr_anx_other_healthy", 
+"thyroid_gland_illness", "thyroid_other_healthy")) %>%  
+  select(!contains("_other_"))
+
+# "CHPD" = chronic pulmonal desease
+# IHD = ischemic heart desease
+# GD_ulcus = gastic duodenal colitis
+# IBD = inflamatory bowel desease
+
+```
+
+```{r data loading - PA dataset, include=FALSE}
+path.to.dat = paste0(getwd(),"/study data")
+data.pa = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
+```
+
+```{r data loading - VACC dataset, include=FALSE}
+data.vacc = readRDS(paste0(path.to.dat,"/data.vacc.cons.life.Rds"))
+```
+
+```{r data loading - Concecrated dataset 2011, include=FALSE}
+
+data.consq.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
+  
+data.consq.long=read_excel(path = paste0(path.to.dat,"/data.cons.long.xlsx"))
+
+
+data.consq.raw = full_join(x = data.consq.from.G, 
+                      y = data.consq.long, by = "code")
+
+# removing slovak participants
+data.consq.raw = data.consq.raw %>% 
+  filter(country == "CZ")
+```
+<!-- ----------------------------------------- -->
+<!-- ----------------------------------------- -->
+<!-- ----------------------------------------- -->
+<!-- Data screening REP dataset 2016------------->
+<!-- ----------------------------------------- -->
+<!-- ----------------------------------------- -->
+<!-- ----------------------------------------- -->
+```{r scoring, include=FALSE}
+# removing duplicites
+data.consq.rm.dups = data.consq.raw %>% 
+  filter()
+
+```
+
+
+```{r outliers screening and inconsistent responding detection, include=FALSE}
+# calculating MAD 
+# OASIS (ex dataset)
+out_MAD.OA.ex=outliers_mad(data.ex$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+# OASIS (pa dataset)
+out_MAD.OA.pa=outliers_mad(data.pa$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+#...............................................................................................
+# ODSIS (ex dataset)
+out_MAD.OD.ex=outliers_mad(data.ex$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+# ODSIS (pa dataset)
+out_MAD.OD.pa=outliers_mad(data.pa$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+
+# creating dataset only with outliers for screening purposes
+# outliers=data.ex[c(out_MAD.OA.ex[["outliers_pos"]]), ] %>% view() 
+# outliers=data.pa[c(out_MAD.OA.pa[["outliers_pos"]]), ] %>% view() 
+# outliers=data.pa[c(out_MAD.OD.ex[["outliers_pos"]]), ] %>% view() 
+# outliers=data.pa[c(out_MAD.OD.pa[["outliers_pos"]]), ] %>% view() 
+
+data.pa = data.pa %>% # deletetion respondents answering in uniform way - detected by visual inspection  
+  filter(!code %in% c("74d9cc54199425db9c2da2cc1d33c923", "06189bd8c5a8850748cd7d634659ff45"))
+
+# Table with inconsistent respondents (FALSE = inconsistent) (feels the God presence despite being Non-religious)
+code_of_inconsistenters = data.ex %>% 
+  mutate(incons_resp = case_when(
+    DSES_1 >= 4 & faith == "Non-religious" |
+    DSES_1 >= 4 & faith == "No, I am convinced atheist" |
+    DSES_15 >= 4 & faith == "Non-religious" |
+    DSES_15 >= 4 & faith == "No, I am convinced atheist"~ FALSE,
+    TRUE ~ TRUE)) %>%
+  filter(incons_resp == "FALSE") %>% 
+  select(code)
+
+# exclusion of respondnets which responeded inconsistently
+data.ex = data.ex %>% 
+  filter(!code %in% code_of_inconsistenters$code)
+```
+
+```{r missing data analysis, include=FALSE}
+# data ex
+# how many data are missing
+#data.pa %>% select(starts_with(c("OASIS","ODSIS"))) %>% summary
+# MCAR.ex.data=BaylorEdPsych::LittleMCAR(select(.data = data.ex, starts_with(c("ODSIS_","OASIS_","Age","obtize_9b","BFI_N_"))))
+#.........................................................................................................
+# data.pa 
+# how many data are missing
+#data.pa %>% select(starts_with(c("OASIS","ODSIS"))) %>% summary
+# MCAR.pa.data=BaylorEdPsych::LittleMCAR(select(.data = data.pa, starts_with(c("OASIS_","ODSIS_","BFI_N_","RSES","Age"))))
+#.........................................................................................................
+# Mcar test from different package which can del with more than 50 variables
+MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("OASIS_","ODSIS_","DSES_","BFI_N_","panas","Age","ECI_","GSES_","HSPS","SSDS_","SHSS"))))
+
+# Rationale why imputation was not conducted: 
+# In the ex data, we had enought data thus missing cases were deleted listwise. 
+# in the pa data, the multiple impuation based on predictive mean maching was used to add valeus (it was possible as only around 26 percent values in rows were missing and it is possible to impute up to 90% without bias see: 
+#Madley-Dowd, P., Hughes, R., Tilling, K., & Heron, J. (2019). The proportion of missing data should not be used to guide decisions on multiple imputation. Journal of clinical epidemiology, 110, 63-73.)
+```
+
+```{r imputation procedure, include=FALSE}
+# uncheck if the code is available for you
+# library(osfr)
+# osf_auth("ASK THE FIRST AUTHOR FOR ACCESS")
+# project <- osf_retrieve_node("https://osf.io/8ru4s/")
+# files <- osf_ls_files(project)
+# osf_download(files, conflicts = "overwrite")
+# source(knitr::purl("imputation_of_data.panel.rmd", quiet=TRUE))
+```
+
+```{r multivariate normality, include=FALSE}
+# loading dataset with imputed values
+data.pa=readRDS("data.pa.aft.imp.Rds")
+
+# MULTIVARIATE NORMALITY:
+# OASIS
+mvn(data = select(.data = data.ex, starts_with("OASIS_")), mvnTest = "mardia", univariatePlot = "histogram")
+mvn(data = select(.data = data.pa, starts_with("OASIS_")), mvnTest = "mardia", univariatePlot = "histogram")
+# ODSIS
+mvn(data = select(.data = data.ex, starts_with("ODSIS_")), mvnTest = "mardia", univariatePlot = "histogram")
+mvn(data = select(.data = data.pa, starts_with("ODSIS_")), mvnTest = "mardia", univariatePlot = "histogram")
+# inspection indicated skewness problems with items: 
+Mard=mvn(data= data.ex[, c("OASIS")],mvnTest = "mardia")    
+
+# summary: # in both datasets, normality in OASIS and ODSIS cen be rejectd
+```
+
+```{r Homoscedasticity_and_other_assumptions, include=FALSE}
+# OASIS - EX dataset 
+# fake regression 
+random=rchisq(nrow(data.ex), 7) # generate random data
+fake_regres=lm(random~., data= data.ex %>% select(starts_with("OASIS_"))) # run fake regression
+# run diagnostics plots 
+plot(fake_regres)
+# testing homogenity of variances
+lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
+#____________________________________________________________________________
+# ODSIS - EX dataset 
+random=rchisq(nrow(data.ex), 7) # generate random data
+fake_regres=lm(random~., data= data.ex %>% select(starts_with("ODSIS_"))) # run fake regression
+plot(fake_regres)
+lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
+#*****************************************************************************
+# OASIS - PA dataset 
+# fake regression 
+random=rchisq(nrow(data.pa), 7) # generate random data
+fake_regres=lm(random~., data= data.pa %>% select(starts_with("OASIS_"))) # run fake regression
+# run diagnostics plots 
+plot(fake_regres)
+# testing homogenity of variances
+lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
+#____________________________________________________________________________
+# ODSIS - PA dataset 
+random=rchisq(nrow(data.pa), 7) # generate random data
+fake_regres=lm(random~., data= data.pa %>% select(starts_with("ODSIS_"))) # run fake regression
+plot(fake_regres)
+lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
+
+```
+
+# Methods
+
+## Measures
+
+
+## Participants
+In this study, data from in total 4 samples were used. First sample consisted of participants from nationally representative sample.  
+
+
+
+
+# toto ověřit !!! 
+As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise.  
+
+
+## Statistical analysis
+
+
+# Results
+
+<!-- This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn. -->
+
+## Subsection Heading Here
+
+<!-- Subsection text here. -->
+
+### Subsubsection Heading Here
+
+Bulleted lists look like this:
+
+<!-- * First bullet -->
+<!-- * Second bullet -->
+<!-- * Third bullet -->
+
+<!-- Numbered lists can be added as follows: -->
+
+<!-- 1. First item -->
+<!-- 2. Second item -->
+<!-- 3. Third item -->
+
+<!-- The text continues here. -->
+
+<!-- All figures and tables should be cited in the main text as Figure 1, Table 1, etc. -->
+
+<!-- \begin{figure}[H] -->
+<!-- \centering -->
+<!-- \includegraphics[width=3 cm]{logo-mdpi} -->
+<!-- \caption{This is a figure, Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.} -->
+<!-- \end{figure} -->
+
+
+<!-- \begin{table}[H] -->
+<!-- \caption{This is a table caption. Tables should be placed in the main text near to the first time they are cited.} -->
+<!-- \centering -->
+<!-- %% \tablesize{} %% You can specify the fontsize here, e.g.  \tablesize{\footnotesize}. If commented out \small will be used. -->
+<!-- \begin{tabular}{ccc} -->
+<!-- \toprule -->
+<!-- \textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\ -->
+<!-- \midrule -->
+<!-- entry 1		& data			& data\\ -->
+<!-- entry 2		& data			& data\\ -->
+<!-- \bottomrule -->
+<!-- \end{tabular} -->
+<!-- \end{table} -->
+
+<!-- This is an example of an equation: -->
+
+<!-- \begin{equation} -->
+<!-- \mathbb{S} -->
+<!-- \end{equation} -->
+<!-- If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph. -->
+
+<!-- Please punctuate equations as regular text. Theorem-type environments (including propositions, lemmas, corollaries etc.) can be formatted as follows: -->
+<!-- Example of a theorem: -->
+<!-- \begin{Theorem} -->
+<!-- Example text of a theorem. -->
+<!-- \end{Theorem} -->
+
+<!-- The text continues here. Proofs must be formatted as follows: -->
+
+<!-- Example of a proof: -->
+<!-- \begin{proof}[Proof of Theorem 1] -->
+<!-- Text of the proof. Note that the phrase `of Theorem 1' is optional if it is clear which theorem is being referred to. -->
+<!-- \end{proof} -->
+<!-- The text continues here. -->
+
+# Discussion
+
+<!-- Authors should discuss the results and how they can be interpreted in perspective of previous studies and of the working hypotheses. The findings and their implications should be discussed in the broadest context possible. Future research directions may also be highlighted. -->
+
+# Conclusion
+
+<!-- This section is not mandatory, but can be added to the manuscript if the discussion is unusually long or complex. -->
+
+# Patents
+
+<!-- This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript. -->

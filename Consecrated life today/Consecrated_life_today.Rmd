@@ -78,7 +78,7 @@ output: rticles::mdpi_article
 ---
 ```{r pcgs, include=FALSE}
 set.seed(8448923)
-packages=c("psych","dplyr","lavaan","base","foreign","Routliers","MVN","parameters", "EFA.MRFA","RGenData","semPlot","psycho","apa","corx","effectsize","qwraps2","finalfit","ggstatsplot","dunn.test","devtools","rticles","ICC.Sample.Size","tidyverse","magrittr","osfr","expss","gtsummary","huxtable","equaltestMI","haven","rcompanion","ufs") 
+packages=c("psych","dplyr","lavaan","base","foreign","Routliers","MVN","parameters", "EFA.MRFA","RGenData","semPlot","psycho","apa","corx","effectsize","qwraps2","finalfit","ggstatsplot","dunn.test","devtools","rticles","ICC.Sample.Size","tidyverse","magrittr","osfr","expss","gtsummary","huxtable","equaltestMI","haven","rcompanion","ufs","readxl") 
 
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
@@ -113,7 +113,8 @@ library("papaja")
 ```
 
 ```{r data loading - REP dataset 2016, include=FALSE}
-data.rep = read_sav(paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.sav"))
+path.to.dat = paste0(getwd(),"/study data")
+# data.rep = read_sav(paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.sav"))
 
 data.rep=read_excel(path = paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.xlsx"))
 #(....................................................................................)
@@ -133,9 +134,10 @@ data.rep = data.rep %>%
                                                       "1" = "Student",
                                                       "2" = "Invalid pensioner",
                                                       "3" = "Employed",
-                                                      "4" = "In houshold",
-                                                      "5" = "Unemployed",
-                                                      "6" = "Pensioner"),
+                                                      "4" = "Entepreanur",
+                                                      "5" = "At home",
+                                                      "6" = "Unemployed",
+                                                      "7" = "Pensioner"),
          education = recode_factor(education,
                                    "1" = "Basic school",
                                    "2" = "Vocational school or non-maturity highschool", 
@@ -145,54 +147,198 @@ data.rep = data.rep %>%
                                "1" = "Yes, I am a member of church",
                                "2" = "Yes, but I am not a member of a church",
                                "3" = "No",
-                               "4" = "No, I am convinced atheist"))
+                               "4" = "No, I am convinced atheist"),
+         Source = as.factor("Representative")) %>% 
+  rename("Gender" = "sex",
+         "Family_status" = "marital_status_all_groups",
+         "Economical_status" = "economical_status_all_groups",
+         "Education" = "education",
+         "code" = "CISLO_DOTAZNIKU",
+         "hlth_ICHS" = "IHD",
+"hlth_chronic_lung_disease" = "IBD",
+"hlth_astma" = "asthma",
+"hlth_diabetes" = "diabetes", 
+"hlth_arthritis" = "artritis",
+"hlth_back_pain" = "back_pain", 
+"hlth_allergy" = "allergy",
+"hlth_depression_anxiety" = "depression_anxiety",
+"hlth_obesity" = "obesity", 
+"hlth_gastric_or_duodenal_ulcers" = "GD_ulcus",
+"hlth_thyroid_disease" = "thyroid_gland_illness",
+"hlth_hypertension" = "hypertension",
+"hlth_migraine" = "migrena",
+"hlth_skin_diseases_eczema" = "ekzema",
+"hlth_ICHS" = "IHD",
+"hlth_stroke" = "stroke",
+"hlth_for_wom_pain_in_the_small_" = "pelvic_pain",
+"hlth_pain_of_unclear_origin" = "pain_unclear_origin",
+"hlth_cancer" = "cancer")
 
+data.rep = data.rep %>% select(starts_with(
+c("code","Gender","Family_status","Age","Economical_status", "Education", "Faith", "hlth_","DSES1","DSES15"))) %>%  
+  select(!contains(c("_other_","IBDonly")))
 
+# summ of all deseases
+data.rep = data.rep %>% 
+  mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
 
-deseases.nam.rep = data.rep %>% select(
-c("IHD", "IHD_other_healthy","hypertension",
-  "hypertension_other_healthy", "stroke", "CHPD", 
-"CHPD_other_healthy", "asthma", "asthma_other_healthy", "cancer", 
-"cancer_other_healthy", "diabetes", "diabetes_other_healthy", 
-"obesity", "obesity_other_healthy", "artritis", "artritis_other_healthy", 
-"back_pain", "backpain_other_healthy", "GD_ulcus", "GDulcus_other_healthy", 
-"IBD", "IBDonly", "IBD_other_healthy", "ekzema", "ekzema_other_healthy", 
-"allergy", "allergy_other_healthy", "migrena", "migrena_other_healthy", 
-"pain_unclear_origin", "painunclear_other_healthy", "pelvic_pain", 
-"pelvicpain_other_healthy", "depression_anxiety", "depr_anx_other_healthy", 
-"thyroid_gland_illness", "thyroid_other_healthy")) %>%  
-  select(!contains("_other_"))
+# Table with inconsistent respondents (FALSE = inconsistent) (feels the God presence despite being Non-religious)
+# code_of_inconsistenters.rep = data.rep %>% 
+#   mutate(incons_resp = case_when(
+#     DSES1 >= 4 & Faith == "No" |
+#     DSES1 >= 4 & Faith == "No, I am convinced atheist" |
+#     DSES15 >= 4 & Faith == "No" |
+#     DSES15 >= 4 & Faith == "No, I am convinced atheist"~ FALSE,
+#     TRUE ~ TRUE)) %>%
+#   filter(incons_resp == "FALSE") %>% 
+#   select(CISLO_DOTAZNIKU)
+
+# exclusion of respondnets which responeded inconsistently 
+# data.rep = data.rep %>% 
+#   filter(!code %in% code_of_inconsistenters.rep$code)
 
 # "CHPD" = chronic pulmonal desease
 # IHD = ischemic heart desease
 # GD_ulcus = gastic duodenal colitis
 # IBD = inflamatory bowel desease
 
+per.male_female.s1=table(data.rep$Gender)/length(data.rep$Gender) 
 ```
 
 ```{r data loading - PA dataset, include=FALSE}
-path.to.dat = paste0(getwd(),"/study data")
-data.pa = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
+data.pa.raw = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
+
+data.pa.raw = data.pa.raw %>% 
+  mutate(Source = as.factor("Panel")) %>% 
+  filter(low_q_res == "HQ") %>% 
+  rename("Economical_status" = "economical_status",
+         "Education" = "education",
+         "Gender" = "gender"
+         )
+
+# data.pa.raw %>% # for a some reason numbers > 10 can not be subsated
+#   names %>%
+#   str_subset(., pattern = "\\d(?=a)")
+
+data.pa = data.pa.raw %>% 
+  select(ends_with(
+c("Gender",
+  "Education",
+  "Economical_status" ,
+  "hlth_ICHS",
+"hlth_chronic_lung_disease",
+"hlth_diabetes", 
+"hlth_astma" ,
+"hlth_arthritis",
+"hlth_back_pain", 
+"hlth_allergy",
+"hlth_depression_anxiety",
+"hlth_obesity", 
+"hlth_gastric_or_duodenal_ulcers",
+"hlth_thyroid_disease",
+"hlth_hypertension",
+"hlth_migraine",
+"hlth_skin_diseases_eczema",
+"hlth_ICHS",
+"hlth_stroke", 
+"hlth_for_wom_pain_in_the_small_", 
+"hlth_pain_of_unclear_origin",
+"hlth_cancer",
+"obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
+"obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a")))
+
+per.male_female.s2=table(data.pa$Gender)/length(data.pa$Gender) 
 ```
 
 ```{r data loading - VACC dataset, include=FALSE}
-data.vacc = readRDS(paste0(path.to.dat,"/data.vacc.cons.life.Rds"))
+data.vacc.raw = readRDS(paste0(path.to.dat,"/data.vacc.cons.life.Rds"))
+
+data.vacc = data.vacc.raw %>% 
+  filter(low_q_res == "HQ") %>% 
+  rename("Faith" = "Religiosity")
+
+data.vacc = data.vacc %>% 
+  select(ends_with(c("Gender",
+  "Education",
+  "Economical_status" ,
+  "hlth_ICHS",
+"hlth_chronic_lung_disease",
+"hlth_diabetes", 
+"hlth_astma" ,
+"hlth_arthritis",
+"hlth_back_pain", 
+"hlth_allergy",
+"hlth_depression_anxiety",
+"hlth_obesity", 
+"hlth_gastric_or_duodenal_ulcers",
+"hlth_thyroid_disease",
+"hlth_hypertension",
+"hlth_migraine",
+"hlth_skin_diseases_eczema",
+"hlth_ICHS",
+"hlth_stroke", 
+"hlth_for_wom_pain_in_the_small_", 
+"hlth_pain_of_unclear_origin",
+"hlth_cancer",
+"obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
+"obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a")))
+
+per.male_female.s3=table(data.vacc$Gender)/length(data.vacc$Gender) 
 ```
 
 ```{r data loading - Concecrated dataset 2011, include=FALSE}
-
+# loading of the recoded data by Gelma
 data.consq.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
   
-data.consq.long=read_excel(path = paste0(path.to.dat,"/data.cons.long.xlsx"))
+# loading of data downloaded from server 
+data.consq.long = readRDS(paste0(path.to.dat,"/data.cons.Rds"))
 
-
-data.consq.raw = full_join(x = data.consq.from.G, 
+# merging datasets together
+data.consq.raw = full_join(x = data.consq.from.G,
                       y = data.consq.long, by = "code")
 
-# removing slovak participants
-data.consq.raw = data.consq.raw %>% 
+# removing Slovak participants
+data.consq.raw.cz = data.consq.raw %>% 
   filter(country == "CZ")
+
+# removing speeders
+data.consq.raw.hq = data.consq.raw.cz %>% 
+  filter(low_q_res == "HQ")
+
+data.cons = data.consq.raw.hq %>% 
+  mutate(across(starts_with("hlth_"), ~ as.numeric(.))) %>% 
+  select(ends_with(c("Gender",
+  "Education",
+  "Economical_status" ,
+  "hlth_ICHS",
+"hlth_chronic_lung_disease",
+"hlth_diabetes", 
+"hlth_astma" ,
+"hlth_arthritis",
+"hlth_back_pain", 
+"hlth_allergy",
+"hlth_depression_anxiety",
+"hlth_obesity", 
+"hlth_gastric_or_duodenal_ulcers",
+"hlth_thyroid_disease",
+"hlth_hypertension",
+"hlth_migraine",
+"hlth_skin_diseases_eczema",
+"hlth_ICHS",
+"hlth_stroke", 
+"hlth_for_wom_pain_in_the_small_", 
+"hlth_pain_of_unclear_origin",
+"hlth_cancer",
+"obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
+"obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a"))) 
+
+# summ of all deseases
+data.cons = data.cons %>% 
+  mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
+
+per.male_female.s4=table(data.cons$Gender)/length(data.cons$Gender) 
 ```
+<!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
@@ -206,7 +352,6 @@ data.consq.rm.dups = data.consq.raw %>%
   filter()
 
 ```
-
 
 ```{r outliers screening and inconsistent responding detection, include=FALSE}
 # calculating MAD 
@@ -331,8 +476,11 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 
 
 ## Participants
-In this study, data from in total 4 samples were used. First sample consisted of participants from nationally representative sample.  
+In this study, data from in total 4 samples were used. First sample (*n* = `r nrow(data.rep)`, Age: *M* = `r mean(data.rep$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.rep$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s1[["Female"]]*100,digits = 2)`%) consisted of participants from nationally representative sample collected in 2016. In this dataset we did not find subjects responding incongruently to the control items regarding a religiosity and spirituality i.e. feeling the God presence despite being Non-religious or atheist. Thus, no participant was excluded from a dataset. 
 
+The second sample was collected in.......... From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.rm.low.q)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders (i.e. time spend filling questionnaire was < 10 min.). The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimes). Hance, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%)
+
+The third sample (*n* = `r nrow(data.vacc)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting inconsistent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants.      
 
 
 

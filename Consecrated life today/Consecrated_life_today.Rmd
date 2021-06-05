@@ -173,11 +173,12 @@ data.rep = data.rep %>%
 "hlth_for_wom_pain_in_the_small_" = "pelvic_pain",
 "hlth_pain_of_unclear_origin" = "pain_unclear_origin",
 "hlth_cancer" = "cancer") %>% 
- mutate(across(starts_with(c("hlth_")), ~ as.numeric(.)))
+ mutate(across(starts_with(c("hlth_")), ~ as.numeric(.))) %>% 
+  mutate(code = as.character(code))
 
 
 data.rep = data.rep %>% select(starts_with(
-c("code","Gender","Family_status","Age","Economical_status", "Education", "Faith", "hlth_","DSES1","DSES15"))) %>%  
+c("code","Gender","Family_status","Age","Economical_status", "Education", "Faith", "hlth_","DSES1","DSES15","Source"))) %>%  
   select(!contains(c("_other_","IBDonly")))
 
 # summ of all deseases
@@ -213,26 +214,41 @@ per.male_female.s1=table(data.rep$Gender)/length(data.rep$Gender)
 ```{r data loading - PA dataset, include=FALSE}
 data.pa.raw = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
 
-data.pa.raw = data.pa.raw %>% 
+data.pa.hq = data.pa.raw %>% 
   mutate(Source = as.factor("Panel")) %>% 
   filter(low_q_res == "HQ") %>% 
   rename("Economical_status" = "economical_status",
          "Education" = "education",
-         "Gender" = "gender"
+         "Gender" = "gender",
+         "Age" = "age"
          ) %>% 
-  mutate(Source = as.factor("Panel")) %>% 
-  mutate(across(starts_with(c("obtize_","hlth_","OASIS_","ODSIS_")), ~ as.numeric(.))) %>% 
+  mutate(across(starts_with(c("obtize_","OASIS_","ODSIS_","hlth_")), ~ as.numeric(.))) %>% 
+  mutate(across(starts_with(c("hlth_")), ~ dplyr::recode(., 
+                                                  "1" = 0,
+                                                  "2" = 1 ))) %>% 
   mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
-  mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) 
+  mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) %>% 
+  mutate(Education = recode_factor(Education,
+                                   "Basic school" = "Basic school",
+                                   "Vocational school or non - maturity high school" = "Vocational school or non - maturity high school", 
+                                   "High school" = "High school",
+                                   "Higher vocational school or University bachelor" = "Higher vocational school or University bachelor", 
+                                   "University master or higher" = "University master or higher", .ordered = F)) %>% 
+  mutate(daily_energy = recode_factor(daily_energy,
+                                      "1" = "Early bird",
+                                      "2" = "Night own"),
+                  psychotherapy = recode_factor(psychotherapy,
+                                       "1" = "Yes",
+                                       "2" = "No")) 
 
 
 # data.pa.raw %>% # for a some reason numbers > 10 can not be subsated
 #   names %>%
 #   str_subset(., pattern = "\\d(?=a)")
 
-data.pa.out = data.pa.raw %>% 
+data.pa.out = data.pa.hq %>% 
   select(ends_with(
-c("Gender",
+c("Gender","Age",
   "Education",
   "Economical_status" ,
   "hlth_ICHS",
@@ -257,7 +273,11 @@ c("Gender",
 "obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
 "obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a",
 "daily_energy",
-"psychotherapy","OASIS","ODSIS","code")))
+"psychotherapy","OASIS","ODSIS","code","Source")))
+
+# summ of all deseases
+data.pa = data.pa.out %>% 
+  mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
 
 per.male_female.s2=table(data.pa$Gender)/length(data.pa$Gender) 
 ```
@@ -269,7 +289,7 @@ per.male_female.s2=table(data.pa$Gender)/length(data.pa$Gender)
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
-```{r outliers screening and inconsistent responding detection, include=FALSE}
+```{r outliers screening and inconsistent responding detection pa, include=FALSE}
 # calculating MAD 
 # OASIS
 out_MAD.OA.pa=outliers_mad(data.pa.out$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
@@ -277,8 +297,8 @@ out_MAD.OA.pa=outliers_mad(data.pa.out$OASIS, b = 1.4826,threshold = 2.5, na.rm 
 out_MAD.OD.pa=outliers_mad(data.pa.out$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
 
 # creating dataset only with outliers for screening purposes
-# outliers=data.pa.out[c(out_MAD.OA.pa[["outliers_pos"]]), ] %>% view() 
-# outliers=data.pa.out[c(out_MAD.OD.pa[["outliers_pos"]]), ] %>% view() 
+# data.pa.out %>% filter(OASIS %in% out_MAD.OA.pa$outliers) %>% view()
+# data.pa.out %>% filter(ODSIS %in% out_MAD.OD.pa$outliers) %>% view()
 
 pa.cod.rem = c("74d9cc54199425db9c2da2cc1d33c923", "06189bd8c5a8850748cd7d634659ff45")
 
@@ -286,28 +306,28 @@ data.pa = data.pa.out %>% # deletetion respondents answering in uniform way - de
   filter(!code %in% pa.cod.rem)
 ```
 
-```{r missing data analysis, include=FALSE}
+```{r missing data analysis pa, include=FALSE}
 # Mcar test from different package which can del with more than 50 variables
-MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","daily_energy","psychotherapy","hlth_"))))
+MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","hlth_"))))
 
 MCAR.pa.data.mis.mech # MCAR holds 
 ```
 
-```{r multivariate normality, include=FALSE}
+```{r multivariate normality pa, include=FALSE}
 # MULTIVARIATE NORMALITY:
 # mvn(data = select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","daily_energy","psychotherapy","hlth_"))), mvnTest = "mardia", univariatePlot = "histogram")
     
 # inspection indicated skewness problems with items: 
-Mard=mvn(data= select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","daily_energy","psychotherapy","hlth_"))),mvnTest = "mardia")    
+Mard=mvn(data= select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","hlth_"))),mvnTest = "mardia")    
 
 # summary: # in both datasets, normality in OASIS and ODSIS cen be rejectd
 ```
 
-```{r Homoscedasticity_and_other_assumptions, include=FALSE}
+```{r Homoscedasticity_and_other_assumptions pa, include=FALSE}
 # OASIS - PA dataset 
 # fake regression 
 random=rchisq(nrow(data.pa), 7) # generate random data
-fake_regres=lm(random~., data = select(data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","daily_energy","psychotherapy","hlth_"))),) # run fake regression
+fake_regres=lm(random~., data = select(data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","daily_energy","psychotherapy","hlth_", "Gender", "Education")))) # run fake regression
 # run diagnostics plots 
 plot(fake_regres)
 # testing homogenity of variances
@@ -324,12 +344,17 @@ data.vacc = data.vacc.raw %>%
   filter(low_q_res == "HQ") %>% 
   rename("Faith" = "Religiosity") %>% 
   mutate(Source = as.factor("Vacctination")) %>% 
-  mutate(across(starts_with(c("obtize_","hlth_","OASIS_","ODSIS_")), ~ as.numeric(.))) %>% 
+  mutate(across(starts_with(c("obtize_","hlth_","OASIS_","ODSIS_")), ~ as.numeric(.))) %>%   
   mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
   mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) 
 
 data.vacc = data.vacc %>% 
-  select(ends_with(c("Gender",
+    mutate(hlth_depression_anxiety = case_when(
+    hlth_psych_anxiety == "1" | 
+      hlth_psych_depress == "1" ~ 1, 
+    TRUE ~ 0
+  )) %>% 
+  select(starts_with(c("Age","Gender",
   "Education",
   "Economical_status" ,
   "hlth_ICHS",
@@ -350,11 +375,16 @@ data.vacc = data.vacc %>%
 "hlth_stroke", 
 "hlth_for_wom_pain_in_the_small_", 
 "hlth_pain_of_unclear_origin",
-"hlth_cancer",
+"hlth_cancer", "daily_energy",
 "obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
-"obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a",
-"daily_energy",
-"OASIS","ODSIS","code"))) # variable "psychotherapy" was not selected because in this survey it also includes "psychiatrist" while in the panel data and consecrated dataset not
+"obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", 
+"obtize_10a", "obtize_11a", "obtize_12a",  # variable "psychotherapy" was not selected because in this survey it also includes "psychiatrist" while in the panel data and consecrated dataset not 
+"OASIS","ODSIS","code","Source"))) %>% 
+select(!ends_with("education_type"))
+
+# summ of all deseases
+data.vacc = data.vacc %>% 
+  mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
 
 per.male_female.s3=table(data.vacc$Gender)/length(data.vacc$Gender) 
 ```
@@ -375,83 +405,32 @@ out_MAD.OA.vacc=outliers_mad(data.vacc$OASIS, b = 1.4826,threshold = 2.5, na.rm 
 out_MAD.OD.vacc=outliers_mad(data.vacc$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
 
 # creating dataset only with outliers for screening purposes
-# outliers=data.vacc[c(out_MAD.OA.vacc[["outliers_pos"]]), ] %>% view()
-# outliers=data.vacc[c(out_MAD.OD.vacc[["outliers_pos"]]), ] %>% view()
+# data.vacc %>% filter(OASIS %in% out_MAD.OA.vacc$outliers) %>% view()
+# data.vacc %>% filter(ODSIS %in% out_MAD.OD.vacc$outliers) %>% view()
 
-vacc.cod.rem = c("", "")
-
-data.pa = data.vacc %>% # deletetion respondents answering in uniform way - detected by visual inspection  
-  filter(!code %in% vacc.cod.rem)
+# screening was conducted via examination of the uniform pattern of responding across deseases and OASIS and ODSIS score - if particpants responded that he or she suffers from all deseases and the report extreme scores in OASIS or ODSIS, than this respondent was labeled as low quality respondet 
 ```
 
 ```{r missing data analysis, include=FALSE}
-# data ex
-# how many data are missing
-#data.pa %>% select(starts_with(c("OASIS","ODSIS"))) %>% summary
-# MCAR.ex.data=BaylorEdPsych::LittleMCAR(select(.data = data.ex, starts_with(c("ODSIS_","OASIS_","Age","obtize_9b","BFI_N_"))))
-#.........................................................................................................
-# data.pa 
-# how many data are missing
-#data.pa %>% select(starts_with(c("OASIS","ODSIS"))) %>% summary
-# MCAR.pa.data=BaylorEdPsych::LittleMCAR(select(.data = data.pa, starts_with(c("OASIS_","ODSIS_","BFI_N_","RSES","Age"))))
-#.........................................................................................................
-# Mcar test from different package which can del with more than 50 variables
-MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("OASIS_","ODSIS_","DSES_","BFI_N_","panas","Age","ECI_","GSES_","HSPS","SSDS_","SHSS"))))
-
-# Rationale why imputation was not conducted: 
-# In the ex data, we had enought data thus missing cases were deleted listwise. 
-# in the pa data, the multiple impuation based on predictive mean maching was used to add valeus (it was possible as only around 26 percent values in rows were missing and it is possible to impute up to 90% without bias see: 
-#Madley-Dowd, P., Hughes, R., Tilling, K., & Heron, J. (2019). The proportion of missing data should not be used to guide decisions on multiple imputation. Journal of clinical epidemiology, 110, 63-73.)
+MCAR.vacc.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.vacc, starts_with(c("OASIS_","ODSIS_","obtize_","hlth_", "Age")))) # MCAR holds
 ```
 
 ```{r multivariate normality, include=FALSE}
-# loading dataset with imputed values
-data.pa=readRDS("data.pa.aft.imp.Rds")
-
-# MULTIVARIATE NORMALITY:
-# OASIS
-mvn(data = select(.data = data.ex, starts_with("OASIS_")), mvnTest = "mardia", univariatePlot = "histogram")
-mvn(data = select(.data = data.pa, starts_with("OASIS_")), mvnTest = "mardia", univariatePlot = "histogram")
-# ODSIS
-mvn(data = select(.data = data.ex, starts_with("ODSIS_")), mvnTest = "mardia", univariatePlot = "histogram")
-mvn(data = select(.data = data.pa, starts_with("ODSIS_")), mvnTest = "mardia", univariatePlot = "histogram")
+# mvn(data = select(.data = data.vacc, starts_with(c("OASIS","ODSIS","obtize_","hlth_","Age"))), mvnTest = "mardia", univariatePlot = "histogram")
 # inspection indicated skewness problems with items: 
-Mard=mvn(data= data.ex[, c("OASIS")],mvnTest = "mardia")    
+Mard=mvn(data= select(.data = data.vacc, starts_with(c("OASIS","ODSIS","obtize_","hlth_", "Age"))),mvnTest = "mardia")    
 
-# summary: # in both datasets, normality in OASIS and ODSIS cen be rejectd
+# summary: # in both datasets, normality in OASIS and ODSIS can be rejected
 ```
 
 ```{r Homoscedasticity_and_other_assumptions, include=FALSE}
-# OASIS - EX dataset 
 # fake regression 
-random=rchisq(nrow(data.ex), 7) # generate random data
-fake_regres=lm(random~., data= data.ex %>% select(starts_with("OASIS_"))) # run fake regression
+random=rchisq(nrow(data.vacc), 7) # generate random data
+fake_regres=lm(random~., data= data.vacc %>% select(starts_with(c("OASIS","ODSIS","obtize_","hlth_", "Age", "Gender", "Education")))) # run fake regression
 # run diagnostics plots 
 plot(fake_regres)
 # testing homogenity of variances
 lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-#____________________________________________________________________________
-# ODSIS - EX dataset 
-random=rchisq(nrow(data.ex), 7) # generate random data
-fake_regres=lm(random~., data= data.ex %>% select(starts_with("ODSIS_"))) # run fake regression
-plot(fake_regres)
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-#*****************************************************************************
-# OASIS - PA dataset 
-# fake regression 
-random=rchisq(nrow(data.pa), 7) # generate random data
-fake_regres=lm(random~., data= data.pa %>% select(starts_with("OASIS_"))) # run fake regression
-# run diagnostics plots 
-plot(fake_regres)
-# testing homogenity of variances
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-#____________________________________________________________________________
-# ODSIS - PA dataset 
-random=rchisq(nrow(data.pa), 7) # generate random data
-fake_regres=lm(random~., data= data.pa %>% select(starts_with("ODSIS_"))) # run fake regression
-plot(fake_regres)
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-
 ```
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
@@ -465,8 +444,8 @@ data.cons.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"
 data.cons.long = readRDS(paste0(path.to.dat,"/data.cons.Rds"))
 
 # merging datasets together
-data.cons.raw = full_join(x = data.consq.from.G,
-                           y = data.consq.long, by = "code") %>% 
+data.cons.raw = full_join(x = data.cons.from.G,
+                           y = data.cons.long, by = "code") %>% 
   mutate(Source = as.factor("Consecrated")) %>% 
   mutate(across(starts_with(c("obtize_","hlth_")), ~ as.numeric(.)))
 #............................................................................................
@@ -476,15 +455,20 @@ data.cons.raw.hq = data.cons.raw %>%
   filter(low_q_res == "HQ")
 
 # removing Slovak participants
-data.cons = data.cons.raw.hq %>% 
+data.cons.cz = data.cons.raw.hq %>% 
   filter(country == "CZ")
 
+# removal of dupicites - no duplicites in Czech participants
+data.cons = data.cons.cz %>% 
+  select(!"age") %>% 
+  filter(duplicities == "0")
+
 data.cons = data.cons %>% 
-  mutate(across(starts_with(c("hlth_","OASIS_","ODSIS_")), ~ as.numeric(.))) %>% 
+  mutate(across(starts_with(c("hlth_","OASIS_","ODSIS_","religious_age")), ~ as.numeric(.))) %>% 
   mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
   mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) %>% 
-  select(ends_with(c("Gender",
-  "Education",
+  select(starts_with(c("Gender",
+  "Education","Age",
   "Economical_status" ,
   "hlth_ICHS",
 "hlth_chronic_lung_disease",
@@ -509,14 +493,14 @@ data.cons = data.cons %>%
 "obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a",
 "daily_energy",
 "psychotherapy",
-"OASIS","ODSIS","code"))) 
+"OASIS","ODSIS","code","religious_age","code","Source"))) %>% 
+  select(!starts_with(c("education.x","education.y","religious_age.x")))
 
 # sum of all diseases
 data.cons = data.cons %>% 
   mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
 
 per.male_female.s4=table(data.cons$Gender)/length(data.cons$Gender) 
-
 
 #...............................................................
 # just basic descriptive
@@ -528,126 +512,49 @@ per.male_female.s4=table(data.cons$Gender)/length(data.cons$Gender)
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
-<!-- Data screening REP dataset 2016------------->
+<!-- Data screening CONCECRATED dataset 2016----->
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
-```{r outliers screening and inconsistent responding detection, include=FALSE}
-# calculating MAD 
-# OASIS (ex dataset)
-out_MAD.OA.ex=outliers_mad(data.ex$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-# OASIS (pa dataset)
-out_MAD.OA.pa=outliers_mad(data.pa$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-#...............................................................................................
-# ODSIS (ex dataset)
-out_MAD.OD.ex=outliers_mad(data.ex$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-# ODSIS (pa dataset)
-out_MAD.OD.pa=outliers_mad(data.pa$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+```{r outliers screening and inconsistent responding detection cons, include=FALSE}
+out_MAD.OA.cons=outliers_mad(data.cons$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+out_MAD.OD.cons=outliers_mad(data.cons$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
 
 # creating dataset only with outliers for screening purposes
-# outliers=data.ex[c(out_MAD.OA.ex[["outliers_pos"]]), ] %>% view() 
-# outliers=data.pa[c(out_MAD.OA.pa[["outliers_pos"]]), ] %>% view() 
-# outliers=data.pa[c(out_MAD.OD.ex[["outliers_pos"]]), ] %>% view() 
-# outliers=data.pa[c(out_MAD.OD.pa[["outliers_pos"]]), ] %>% view() 
-
-data.pa = data.pa %>% # deletetion respondents answering in uniform way - detected by visual inspection  
-  filter(!code %in% c("74d9cc54199425db9c2da2cc1d33c923", "06189bd8c5a8850748cd7d634659ff45"))
-
-# Table with inconsistent respondents (FALSE = inconsistent) (feels the God presence despite being Non-religious)
-code_of_inconsistenters = data.ex %>% 
-  mutate(incons_resp = case_when(
-    DSES_1 >= 4 & faith == "Non-religious" |
-    DSES_1 >= 4 & faith == "No, I am convinced atheist" |
-    DSES_15 >= 4 & faith == "Non-religious" |
-    DSES_15 >= 4 & faith == "No, I am convinced atheist"~ FALSE,
-    TRUE ~ TRUE)) %>%
-  filter(incons_resp == "FALSE") %>% 
-  select(code)
-
-# exclusion of respondnets which responeded inconsistently
-data.ex = data.ex %>% 
-  filter(!code %in% code_of_inconsistenters$code)
+# data.cons %>% filter(OASIS %in% out_MAD.OA.cons$outliers) %>% view()
+# data.cons %>% filter(ODSIS %in% out_MAD.OD.cons$outliers) %>% view()
 ```
 
-```{r missing data analysis, include=FALSE}
-# data ex
-# how many data are missing
-#data.pa %>% select(starts_with(c("OASIS","ODSIS"))) %>% summary
-# MCAR.ex.data=BaylorEdPsych::LittleMCAR(select(.data = data.ex, starts_with(c("ODSIS_","OASIS_","Age","obtize_9b","BFI_N_"))))
-#.........................................................................................................
-# data.pa 
-# how many data are missing
-#data.pa %>% select(starts_with(c("OASIS","ODSIS"))) %>% summary
-# MCAR.pa.data=BaylorEdPsych::LittleMCAR(select(.data = data.pa, starts_with(c("OASIS_","ODSIS_","BFI_N_","RSES","Age"))))
-#.........................................................................................................
-# Mcar test from different package which can del with more than 50 variables
-MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("OASIS_","ODSIS_","DSES_","BFI_N_","panas","Age","ECI_","GSES_","HSPS","SSDS_","SHSS"))))
-
-# Rationale why imputation was not conducted: 
-# In the ex data, we had enought data thus missing cases were deleted listwise. 
-# in the pa data, the multiple impuation based on predictive mean maching was used to add valeus (it was possible as only around 26 percent values in rows were missing and it is possible to impute up to 90% without bias see: 
-#Madley-Dowd, P., Hughes, R., Tilling, K., & Heron, J. (2019). The proportion of missing data should not be used to guide decisions on multiple imputation. Journal of clinical epidemiology, 110, 63-73.)
+```{r missing data analysis cons, eval=FALSE, include=FALSE}
+MCAR.cons.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.cons, starts_with(c("OASIS_","ODSIS_",
+                                                                                                 "obtize_","hlth_","Age",
+                                                                                                 "daily_energy",
+                                                                                                 "psychotherapy",
+                                                                                                 "religious_age"))))
 ```
 
-```{r imputation procedure, include=FALSE}
-# uncheck if the code is available for you
-# library(osfr)
-# osf_auth("ASK THE FIRST AUTHOR FOR ACCESS")
-# project <- osf_retrieve_node("https://osf.io/8ru4s/")
-# files <- osf_ls_files(project)
-# osf_download(files, conflicts = "overwrite")
-# source(knitr::purl("imputation_of_data.panel.rmd", quiet=TRUE))
-```
-
-```{r multivariate normality, include=FALSE}
-# loading dataset with imputed values
-data.pa=readRDS("data.pa.aft.imp.Rds")
-
+```{r multivariate normality cons, include=FALSE}
 # MULTIVARIATE NORMALITY:
-# OASIS
-mvn(data = select(.data = data.ex, starts_with("OASIS_")), mvnTest = "mardia", univariatePlot = "histogram")
-mvn(data = select(.data = data.pa, starts_with("OASIS_")), mvnTest = "mardia", univariatePlot = "histogram")
-# ODSIS
-mvn(data = select(.data = data.ex, starts_with("ODSIS_")), mvnTest = "mardia", univariatePlot = "histogram")
-mvn(data = select(.data = data.pa, starts_with("ODSIS_")), mvnTest = "mardia", univariatePlot = "histogram")
+# mvn(data = select(.data = data.cons, starts_with(c("OASIS","ODSIS", "obtize_","hlth_","Age","religious_age"))), mvnTest = "mardia", univariatePlot = "histogram")
 # inspection indicated skewness problems with items: 
-Mard=mvn(data= data.ex[, c("OASIS")],mvnTest = "mardia")    
+Mard=mvn(data= select(.data = data.cons, starts_with(c("OASIS","ODSIS","obtize_",
+                             "hlth_","Age","religious_age"))),mvnTest = "mardia")    
 
 # summary: # in both datasets, normality in OASIS and ODSIS cen be rejectd
 ```
 
-```{r Homoscedasticity_and_other_assumptions, include=FALSE}
-# OASIS - EX dataset 
+```{r Homoscedasticity_and_other_assumptions cons, include=FALSE}
 # fake regression 
-random=rchisq(nrow(data.ex), 7) # generate random data
-fake_regres=lm(random~., data= data.ex %>% select(starts_with("OASIS_"))) # run fake regression
+random=rchisq(nrow(data.cons), 7) # generate random data
+fake_regres=lm(random~., data= data.cons %>% select(starts_with(c("OASIS","ODSIS","obtize_",
+                             "hlth_","Age","religious_age")))) # run fake regression
 # run diagnostics plots 
 plot(fake_regres)
 # testing homogenity of variances
 lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-#____________________________________________________________________________
-# ODSIS - EX dataset 
-random=rchisq(nrow(data.ex), 7) # generate random data
-fake_regres=lm(random~., data= data.ex %>% select(starts_with("ODSIS_"))) # run fake regression
-plot(fake_regres)
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-#*****************************************************************************
-# OASIS - PA dataset 
-# fake regression 
-random=rchisq(nrow(data.pa), 7) # generate random data
-fake_regres=lm(random~., data= data.pa %>% select(starts_with("OASIS_"))) # run fake regression
-# run diagnostics plots 
-plot(fake_regres)
-# testing homogenity of variances
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-#____________________________________________________________________________
-# ODSIS - PA dataset 
-random=rchisq(nrow(data.pa), 7) # generate random data
-fake_regres=lm(random~., data= data.pa %>% select(starts_with("ODSIS_"))) # run fake regression
-plot(fake_regres)
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-
 ```
+
+# Introduction
 
 # Methods
 
@@ -655,35 +562,69 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 ZDE SI MOC PROSÍM POPIŠ, JAKÉ ŠKÁLY A OTÁZKY JSME POUŽILI K MĚŘENÍ TOHO, CO NÁS ZAJÍMALO. VELMI DOPORUČUJI KLÁRY VZHOROVÝ ČLÁNEK, ZDE JE TO POPSÁNO PRVOTŘÍDNĚ
 
 ## Participants
-In this study, data from in total 4 samples were used. 
 
 ### 1. sample  
-  First sample (*n* = `r nrow(data.rep)`, Age: *M* = `r mean(data.rep$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.rep$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s1[["Female"]]*100,digits = 2)`%) consisted of participants from nationally representative sample collected in 2016. In this dataset we did not find subjects responding incongruently to the control items regarding a religiosity and spirituality i.e. feeling the God presence despite being Non-religious or atheist. Thus, no participant was excluded from a dataset. 
+  First sample (*n* = `r nrow(data.rep)`, Age: *M* = `r mean(data.rep$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.rep$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s1[["Female"]]*100,digits = 2)`%) consisted of participants from nationally representative sample collected in 2016. In this dataset we did not find subjects responding incongruently to the control items i.e. feeling the God presence despite being Non-religious or atheist. Thus, no participant was excluded from a dataset. 
 
 ### 2. sample
-  The second sample was collected in.......... From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.rm.low.q)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders (i.e. time spend filling questionnaire was < 10 min.). The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimes). Hence, the number of participants was `r nrow(data.pa)`. Lastly, we removed records from subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%). 
+  The second sample was collected in.......... From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.hq)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders i.e. time spend filling questionnaire was < 10 min. The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimes). Hence, the number of participants was `r nrow(data.pa.out)`. We also removed records from subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%). 
 
 ### 3. sample 
-  The third sample (*n* = `r nrow(data.vacc)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting inconsistent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants.      
+  The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting inconsistent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participt with uniform responses was detected.       
 
 ### 4. sample 
-  We collected `r nrow(data.consq.raw)` participants. In the first step, we excluded participants (*n* = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclucion, `r nrow(data.cons.raw.hq)` participants remained. In the further step,  we removed those not being Czechs citizens (*n* = `r nrow(data.cons.raw.hq) - nrow(data.cons)`) (JE TO TAKTO PRAVDA? KDYŽTAK TO MOC PROSÍM POPIŠ TAK, ABY TO ODPOVÍDALO) resulting in `r nrow(data.cons)` subjects (Age: *M* = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%).      
-  
-
-
-
-
-
-
-
-# toto ověřit !!! 
-As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise.  
-
+  We collected `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (*n* = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclucion, `r nrow(data.cons.raw.hq)` participants remained. In the further step,  we removed those not being Czechs citizens (*n* = `r nrow(data.cons.raw.hq) - nrow(data.cons.cz)`) (JE TO TAKTO PRAVDA? KDYŽTAK TO MOC PROSÍM POPIŠ TAK, ABY TO ODPOVÍDALO) resulting in `r nrow(data.cons)` subjects (Age: *M* = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected.       
+<!-- IDEÁLNĚ NEZAHRNOVAT DAILY ENERGY U VAKCINACE PÁČ JE PAK VYLOUČEN MCAR -->
 
 ## Statistical analysis
-
+  As indicated by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were excluded. 
+  
+  Variance Inflation Factor was xxxxx.
+  
+  <!-- In the logistic regression models, religiosity (Religious/Non-religious) was regressed on the variables assessing a) self-reported change of behaviours and emotionality caused by covid-19 pandemic and b) factors which help participants during covid-19 pandemic. Each model was fitted with different outcome variable. Numeric variables were standardised to z-scores. All models were adjusted for age, gender, socioeconomic status. Non-adjusted effects will also be reported. In the next step, the predictor (Religiosity) was replaced by the variable religious attendance and the all models were runned again with this new regressor. The `r cite_r()` programming software was used for all analyses. -->
 
 # Results
+
+In the first step of the analysis, we compared clerics with non - clerices in their self - reported chronotype. Results revealed that there was no differrence between these two groups across the two surveys see Table 1.
+
+
+
+```{r merge of the datasets, include=FALSE}
+data = bind_rows(data.rep, 
+                 data.pa,
+                 data.vacc,
+                 data.cons)
+```
+
+
+```{r contingenty tables, echo=FALSE, message=FALSE, warning=FALSE}
+# library(sjPlot)
+# daily.energ.tab=sjt.xtab(dat.to.daily$Source, #rows
+#          dat.to.daily$daily_energy) #columns
+#....................................................
+
+dat.to.daily = 
+           filter(data, Source == "Panel" |
+             Source == "Vacctination" |
+             Source == "Consecrated") %>% 
+  mutate_if(is.factor, droplevels) %>% 
+    select(Source, daily_energy) 
+
+
+dat.to.daily %>% 
+  tbl_summary(by = daily_energy) %>%
+  add_p() %>% 
+    modify_spanning_header(c("stat_1", "stat_2") ~ "**Chronotype**") %>% 
+  modify_footnote(update = everything() ~ NA) %>% 
+  as_kable_extra(format = "latex",
+                 booktabs = TRUE)
+# %>% 
+  # kableExtra::kable_styling(latex_options = "scale_down")
+```
+
+
+
+
 
 <!-- This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn. -->
 

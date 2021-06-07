@@ -14,6 +14,7 @@ cache:
 
   
   before_script:
+  - apt-get update
   - apt-get install -y --no-install-recommends ${APT_PKGS}
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"

@@ -12,8 +12,10 @@ cache:
     - ${RENV_PATHS_LIBRARY}
 
 
-article:
-  stage: deploy
+# setup steps
+run:
+  tags:
+      - docker
   image: rocker/verse:4.0.5
   
   before_script:

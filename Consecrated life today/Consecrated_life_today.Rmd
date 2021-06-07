@@ -812,8 +812,6 @@ variab.co.fin=corx(variab.co, method = "spearman", triangle = "lower", describe 
 knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated below referes to associations between various personality aspects and conspiracy theories belief")
 ```
 
-
-## Chronical ilness differences
 ## Chronical ilness differences
 ```{r rist regression, include=FALSE}
 # Side-by-side Regression Models
@@ -1003,7 +1001,7 @@ ra.30 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.31 <-
-  glm(hlth_for_wom_pain_in_the_small ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_for_wom_pain_in_the_small_ ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain in the small pelvis"))%>%
   bold_p(t = 0.001388889) 
@@ -1011,7 +1009,7 @@ ra.31 <-
 # data.reg = data.reg %>% rename("hlth_for_wom_pain_in_the_small" = "hlth_for_wom_pain_in_the_small_")
 
 ra.32 <-
-  glm(hlth_for_wom_pain_in_the_small ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_for_wom_pain_in_the_small_ ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain in the small pelvis"))%>%
   bold_p(t = 0.001388889) 
@@ -1090,7 +1088,6 @@ tbls = list(ra.tab.pok1,ra.tab.pok2),
 tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
 
 
-
 #.......................................................................
 # ra.1 <-
 #   glm(hlth_depression_anxiety ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
@@ -1107,8 +1104,88 @@ tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
 
 ```
 
+```{r}
+table.2=ra.t1
+
+#show_header_names(table.2)
+# if there is need to use this code in the some other research there is need to just replace the names of the columns (e.g. `95% CI_(RA)` by " `95% CI_(EMP)`) and delete or add the number of OR,p-val,CI columns
+
+  # convert to tibble object
+  table.2.tib= table.2 %>% as_tibble()
+  
+  # setting names
+names.tab2=c("Table 2",
+             "OR_(R)","95% CI_(R)","p-value_(R)", # the first names are crude and second for adjusted effect
+             "OR_(Rna)","95% CI_(Rna)","p-value_(Rna)")
+
+table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
+
+  
+   #ds=gtsummary::as_tibble(re.tab.1)
+   table.2.tib.star = table.2.tib %>%
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '^>', ""))) %>%
+   dplyr::mutate(TF_P=across(dplyr::contains("p-val"), ~str_detect(., pattern = "_"))) %>% 
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '__', ""))) %>% 
+   dplyr::mutate(stars = across(dplyr::contains("p-val"), ~pander::add.significance.stars(., cutoffs = c(0.05, 0.01, 0.001))))
+   table.2.tib.star = table.2.tib.star %>% 
+   dplyr::mutate_at(dplyr::vars("OR_(R)"), ~paste0(., c(table.2.tib.star$stars$`p-value_(R)`))) %>%  # if more p value is present there is need add more rows here 
+   dplyr::mutate_at(dplyr::vars("OR_(Rna)"), ~paste0(., c(table.2.tib.star$stars$`p-value_(Rna)`))) %>%  
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., " ", ""))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\*+", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+", NA_character_))) 
+   # if command is not working there is need to remove in the last commant the ""sta"" column
+  
+      # creating the new column containing only: OR 95%CI(xx-xx)
+    table.2.tib.star = table.2.tib.star %>% 
+     mutate(cis1 = paste0('(',table.2.tib.star$`95% CI_(R)`,')'), 
+            cis2 = paste0('(',table.2.tib.star$`95% CI_(Rna)`,')'))
+    # replacing old columns
+    table.2.tib.star = table.2.tib.star %>% 
+      mutate(`OR_(R)`=paste(table.2.tib.star$`OR_(R)`, cis1, sep=" "),
+             `OR_(Rna)`=paste(table.2.tib.star$`OR_(Rna)`, cis2, sep=" "))
+    
+    # deleting undesired symbols
+    table.2.tib.star = table.2.tib.star %>% 
+      select(dplyr::contains(c("Table","OR","TF"))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\[ ]+", " "))) 
+    # Adding prefix to corrected values
+      # table.2.tib.star = table.2.tib.star %>% 
+      # mutate(`OR_(R)` = case_when(table.2.tib.star$TF_P$`p-value_(R)` == "TRUE" ~ paste0("B", sep = "_", `OR_(R)`), 
+      #                    TRUE ~ `OR_(R)`),
+      #        `OR_(Rna)`= case_when(table.2.tib.star$TF_P$`p-value_(Rna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(Rna)`), 
+      #                    TRUE ~ `OR_(Rna)`),
+      #         `OR_(RA)`= case_when(table.2.tib.star$TF_P$`p-value_(RA)` == "TRUE" ~ paste0("B", sep = "_",  `OR_(RA)`), 
+      #                    TRUE ~ `OR_(RA)`),
+      #         `OR_(RAna)` = case_when(table.2.tib.star$TF_P$`p-value_(RAna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(RAna)`), 
+      #                    TRUE ~  `OR_(RAna)`))
+      
+     # selecting only relevant columns
+         table.2.tib.star = table.2.tib.star %>% 
+          mutate(across(dplyr::contains("OR_"), ~str_replace_all(., "\\[+", " ["))) %>% 
+            select(!dplyr::starts_with("TF_P")) %>% 
+           tibble::add_row(.after = "Day structure") %>%  # there is need to add as much rows as is the number of rows in second part of the table 
+           tibble::add_row() %>%
+           tibble::add_row() %>% 
+           tibble::add_row() %>% 
+           tibble::add_row() %>% 
+          mutate("Crude effect" = "") %>%  
+           mutate("Adjusted effect" = "") %>% 
+          select(`Table 2`, "Crude effect", `OR_(Rna)`, "Adjusted effect", `OR_(R)`) %>%    # changing the position of crude effect 
+             mutate_all( ~(na_if(., ""))) %>%
+           janitor::remove_empty(which = c("cols")) %>% 
+           rename("Crude effect" = `OR_(Rna)`,
+                  "Adjusted effect" = `OR_(R)`)
+         
+      # transposing table 
+         # convert to wider format
+       tab.wide.1 = table.2.tib.star %>%
+         t()
+```
 
 
+porovnat řeholníky slováky s řeholníky čechy
 
 <!-- This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn. -->
 

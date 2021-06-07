@@ -637,6 +637,7 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 
 # Methods
 
+
 ## Measures
 
 ### Helth complains 

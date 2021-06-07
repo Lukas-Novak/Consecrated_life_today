@@ -2,12 +2,13 @@
 title: Consecrated life today comparision of general health characteristics between non clerial and clerial samples 
 author:
   - name: Dana Jaksickova
-    affil: 1,\ddagger,*
+    affil: 1,\ddagger,
+    orcid: 0000-0001-6087-9545
   - name: Klara Malinakova
     affil: 1,\ddagger,
     orcid: 0000-0001-6939-1204
   - name: Lukas Novak
-    affil: 1,\ddagger,
+    affil: 1,\ddagger,*
     orcid: 0000-0002-7582-2098
   - name: Peter Tavel
     affil: 1,\ddagger,
@@ -18,14 +19,14 @@ affiliation:
       Palacky University Olomouc - 
       Social Health Institute
       Correspondence Univerzitni 244/22, 771 11, Olomouc, Czech Republic
-    email: dana.jaksickova@oushi.upol.cz
+    email: dana.jaksicova@oushi.upol.cz
 # firstnote to eighthnote
 firstnote: |
   Current address: Updated affiliation
 secondnote: |
   These authors contributed equally to this work.
 correspondence: |
-  dana.jaksickova@oushi.upol.cz; Tel.: +XX-000-00-0000.
+  dana.jaksicova@oushi.upol.cz; Tel.: +XX-000-00-0000.
 journal: ijerph
 type: article
 status: accept
@@ -636,6 +637,7 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 # Introduction
 
 # Methods
+
 
 ## Measures
 

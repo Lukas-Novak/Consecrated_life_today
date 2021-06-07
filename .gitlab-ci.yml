@@ -5,27 +5,28 @@ variables:
   RENV_PATHS_CACHE: ${CI_PROJECT_DIR}/cache
   RENV_PATHS_LIBRARY: ${CI_PROJECT_DIR}/renv/library
 
+
 cache:
   key: ${CI_JOB_NAME}
   paths:
     - ${RENV_PATHS_CACHE}
     - ${RENV_PATHS_LIBRARY}
 
+before_script:
+  - apt-get update
+  - apt-get install -y --no-install-recommends ${APT_PKGS}
+  - export PATH="/usr/local/lib/R/site-library/littler/examples/:${PATH}"
+  - echo "options(Ncpus = $(nproc --all))" >> /usr/local/lib/R/etc/Rprofile.site
+  - R -e  'install.packages(c("ggplot2","rtweet"))'
+  - mkdir -p ~/.local/share/renv
+  - R -e 'renv::restore()'
+
 # setup steps
 run:
   tags:
       - docker
-  image: rocker/verse:4.0.5
-  
-  before_script:
-  - mkdir private  
-  - apt-get update
-  - apt-get install -y --no-install-recommends ${APT_PKGS}
-  - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
-  - Rscript -e "renv::restore()"
+  image: rocker/r-ver:4.0.2
   script:
-    - Rscript -e "rmarkdown::render('Consecrated life today/Consecrated_life_today.Rmd')"
-  artifacts:
-    paths:
-      - private
-    when: always
+      - Rscript -e "rmarkdown::render('Consecrated life today/Consecrated_life_today.Rmd')"
+
+

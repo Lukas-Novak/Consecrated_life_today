@@ -11,12 +11,6 @@ cache:
     - ${RENV_PATHS_CACHE}
     - ${RENV_PATHS_LIBRARY}
 
-
-# setup steps
-run:
-  tags:
-      - docker
-  image: rocker/verse:4.0.5
   
   before_script:
   - mkdir private  
@@ -30,3 +24,9 @@ run:
     paths:
       - private
     when: always
+
+# setup steps
+run:
+  tags:
+      - docker
+  image: rocker/verse:4.0.5

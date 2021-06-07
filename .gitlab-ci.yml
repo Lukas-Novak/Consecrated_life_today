@@ -6,10 +6,10 @@ variables:
   RENV_PATHS_LIBRARY: ${CI_PROJECT_DIR}/renv/library
 
 cache:
-key: ${CI_JOB_NAME}
-paths:
- - ${RENV_PATHS_CACHE}
- - ${RENV_PATHS_LIBRARY}
+  key: ${CI_JOB_NAME}
+  paths:
+    - ${RENV_PATHS_CACHE}
+    - ${RENV_PATHS_LIBRARY}
 
 
 article:

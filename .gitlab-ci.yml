@@ -17,7 +17,6 @@ before_script:
   - apt-get install -y --no-install-recommends ${APT_PKGS}
   - export PATH="/usr/local/lib/R/site-library/littler/examples/:${PATH}"
   - echo "options(Ncpus = $(nproc --all))" >> /usr/local/lib/R/etc/Rprofile.site
-  - R -e  'install.packages(c("ggplot2","rtweet"))'
   - mkdir -p ~/.local/share/renv
   - R -e 'renv::restore()'
 

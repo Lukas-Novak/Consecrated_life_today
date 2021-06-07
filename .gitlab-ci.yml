@@ -5,7 +5,7 @@ article:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
   script:
-    - Rscript -e "rmarkdown::render('Consecrated_life_today.Rmd')"
+    - Rscript -e "rmarkdown::render('Consecrated life today/Consecrated_life_today.Rmd')"
   artifacts:
     paths:
       - MyArticle

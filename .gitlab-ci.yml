@@ -12,13 +12,9 @@ cache:
     - ${RENV_PATHS_LIBRARY}
 
 
-# setup steps
-run:
-  tags:
-      - docker
-  image: rocker/verse:4.0.5
   
   before_script:
+  - apt-get install -y --no-install-recommends ${APT_PKGS}
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
   script:
@@ -28,3 +24,9 @@ run:
     paths:
       - private
     when: always
+
+# setup steps
+run:
+  tags:
+      - docker
+  image: rocker/verse:4.0.5

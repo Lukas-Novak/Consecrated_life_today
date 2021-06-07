@@ -16,6 +16,7 @@ cache:
   before_script:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
+  
   script:
     - mkdir private  
     - Rscript -e "rmarkdown::render('Consecrated life today/Consecrated_life_today.Rmd')"

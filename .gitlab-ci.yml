@@ -15,7 +15,3 @@ before_script:
 
   script:
     - Rscript -e "rmarkdown::render('Consecrated_life_today.Rmd')"
-  artifacts:
-    paths:
-      - Consecrated_life_today
-    when: always

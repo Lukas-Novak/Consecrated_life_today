@@ -10,7 +10,6 @@ cache:
     - ${RENV_PATHS_LIBRARY}
 
 before_script:
-  - < ... other pre-deploy steps ... >
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
 

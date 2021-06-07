@@ -1,6 +1,7 @@
 article:
   stage: deploy
-  image: rocker/verse:4.0.5
+  image: rocker/r-verse:4.0.5
+  
   before_script:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"

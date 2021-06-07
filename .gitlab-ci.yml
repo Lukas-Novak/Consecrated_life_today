@@ -19,6 +19,8 @@ run:
   image: rocker/verse:4.0.5
   
   before_script:
+  - apt-get update
+  - apt-get install -y --no-install-recommends ${APT_PKGS}
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
   script:

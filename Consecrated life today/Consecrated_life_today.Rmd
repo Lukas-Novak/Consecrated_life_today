@@ -830,10 +830,11 @@ data.reg = data %>%
   mutate_if(is.factor, droplevels) %>% 
   mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y))
 
+# removing Slovak participants
+data.cons.cz = data.cons.raw.hq %>% 
+  filter(country == "CZ")
 
-
-
-d = data.reg %>% group_by(Source) %>% sample_n(size = 180)
+# d = data.reg %>% group_by(Source) %>% sample_n(size = 180)
 
 ra.1 <-
   glm(hlth_ICHS ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%

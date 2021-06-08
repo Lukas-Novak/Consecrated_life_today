@@ -812,7 +812,7 @@ knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated belo
 ```
 
 ## Chronical ilness differences
-```{r rist regression, include=FALSE}
+```{r rist regression - CZECHS, include=FALSE}
 # Side-by-side Regression Models
 # logistic regression model
 # we have 18 analysis thus 0.05/36 = 0.001388889 = criterion P-value
@@ -831,7 +831,7 @@ data.reg = data %>%
   mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y))
 
 # removing Slovak participants
-data.cons.cz = data.cons.raw.hq %>% 
+data.cz = data %>% 
   filter(country == "CZ")
 
 # d = data.reg %>% group_by(Source) %>% sample_n(size = 180)

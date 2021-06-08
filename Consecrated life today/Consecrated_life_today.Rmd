@@ -514,10 +514,23 @@ data.cons.raw = full_join(x = data.cons.from.G,
 data.cons.raw.hq = data.cons.raw %>% 
   filter(low_q_res == "HQ")
 
+# removing Slovak participants
+data.cons.cz = data.cons.raw.hq %>% 
+  filter(country == "CZ")
+
+# removing Czech participants
+data.cons.sk = data.cons.raw.hq %>% 
+  filter(country == "SK")
+
 # removal of dupicites - no duplicites in Czech participants
-data.cons = data.cons.cz %>% 
+data.cons.dups.rem = data.cons.raw.hq %>% 
   select(!"age") %>% 
   filter(duplicities == "0")
+
+# removal of participants not being neither Czech or Slovak nationality
+data.cons = data.cons.dups.rem %>% 
+  filter(country %in% c("SK","CZ"))
+
 
 data.cons = data.cons %>% 
   rename(hlth_for_wom_pain_in_the_small_ = hlth_for_women_pain_in_the_small_etc) %>% 
@@ -662,7 +675,7 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
   The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.       
 
 ### Sample four
-  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (*n* = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclucion, `r nrow(data.cons.raw.hq)` participants remained. In the further step,  we removed those not being Czechs citizens (*n* = `r nrow(data.cons.raw.hq) - nrow(data.cons.cz)`) (JE TO TAKTO PRAVDA? KDYŽTAK TO MOC PROSÍM POPIŠ TAK, ABY TO ODPOVÍDALO) resulting in `r nrow(data.cons)` subjects (Age: *M* = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample.       
+  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (*n* = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (*n* = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (*n* = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: *M* = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample.       
   
 ## Statistical analysis
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
@@ -775,17 +788,15 @@ In the first step of the analysis, we compared clerics with non - clerics in the
 # sjt.xtab(data$Source, #rows
 #          data$hlth_thyroid_disease) #columns
 #....................................................
-
 dat.to.daily = data %>% 
            filter(Source == "Panel" |
              Source == "Vacctination" |
              Source == "Consecrated") %>% 
   mutate_if(is.factor, droplevels) %>% 
-    select(Source, daily_energy) 
-
+    select(Source, daily_energy, country) 
 
 dat.to.daily %>% 
-  tbl_summary(by = daily_energy, country) %>%
+  tbl_summary(by = daily_energy) %>%
   add_p() %>% 
     modify_spanning_header(c("stat_1", "stat_2") ~ "**Chronotype**") %>%
   modify_caption("Differences in chronotype across samples (N = {N})") %>% 

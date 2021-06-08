@@ -2,13 +2,12 @@
 title: Consecrated life today comparision of general health characteristics between non clerial and clerial samples 
 author:
   - name: Dana Jaksickova
-    affil: 1,\ddagger,
-    orcid: 0000-0001-6087-9545
+    affil: 1,\ddagger,*
   - name: Klara Malinakova
     affil: 1,\ddagger,
     orcid: 0000-0001-6939-1204
   - name: Lukas Novak
-    affil: 1,\ddagger,*
+    affil: 1,\ddagger,
     orcid: 0000-0002-7582-2098
   - name: Peter Tavel
     affil: 1,\ddagger,
@@ -19,14 +18,14 @@ affiliation:
       Palacky University Olomouc - 
       Social Health Institute
       Correspondence Univerzitni 244/22, 771 11, Olomouc, Czech Republic
-    email: dana.jaksicova@oushi.upol.cz
+    email: dana.jaksickova@oushi.upol.cz
 # firstnote to eighthnote
 firstnote: |
   Current address: Updated affiliation
 secondnote: |
   These authors contributed equally to this work.
 correspondence: |
-  dana.jaksicova@oushi.upol.cz; Tel.: +XX-000-00-0000.
+  dana.jaksickova@oushi.upol.cz; Tel.: +XX-000-00-0000.
 journal: ijerph
 type: article
 status: accept
@@ -77,7 +76,7 @@ abbreviations:
     long: Mean Square Error
 output: rticles::mdpi_article
 ---
-```{r pcgs, include=FALSE}
+```{r pcgs, eval=FALSE, include=FALSE}
 set.seed(8448923)
 packages=c("psych","dplyr","lavaan","base","foreign","Routliers","MVN","parameters", "EFA.MRFA","RGenData","semPlot","psycho","apa","corx","effectsize","qwraps2","finalfit","ggstatsplot","dunn.test","devtools","rticles","ICC.Sample.Size","tidyverse","magrittr","osfr","expss","gtsummary","huxtable","equaltestMI","haven","rcompanion","ufs","readxl") 
 
@@ -111,6 +110,12 @@ if (any(Miss.Pack == FALSE)) {
 }
 library("papaja")
 #________________________________________________________________________-
+```
+
+```{r}
+set.seed(8448923)
+packages=c("psych","dplyr","lavaan","base","foreign","Routliers","MVN","parameters", "EFA.MRFA","RGenData","semPlot","psycho","apa","corx","effectsize","qwraps2","finalfit","ggstatsplot","dunn.test","devtools","rticles","ICC.Sample.Size","tidyverse","magrittr","osfr","expss","gtsummary","huxtable","equaltestMI","haven","rcompanion","ufs","readxl","janitor")
+invisible(lapply(packages, library, character.only = TRUE))
 ```
 
 ```{r data loading - REP dataset 2016, include=FALSE}
@@ -509,10 +514,6 @@ data.cons.raw = full_join(x = data.cons.from.G,
 data.cons.raw.hq = data.cons.raw %>% 
   filter(low_q_res == "HQ")
 
-# removing Slovak participants
-data.cons.cz = data.cons.raw.hq %>% 
-  filter(country == "CZ")
-
 # removal of dupicites - no duplicites in Czech participants
 data.cons = data.cons.cz %>% 
   select(!"age") %>% 
@@ -638,7 +639,6 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 
 # Methods
 
-
 ## Measures
 
 ### Helth complains 
@@ -761,8 +761,7 @@ tbl_merge(tbls = list(cs.tab.1, cs.tab.2, cs.tab.3, cs.tab.4),
   # apa_table(caption = "Socio-demographic results of the samples", span_text_columns = F)
 ```
 
-$$\\[1in]$$
-
+$$\\[in]$$
 
 
 \newpage
@@ -801,8 +800,6 @@ dat.to.daily %>%
 
 ```{r cor.tab1, eval=FALSE, include=FALSE}
 # recode variables to numeric
-
-
 variab.co = data %>% 
   select(starts_with(c("hlth_","Gender","Education","Faith","Economical_status","Age","religious_age.y","General_health")))
 
@@ -832,6 +829,8 @@ data.reg = data %>%
                                                      "Consecrated" = "Consecrated", .ordered = T))) %>%
   mutate_if(is.factor, droplevels) %>% 
   mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y))
+
+
 
 
 d = data.reg %>% group_by(Source) %>% sample_n(size = 180)
@@ -933,7 +932,7 @@ ra.17 <-
 ra.18 <-
   glm(hlth_back_pain ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Bback pain"))%>%
+                 label = list(Source ~ "Back pain"))%>%
   bold_p(t = 0.001388889) 
 #___________________________________________________________________________________________________________________
 ra.19 <-
@@ -1103,10 +1102,9 @@ tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
 #   modify_footnote(estimate ~ "CI = Confidence Interval", abbreviation = TRUE) %>% 
 #     bold_p(t = 0.001388889) 
 #.......................................................................
-
 ```
 
-```{r}
+```{r creating table, echo=FALSE}
 table.2=ra.t1
 
 #show_header_names(table.2)
@@ -1122,7 +1120,6 @@ names.tab2=c("Table 2",
 
 table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
 
-  
    #ds=gtsummary::as_tibble(re.tab.1)
    table.2.tib.star = table.2.tib %>%
    dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '^>', ""))) %>%
@@ -1168,10 +1165,7 @@ table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
           mutate(across(dplyr::contains("OR_"), ~str_replace_all(., "\\[+", " ["))) %>% 
             select(!dplyr::starts_with("TF_P")) %>% 
            tibble::add_row(.after = "Day structure") %>%  # there is need to add as much rows as is the number of rows in second part of the table 
-           tibble::add_row() %>%
-           tibble::add_row() %>% 
-           tibble::add_row() %>% 
-           tibble::add_row() %>% 
+
           mutate("Crude effect" = "") %>%  
            mutate("Adjusted effect" = "") %>% 
           select(`Table 2`, "Crude effect", `OR_(Rna)`, "Adjusted effect", `OR_(R)`) %>%    # changing the position of crude effect 

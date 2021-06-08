@@ -573,7 +573,7 @@ data.cons = data.cons %>%
 "obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
 "obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a",
 "daily_energy",
-"psychotherapy",
+"psychotherapy","country",
 "OASIS","ODSIS","code","religious_age","code","Source"))) %>% 
   select(!starts_with(c("education.x","education.y","religious_age.x")))
 
@@ -674,7 +674,7 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 
 # Results
 
-```{r merge of the datasets, echo=FALSE, message=FALSE, warning=FALSE}
+```{r merge of the datasets, message=FALSE, warning=FALSE, include=FALSE}
 data = bind_rows(data.rep, 
                  data.pa,
                  data.vacc,
@@ -785,7 +785,7 @@ dat.to.daily = data %>%
 
 
 dat.to.daily %>% 
-  tbl_summary(by = daily_energy) %>%
+  tbl_summary(by = daily_energy, country) %>%
   add_p() %>% 
     modify_spanning_header(c("stat_1", "stat_2") ~ "**Chronotype**") %>%
   modify_caption("Differences in chronotype across samples (N = {N})") %>% 
@@ -815,7 +815,7 @@ knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated belo
 ```{r rist regression - CZECHS, include=FALSE}
 # Side-by-side Regression Models
 # logistic regression model
-# we have 18 analysis thus 0.05/36 = 0.001388889 = criterion P-value
+# we have 18 analysis thus 0.05/36 = 0.001388889 = criterion P-value in the last analysis
 
 # data$Source = relevel(data$Source, ref = "Less than once a week")
 
@@ -831,7 +831,7 @@ data.reg = data %>%
   mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y))
 
 # removing Slovak participants
-data.cz = data %>% 
+data.reg = data.reg %>% 
   filter(country == "CZ")
 
 # d = data.reg %>% group_by(Source) %>% sample_n(size = 180)
@@ -1179,6 +1179,11 @@ table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
          # convert to wider format
        tab.wide.1 = table.2.tib.star %>%
          t()
+```
+
+```{r}
+tab.wide.1 %>% 
+  df
 ```
 
 

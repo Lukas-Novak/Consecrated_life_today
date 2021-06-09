@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.8)  9 JUN 2021 11:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.8)  9 JUN 2021 11:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1309,19 +1309,19 @@ r.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 ) [2] [3] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 486--486
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 
  []
 
 (./appendix.tex)
 No file Consecrated_life_today.bbl.
-<logo-ccby.pdf, id=199, 597.23125pt x 845.1575pt>
+<logo-ccby.pdf, id=198, 597.23125pt x 845.1575pt>
 File: logo-ccby.pdf Graphic file (type pdf)
 <use logo-ccby.pdf>
-Package pdftex.def Info: logo-ccby.pdf  used on input line 531.
+Package pdftex.def Info: logo-ccby.pdf  used on input line 524.
 (pdftex.def)             Requested size: 83.4452pt x 118.07622pt.
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 5
-31.
+24.
 
 (c:/Users/notebook/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.f
 d
@@ -1329,7 +1329,7 @@ File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 ) 
 AED: lastpage setting LastPage
 
-Underfull \hbox (badness 10000) in paragraph at lines 531--531
+Underfull \hbox (badness 10000) in paragraph at lines 524--524
 
  []
 
@@ -1339,26 +1339,24 @@ Package rerunfilecheck Info: File `Consecrated_life_today.out' has not changed.
 (rerunfilecheck)             Checksum: D0E5EACF45101AD3D753C414F880B407;2704.
  ) 
 Here is how much of TeX's memory you used:
- 27403 strings out of 480496
- 488845 string characters out of 5897654
+ 27410 strings out of 480496
+ 488916 string characters out of 5897654
  820053 words of memory out of 5000000
  44209 multiletter control sequences out of 15000+600000
- 455265 words of font info for 277 fonts, out of 8000000 for 9000
+ 454649 words of font info for 280 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 99i,13n,97p,2408b,494s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,12n,97p,2408b,494s stack positions out of 5000i,500n,10000p,200000b,80000s
  <c:/Users/notebook/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappe
 n/ec/tcrm1000.600pk>{c:/Users/notebook/AppData/Roaming/TinyTeX/texmf-dist/fonts
 /enc/dvips/base/8r.enc}<c:/Users/notebook/AppData/Roaming/TinyTeX/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/Users/notebook/AppData/Roaming/Tin
-yTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/notebook/App
-Data/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/Users/n
-otebook/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
-<c:/Users/notebook/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/palatino/
-uplri8a.pfb>
-Output written on Consecrated_life_today.pdf (6 pages, 144976 bytes).
+yTeX/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/Users/notebook/AppData/
+Roaming/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/Users/notebo
+ok/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on Consecrated_life_today.pdf (6 pages, 135848 bytes).
 PDF statistics:
- 260 PDF objects out of 1000 (max. 8388607)
- 223 compressed objects within 3 object streams
+ 255 PDF objects out of 1000 (max. 8388607)
+ 220 compressed objects within 3 object streams
  54 named destinations out of 1000 (max. 500000)
  79582 words of extra memory for PDF output out of 89155 (max. 10000000)
 

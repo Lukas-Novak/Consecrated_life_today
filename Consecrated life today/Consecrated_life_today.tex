@@ -253,24 +253,16 @@ the Conference of Major Religious Superiors of the Czech and Slovak
 Republic. The superiors were asked to spread an online or a
 paper-and-pencil questionnaire among the members of their communities
 and to support its completing. Data was collected from March to May
-2021. This sample initially consisted of r nrow(data.cons.raw)
-participants. In the first step, we excluded participants (n = r
-nrow(data.cons.raw) - nrow(data.cons.raw.hq)) who were classified as
-speeders i.e.~finished questionnaire typically lasting more than 30
-minutes in \textless{} 10 minutes. After this exclusion, r
-nrow(data.cons.raw.hq) participants remained. We also removed
-participants who filled questionnaire multiple times (n = r
-nrow(data.cons.raw.hq) - nrow(filter(data.cons.raw.hq, duplicities ==
-``0''))) resulting in (n = r nrow(data.cons.dups.rem)) of subjects .
-This sample consisted of r nrow(data.cons.cz) Czech participants and r
-nrow(data.cons.sk) Slovak participants. Other than Czech and Slovak
-participants were excluded (n = r
-nrow(data.cons.dups.rem)-nrow(data.cons)) resulting in r nrow(data.cons)
-subjects (Age: M = r
-mean(data.cons\(Age, na.rm = T) %>% round(digits = 2), SD = r sd(data.cons
-\)Age, na.rm = T) \%\textgreater\% round(digits = 2), Females: r
-round(per.male\_female.s4{[}{[}``Female''{]}{]}*100,digits = 2)\%). No
-uniform pattern of responding was detected in this sample.
+2021. This sample initially consisted of 497 participants. In the first
+step, we excluded participants (n = 4) who were classified as speeders
+i.e.~finished questionnaire typically lasting more than 30 minutes in
+\textless{} 10 minutes. After this exclusion, 493 participants remained.
+We also removed participants who filled questionnaire multiple times
+(\emph{n} = 63) resulting in (n = 430) of subjects . This sample
+consisted of 180 Czech participants and 213 Slovak participants. Other
+than Czech and Slovak participants were excluded (n = 37) resulting in
+393 subjects (Age: M = 47.52, SD = 9.57, Females: 78.88\%). No uniform
+pattern of responding was detected in this sample.
 
 \hypertarget{statistical-analysis}{%
 \subsection{Statistical analysis}\label{statistical-analysis}}
@@ -381,7 +373,8 @@ Source &  &  & 0.2\\
 \subsection{Chronical ilness
 differences}\label{chronical-ilness-differences}}
 
-Regression analysis indicated that
+Regression analysis indicated that there is a significnat positive
+relationsihp between being cleric and lower probabitly of:
 
 \begin{table}[!h]
 

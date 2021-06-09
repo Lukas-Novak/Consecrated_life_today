@@ -547,7 +547,9 @@ data.cons = data.cons %>%
                                    "other: Mgr, Bc." = "Higher vocational school or University",
                                    "other: PhD." =  "Higher vocational school or University",
                                    "other: ThLic" =  "Higher vocational school or University",
-                                   "other: vysokoškolské licenciatne" =  "Higher vocational school or University")) %>% 
+                                   "other: vysokoškolské licenciatne" =  "Higher vocational school or University",
+                                   "other: ošetrovatelský kurz" = "Higher vocational school or University",
+                                   "other: PhD. " = "Higher vocational school or University")) %>% 
   mutate_if(is.factor, droplevels) %>% 
   
   
@@ -686,7 +688,7 @@ A sample of Catholic order members in the Czech Republic and in the Slovak Repub
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
   To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to reported long lasting illnesses of participants from representative sample. In these models, reported long lasting illness was was as a dependent variable, grouping variable distinguishing clerics from non - clerics was regressor and covariates were are, gender, education and length of a life in clerical order.      
   
-  them to the representative sample  diagnoses of ilnesses reported by participants on the variable    
+  <!-- them to the representative sample  diagnoses of ilnesses reported by participants on the variable     -->
 
   <!-- In the logistic regression models, religiosity (Religious/Non-religious) was regressed on the variables assessing a) self-reported change of behaviours and emotionality caused by covid-19 pandemic and b) factors which help participants during covid-19 pandemic. Each model was fitted with different outcome variable. Numeric variables were standardised to z-scores. All models were adjusted for age, gender, socioeconomic status. Non-adjusted effects will also be reported. In the next step, the predictor (Religiosity) was replaced by the variable religious attendance and the all models were runned again with this new regressor. The `r cite_r()` programming software was used for all analyses. -->
 
@@ -833,7 +835,7 @@ knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated belo
 ```
 
 ## Chronical ilness differences
-  Regression analysis indicated that there is a significnat positive relationsihp between being cleric and lower probabitly of:
+  Regression analysis indicated that there is a significant positive relationsihp between being cleric and lower probability of suffering from chronic illnesses such as hypertension, diabetes or arthritis. However, there was positive relationship between being cleric and depression/anxiety see table 3 for more details.  
 
 ```{r rist regression, include=FALSE}
 # Side-by-side Regression Models
@@ -854,40 +856,37 @@ data.reg = data %>%
   mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
   filter(country %in% "CZ" | Source %in% "Representative")
 
-
-# d = data.reg %>% group_by(Source) %>% sample_n(size = 180)
-
 ra.1 <-
-  glm(hlth_ICHS ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_hypertension ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Ischemic heart disease")) %>%
+                 label = list(Source ~ "Hypertension")) %>%
   bold_p(t = 0.001388889) 
 ra.2 <-
-  glm(hlth_ICHS ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_hypertension ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Ischemic heart disease")) %>%
+                 label = list(Source ~ "Hypertension")) %>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.3 <-
-  glm(hlth_hypertension ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_diabetes ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Hypertension"))%>%
+                 label = list(Source ~ "Diabetes"))%>%
   bold_p(t = 0.001388889) 
 ra.4 <-
-  glm(hlth_hypertension ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_diabetes ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Hypertension"))%>%
+                 label = list(Source ~ "Diabetes"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.5 <-
-  glm(hlth_stroke ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_arthritis ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Stroke"))%>%
+                 label = list(Source ~ "Arthritis"))%>%
   bold_p(t = 0.001388889) 
 ra.6 <-
-  glm(hlth_stroke ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_arthritis ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Stroke"))%>%
+                 label = list(Source ~ "Arthritis"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.7 <-
@@ -902,25 +901,25 @@ ra.8 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.9 <-
-  glm(hlth_cancer ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_depression_anxiety ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Cancer"))%>%
+                 label = list(Source ~ "Depression/Anxiety"))%>%
   bold_p(t = 0.001388889) 
 ra.10 <-
-  glm(hlth_cancer ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_depression_anxiety ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Cancer"))%>%
+                 label = list(Source ~ "Depression/Anxiety"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.11 <-
-  glm(hlth_diabetes ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_ICHS ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Diabetes"))%>%
+                 label = list(Source ~ "Ischemic heart disease"))%>%
   bold_p(t = 0.001388889) 
 ra.12 <-
-  glm(hlth_diabetes ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_ICHS ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Diabetes"))%>%
+                 label = list(Source ~ "Ischemic heart disease"))%>%
   bold_p(t = 0.001388889)
 #_____________________________________________________________
 ra.13 <-
@@ -935,14 +934,14 @@ ra.14 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.15 <-
-  glm(hlth_arthritis ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_stroke ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Arthritis"))%>%
+                 label = list(Source ~ "Stroke"))%>%
   bold_p(t = 0.001388889) 
 ra.16 <-
-  glm(hlth_arthritis ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_stroke ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Arthritis"))%>%
+                 label = list(Source ~ "Stroke"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 
@@ -1038,14 +1037,14 @@ ra.32 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.33 <-
-  glm(hlth_depression_anxiety ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_cancer ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Depression/Anxiety"))%>%
+                 label = list(Source ~ "Cancer"))%>%
   bold_p(t = 0.001388889) 
 ra.34 <-
-  glm(hlth_depression_anxiety ~ Source, family = binomial, data = data.reg) %>%
+  glm(hlth_cancer ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Depression/Anxiety"))%>%
+                 label = list(Source ~ "Cancer"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.35 <-
@@ -1124,7 +1123,6 @@ tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
 #   modify_footnote(estimate ~ "CI = Confidence Interval", abbreviation = TRUE) %>% 
 #     bold_p(t = 0.001388889) 
 #.......................................................................
-
 ```
 
 ```{r include=FALSE}
@@ -1224,7 +1222,7 @@ tr.3=tab.wide.1[,c(9:12)] %>% as_tibble()
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronical mental and physical deseases") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender Education. Values in brackets indicates 95% confidence interval"), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval"), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
 

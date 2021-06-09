@@ -81,9 +81,10 @@
 characteristics between non clerial and clerial samples}
 
 % Authors, for the paper (add full first names)
-\Author{Dana Jaksickova$^{1,\ddagger,*}$, Klara
+\Author{Dana
+Jaksickova$^{1,\ddagger,}$\href{https://orcid.org/0000-0001-6087-9545}{\orcidicon}, Klara
 Malinakova$^{1,\ddagger,}$\href{https://orcid.org/0000-0001-6939-1204}{\orcidicon}, Lukas
-Novak$^{1,\ddagger,}$\href{https://orcid.org/0000-0002-7582-2098}{\orcidicon}, Peter
+Novak$^{1,\ddagger,*}$\href{https://orcid.org/0000-0002-7582-2098}{\orcidicon}, Peter
 Tavel$^{1,\ddagger,}$\href{https://orcid.org/0000-0001-7072-001X}{\orcidicon}}
 
 % Authors, for metadata in PDF
@@ -94,10 +95,10 @@ Tavel}
 \address{%
 $^{1}$ \quad Palacky University Olomouc - Social Health Institute
 Correspondence Univerzitni 244/22, 771 11, Olomouc, Czech
-Republic; \href{mailto:dana.jaksickova@oushi.upol.cz}{\nolinkurl{dana.jaksickova@oushi.upol.cz}}\\
+Republic; \href{mailto:dana.jaksicova@oushi.upol.cz}{\nolinkurl{dana.jaksicova@oushi.upol.cz}}\\
 }
 % Contact information of the corresponding author
-\corres{Correspondence: \href{mailto:dana.jaksickova@oushi.upol.cz}{\nolinkurl{dana.jaksickova@oushi.upol.cz}};
+\corres{Correspondence: \href{mailto:dana.jaksicova@oushi.upol.cz}{\nolinkurl{dana.jaksicova@oushi.upol.cz}};
 Tel.: +XX-000-00-0000.}
 
 % Current address and/or shared authorship
@@ -241,15 +242,35 @@ responses was detected.
 \hypertarget{sample-four}{%
 \subsubsection{Sample four}\label{sample-four}}
 
-This sample initially consisted of 497 participants. In the first step,
-we excluded participants (\emph{n} = 4) who were classified as speeders
-i.e.~finished questionnaire typically lasting more than 30 minutes in
-\textless{} 10 minutes. After this exclucion, 493 participants remained.
-In the further step, we removed those not being Czechs citizens
-(\emph{n} = 313) (JE TO TAKTO PRAVDA? KDYŽTAK TO MOC PROSÍM POPIŠ TAK,
-ABY TO ODPOVÍDALO) resulting in 180 subjects (Age: \emph{M} = 47.12,
-\emph{SD} = 10.42, Females: 70\%). No uniform pattern of responding was
-detected in this sample.
+A sample of Catholic order members in the Czech Republic and in the
+Slovak Republic was recruited to take part in a survey regarding various
+aspects of today´s consecrated life. The respondents were recruited by
+contacting the major superiors of all male and female religious
+institutes in both countries. After six weeks, the information about the
+survey was sent directly into the local communities in order to increase
+the number of respondents. The research was done under the auspices of
+the Conference of Major Religious Superiors of the Czech and Slovak
+Republic. The superiors were asked to spread an online or a
+paper-and-pencil questionnaire among the members of their communities
+and to support its completing. Data was collected from March to May
+2021. This sample initially consisted of r nrow(data.cons.raw)
+participants. In the first step, we excluded participants (n = r
+nrow(data.cons.raw) - nrow(data.cons.raw.hq)) who were classified as
+speeders i.e.~finished questionnaire typically lasting more than 30
+minutes in \textless{} 10 minutes. After this exclusion, r
+nrow(data.cons.raw.hq) participants remained. We also removed
+participants who filled questionnaire multiple times (n = r
+nrow(data.cons.raw.hq) - nrow(filter(data.cons.raw.hq, duplicities ==
+``0''))) resulting in (n = r nrow(data.cons.dups.rem)) of subjects .
+This sample consisted of r nrow(data.cons.cz) Czech participants and r
+nrow(data.cons.sk) Slovak participants. Other than Czech and Slovak
+participants were excluded (n = r
+nrow(data.cons.dups.rem)-nrow(data.cons)) resulting in r nrow(data.cons)
+subjects (Age: M = r
+mean(data.cons\(Age, na.rm = T) %>% round(digits = 2), SD = r sd(data.cons
+\)Age, na.rm = T) \%\textgreater\% round(digits = 2), Females: r
+round(per.male\_female.s4{[}{[}``Female''{]}{]}*100,digits = 2)\%). No
+uniform pattern of responding was detected in this sample.
 
 \hypertarget{statistical-analysis}{%
 \subsection{Statistical analysis}\label{statistical-analysis}}
@@ -290,12 +311,12 @@ study samples.
 \begin{tabular}[t]{lllll}
 \toprule
 \multicolumn{1}{c}{ } & \multicolumn{1}{c}{Sample 1} & \multicolumn{1}{c}{Sample 2} & \multicolumn{1}{c}{Sample 3} & \multicolumn{1}{c}{Sample 4} \\
-\cmidrule(l{3pt}r{3pt}){2-2} \cmidrule(l{3pt}r{3pt}){3-3} \cmidrule(l{3pt}r{3pt}){4-4} \cmidrule(l{3pt}r{3pt}){5-5}
-Characteristic & N = 1,800 & N = 1,141 & N = 1,496 & N = 180\\
-\midrule
+\cmidrule(l{3pt}r{3pt}){2-2} \cmidrule(l{3pt}r{3pt}){3-3} \cmidrule(l{3pt}r{3pt}){4-4} \cmidrule(l{3pt}r{3pt}){5-5}{}
+Characteristic & N = 1,800 & N = 1,141 & N = 1,496 & N = 393\\
+\midrule{}
 Gender &  &  &  & \\
-\hspace{1em}Female & 923 (51\%) & 530 (50\%) & 659 (44\%) & 126 (70\%)\\
-\hspace{1em}Male & 877 (49\%) & 523 (50\%) & 835 (56\%) & 54 (30\%)\\
+\hspace{1em}Female & 923 (51\%) & 530 (50\%) & 659 (44\%) & 310 (79\%)\\
+\hspace{1em}Male & 877 (49\%) & 523 (50\%) & 835 (56\%) & 83 (21\%)\\
 Family\_status &  &  &  & \\
 \hspace{1em}Not in relationship & 439 (24\%) & 267 (25\%) & 201 (13\%) & \\
 \addlinespace
@@ -305,28 +326,33 @@ Family\_status &  &  &  & \\
 \hspace{1em}In relationship & 141 (7.8\%) & 51 (4.8\%) & 236 (16\%) & \\
 Education &  &  &  & \\
 \addlinespace
-\hspace{1em}Basic school & 141 (7.8\%) & 90 (8.7\%) & 91 (6.1\%) & 1 (0.6\%)\\
-\hspace{1em}Vocational school or non - maturity high school & 442 (25\%) & 400 (39\%) & 572 (38\%) & 5 (2.8\%)\\
-\hspace{1em}High school & 854 (47\%) & 377 (36\%) & 451 (30\%) & 24 (13\%)\\
-\hspace{1em}Higher vocational school or University & 363 (20\%) & 169 (16\%) & 380 (25\%) & 150 (83\%)\\
-Economical\_status &  &  &  & \\
+\hspace{1em}Basic school & 141 (7.8\%) & 90 (8.7\%) & 91 (6.1\%) & 1 (0.3\%)\\
+\hspace{1em}Vocational school or non - maturity high school & 442 (25\%) & 400 (39\%) & 572 (38\%) & 12 (3.1\%)\\
+\hspace{1em}High school & 854 (47\%) & 377 (36\%) & 451 (30\%) & 48 (12\%)\\
+\hspace{1em}Higher vocational school or University & 363 (20\%) & 169 (16\%) & 380 (25\%) & 330 (84\%)\\
+\hspace{1em}other: ošetrovatelský kurz &  &  &  & 1 (0.3\%)\\
 \addlinespace
+\hspace{1em}other: PhD. &  &  &  & 1 (0.3\%)\\
+Economical\_status &  &  &  & \\
 \hspace{1em}Without work & 261 (14\%) & 149 (14\%) & 172 (13\%) & \\
 \hspace{1em}Pensioner & 430 (24\%) & 325 (31\%) & 420 (32\%) & \\
 \hspace{1em}Working & 1,109 (62\%) & 559 (54\%) & 707 (54\%) & \\
+\addlinespace
 Faith &  &  &  & \\
 \hspace{1em}Yes, I am a member of church & 170 (9.4\%) &  & 132 (9.4\%) & \\
-\addlinespace
 \hspace{1em}Yes, but I am not a member of a church & 361 (20\%) &  & 331 (24\%) & \\
 \hspace{1em}No & 1,004 (56\%) &  & 680 (48\%) & \\
 \hspace{1em}No, I am convinced atheist & 265 (15\%) &  & 262 (19\%) & \\
-\bottomrule
+\bottomrule{}
 \end{tabular}}
 \end{table}
 
 \[\\[1in]\]
 
 \newpage
+
+\hypertarget{chronotype-differences}{%
+\subsection{Chronotype differences}\label{chronotype-differences}}
 
 In the first step of the analysis, we compared clerics with non -
 clerics in their self - reported chronotype. Pearson, chi-square test
@@ -335,21 +361,60 @@ the two surveys see Table 2.
 
 \begin{table}[!h]
 
-\caption{\label{tab:contingenty tables}Differences in chronotype across samples (N = 2551)}
+\caption{\label{tab:contingenty tables}Differences in chronotype across samples (N = 2731)}
 \centering
 \begin{tabular}[t]{llll}
 \toprule
 \multicolumn{1}{c}{ } & \multicolumn{2}{c}{Chronotype} & \multicolumn{1}{c}{ } \\
-\cmidrule(l{3pt}r{3pt}){2-3}
-Characteristic & Early bird, N = 1,391 & Night own, N = 1,160 & p-value\\
-\midrule
-Source &  &  & 0.14\\
-\hspace{1em}Panel & 498 (36\%) & 453 (39\%) & \\
-\hspace{1em}Vacctination & 812 (58\%) & 632 (54\%) & \\
-\hspace{1em}Consecrated & 81 (5.8\%) & 75 (6.5\%) & \\
-\bottomrule
+\cmidrule(l{3pt}r{3pt}){2-3}{}
+Characteristic & Early bird, N = 1,496 & Night own, N = 1,235 & p-value\\
+\midrule{}
+Source &  &  & 0.2\\
+\hspace{1em}Panel & 498 (33\%) & 453 (37\%) & \\
+\hspace{1em}Vacctination & 812 (54\%) & 632 (51\%) & \\
+\hspace{1em}Consecrated & 186 (12\%) & 150 (12\%) & \\
+\bottomrule{}
 \end{tabular}
 \end{table}
+
+\hypertarget{chronical-ilness-differences}{%
+\subsection{Chronical ilness
+differences}\label{chronical-ilness-differences}}
+
+Regression analysis indicated that
+
+\begin{table}[!h]
+
+\caption{\label{tab:Print regres tab 1}Depicts associations (in Odds rations) between living in clerical life and chronical mental and physical deseases}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{7}{9}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{lllll}
+\toprule{}
+Allergy & Migraine & Pain of unclear origin & Pain in the small pelvis & Depression/Anxiety\\
+\midrule{}
+1.09 (0.72, 1.60) & 0.75 (0.41, 1.25) & 0.92 (0.41, 1.82) & 1.73 (0.82, 3.29) & 2.18** (1.31, 3.49)\\
+1.15 (0.45, 2.84) & 0.71 (0.18, 2.40) & 1.66 (0.28, 7.30) & 2.54 (0.50, 10.9) & 1.09 (0.32, 3.40)\\
+Ischemic heart disease & Hypertension & Stroke & Astma & \\
+0.33 (0.05, 1.06) & 0.84 (0.54, 1.26) & 1.15 (0.18, 3.98) & 1.04 (0.57, 1.76) & \\
+0.06 (0.00, 1.61) & 0.17* (0.04, 0.59) & 0.00 (0.00, 0.52) & 0.54 (0.13, 1.97) & \\
+Cancer & Diabetes & Obesity & Arthritis & \\
+1.61 (0.55, 3.81) & 0.29** (0.10, 0.65) & 1.52 (0.93, 2.38) & 1.05 (0.52, 1.90) & \\
+0.18 (0.01, 2.30) & 0.26 (0.02, 1.99) & 0.67 (0.18, 2.08) & 0.09* (0.01, 0.62) & \\
+Back pain & Gastric or duodenal ulcers & Chronic lung disease & Skin diseases eczema & \\
+0.97 (0.69, 1.36) & 0.61 (0.15, 1.67) & 0.47 (0.03, 2.27) & 1.11 (0.61, 1.88) & \\
+0.81 (0.34, 1.84) & 1.00 (0.05, 9.07) & 0.61 (0.03, 3.62) & 0.58 (0.13, 2.13) & \\
+\bottomrule{}
+\end{tabular}
+\begin{tablenotes}[para]
+\item \textit{Note:} 
+\item p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender Education. Values in brackets indicates 95\% confidence interval
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}
+
+porovnat řeholníky slováky s řeholníky čechy
 
 \hypertarget{subsection-heading-here}{%
 \subsection{Subsection Heading Here}\label{subsection-heading-here}}

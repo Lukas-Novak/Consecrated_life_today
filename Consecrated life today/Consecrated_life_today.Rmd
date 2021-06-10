@@ -1227,7 +1227,6 @@ vars.prev.tab  %>%
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
   kableExtra::kable_styling(latex_options = "hold_position")
-
 ```
 
 

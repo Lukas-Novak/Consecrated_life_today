@@ -1112,6 +1112,7 @@ ra.tab.pok2=tbl_stack(
 ra.t1=tbl_merge(
 tbls = list(ra.tab.pok1,ra.tab.pok2),
 tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
+
 ```
 
 ```{r include=FALSE}

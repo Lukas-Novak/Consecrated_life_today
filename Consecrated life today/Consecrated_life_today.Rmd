@@ -1208,7 +1208,6 @@ tr.3=tab.wide.1[,c(9:12)] %>% as_tibble(rownames = NA)
            mutate(across(starts_with("rowname"), ~ str_replace_all(., "Table 2", replacement = ""))) %>% 
            mutate_all(~(replace(., is.na(.), ""))) %>%
            janitor::row_to_names(row_number = 1) 
-         
 ```
 
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}

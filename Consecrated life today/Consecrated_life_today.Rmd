@@ -837,7 +837,7 @@ knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated belo
 ## Chronical ilness differences
   Regression analysis indicated that there is a significant positive relationsihp between being cleric and lower probability of suffering from chronic illnesses such as hypertension, diabetes or arthritis. However, there was positive relationship between being cleric and depression/anxiety see table 3 for more details.  
 
-```{r rist regression, include=FALSE}
+```{r frist regression, include=FALSE}
 # Side-by-side Regression Models
 # logistic regression model
 # we have 18 analysis thus 0.05/36 = 0.001388889 = criterion P-value

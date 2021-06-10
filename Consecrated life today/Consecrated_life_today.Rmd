@@ -665,6 +665,10 @@ Therefore, the aim of this study is to explore the possible relations between th
 ### Mental problems solving
   The need to find help in case of mental problems was assessed by two additional questions responded yes or no: “Are you taking any psychiatric medication now or have you used it in the past? Have you ever visited or are you currently visiting a psychologist or psychotherapist?“
   
+### Geberal health (GH)
+  The GH was assessed by composite variable created by summing up number of chronic illnesses. This variable was consequently divided into several categories based on the following key: 
+  
+  
 ### Chronotype 
   Daily energy was measured by choosing between two possibilities – an early bird who wakes up early but is tired in the evening, or a night owl who has problem with waking up early but enjoys working in the evening. 
 
@@ -686,7 +690,7 @@ A sample of Catholic order members in the Czech Republic and in the Slovak Repub
 
 ## Statistical analysis
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
-  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to reported long lasting illnesses of participants from representative sample. In these models, reported long lasting illness was was as a dependent variable, grouping variable distinguishing clerics from non - clerics was regressor and covariates were are, gender, education and length of a life in clerical order.      
+  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to reported long lasting illnesses of participants from representative sample. In these models, reported long lasting illness was was as a dependent variable, grouping variable distinguishing clerics from non - clerics was regressor and covariates were are, gender, education and length of a life in clerical order. Multinominal regression was used to compare clerincs and non - clerics to composite variable created as summ of all illnesses and reflecting general health.       
   
   <!-- them to the representative sample  diagnoses of ilnesses reported by participants on the variable     -->
 
@@ -1218,15 +1222,19 @@ tr.3=tab.wide.1[,c(9:12)] %>% as_tibble(rownames = NA)
 
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
 vars.prev.tab = data %>% 
-  select(starts_with(c("Source","hlth_","General_"))) 
-  # vars.prev.tab %>% 
-  # dplyr::mutate(across(dplyr::starts_with("hlth_"), ~str_replace_all(., "hlth_", " "))) %>% view()
-
+  select(starts_with(c("Source","hlth_","General_"))) %>% 
+    rename_all(~str_replace_all(., "hlth_", " "))
+    
 vars.prev.tab  %>% 
   tbl_summary(by = Source, missing = "no") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
-  kableExtra::kable_styling(latex_options = "hold_position")
+  kableExtra::kable_styling(latex_options = "hold_position", font_size = 4)
+```
+
+```{r health complains table, include=FALSE}
+
+
 ```
 
 

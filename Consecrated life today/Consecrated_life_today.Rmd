@@ -1112,21 +1112,6 @@ ra.tab.pok2=tbl_stack(
 ra.t1=tbl_merge(
 tbls = list(ra.tab.pok1,ra.tab.pok2),
 tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
-
-
-#.......................................................................
-# ra.1 <-
-#   glm(hlth_depression_anxiety ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
-#   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-#                  label = list(Source ~ "Ischemic heart disease")) %>%
-#   add_significance_stars(hide_ci = F, hide_se = T) %>% 
-#     add_significance_stars(
-#     pattern = "{estimate} ({conf.low}, {conf.high}){stars}",
-#     hide_ci = TRUE, hide_se = TRUE
-#   ) %>%
-#   modify_footnote(estimate ~ "CI = Confidence Interval", abbreviation = TRUE) %>% 
-#     bold_p(t = 0.001388889) 
-#.......................................................................
 ```
 
 ```{r include=FALSE}

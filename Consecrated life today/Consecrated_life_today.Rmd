@@ -505,28 +505,7 @@ data.cons.raw = full_join(x = data.cons.from.G,
   mutate(across(starts_with(c("obtize_","hlth_")), ~ as.numeric(.)))
 #............................................................................................
 
-# removing speeders
-data.cons.raw.hq = data.cons.raw %>% 
-  filter(low_q_res == "HQ")
-
-# removing Slovak participants
-data.cons.cz = data.cons.raw.hq %>% 
-  filter(country == "CZ")
-
-# removing Czech participants
-data.cons.sk = data.cons.raw.hq %>% 
-  filter(country == "SK")
-
-# removal of dupicites - no duplicites in Czech participants
-data.cons.dups.rem = data.cons.raw.hq %>% 
-  select(!"age") %>% 
-  filter(duplicities == "0")
-
-# removal of participants not being neither Czech or Slovak nationality
-data.cons = data.cons.dups.rem %>% 
-  filter(country %in% c("SK","CZ"))
-
-data.cons = data.cons %>% 
+data.cons.raw = data.cons.raw %>% 
   rename(hlth_for_wom_pain_in_the_small_ = hlth_for_women_pain_in_the_small_etc) %>% 
   mutate(across(starts_with("obtize_"), ~ dplyr::recode(.,
                                                 "1" = "Not many times per week",
@@ -549,12 +528,33 @@ data.cons = data.cons %>%
                                    "other: ThLic" =  "Higher vocational school or University",
                                    "other: vysokoškolské licenciatne" =  "Higher vocational school or University",
                                    "other: ošetrovatelský kurz" = "Higher vocational school or University",
-                                   "other: PhD. " = "Higher vocational school or University")) %>% 
-  mutate_if(is.factor, droplevels) %>% 
+                                   "other: PhD. " = "Higher vocational school or University",
+                                   .default = NA_character_)) %>% 
+  mutate_if(is.factor, droplevels)
   
   
+  # removing speeders
+data.cons.raw.hq = data.cons.raw %>% 
+  filter(low_q_res == "HQ")
+
+# removing Slovak participants
+data.cons.cz = data.cons.raw.hq %>% 
+  filter(country == "CZ")
+
+# removing Czech participants
+data.cons.sk = data.cons.raw.hq %>% 
+  filter(country == "SK")
+
+# removal of dupicites - no duplicites in Czech participants
+data.cons.dups.rem = data.cons.raw.hq %>% 
+  select(!"age") %>% 
+  filter(duplicities == "0")
+
+# removal of participants not being neither Czech or Slovak nationality
+data.cons = data.cons.dups.rem %>% 
+  filter(country %in% c("SK","CZ"))
   
-  
+  data.cons = data.cons %>% 
   mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
   mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) %>% 
   select(starts_with(c("Gender",
@@ -682,7 +682,7 @@ Therefore, the aim of this study is to explore the possible relations between th
 
 ### Sample four
 A sample of Catholic order members in the Czech Republic and in the Slovak Republic was recruited to take part in a survey regarding various aspects of today´s consecrated life. The respondents were recruited by contacting the major superiors of all male and female religious institutes in both countries. After six weeks, the information about the survey was sent directly into the local communities in order to increase the number of respondents. The research was done under the auspices of the Conference of Major Religious Superiors of the Czech and Slovak Republic. The superiors were asked to spread an online or a paper-and-pencil questionnaire among the members of their communities and to support its completing. Data was collected from March to May 2021. 
-  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (n = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (n = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (n = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: M = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, SD = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample.   
+  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (n = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (n = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (n = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: M = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, SD = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample. The mean duration of being part of clerical community was `r round(mean(data.cons$religious_age.y,na.rm = T),digits = 2)`.   
 
 ## Statistical analysis
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
@@ -748,37 +748,41 @@ cs.tab.3=data.vacc %>%
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2,) 
 
-cs.tab.4=data.cons %>% # zvást česi a slováci a další soupec všichni
+cs.tab.4=data.cons %>% 
   dplyr::select(Gender, Education, ) %>%
   tbl_summary( missing = "no",
                   statistic = list(all_continuous() ~  "{mean}({sd})",
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2,) 
+#[......................................................................]
 
+cs.tab.5=data.cons.cz %>% 
+  dplyr::select(Gender, Education) %>%
+  tbl_summary( missing = "no",
+                  statistic = list(all_continuous() ~  "{mean}({sd})",
+                                   all_categorical() ~ "{n} ({p}%)"),
+              digits = all_continuous() ~ 2,) 
 
-tbl_merge(tbls = list(cs.tab.1, cs.tab.2, cs.tab.3, cs.tab.4),
+cs.tab.6=data.cons.sk %>% 
+  dplyr::select(Gender, Education) %>%
+  tbl_summary( missing = "no",
+                  statistic = list(all_continuous() ~  "{mean}({sd})",
+                                   all_categorical() ~ "{n} ({p}%)"),
+              digits = all_continuous() ~ 2,) 
+#................................................................................
+#....................Czech and Slovak clerics .................................
+#................................................................................
+tbl_merge(tbls = list(cs.tab.1, cs.tab.2,
+                      cs.tab.3, cs.tab.4,
+                      cs.tab.5, cs.tab.6),
           tab_spanner = c("**Sample 1**", "**Sample 2**",
-                          "**Sample 3**","**Sample 4**")) %>% 
+                          "**Sample 3**","**Sample 4 (CZ,SK)**",
+                          "**Sample 4 (CZ)**", "**Sample 5 (SK)**")) %>% 
     modify_footnote(update = everything() ~ NA) %>% 
   modify_caption("Socio-demographic table") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
   kableExtra::kable_styling(latex_options = "scale_down")
-  
-  
-  # as_tibble()  %>% 
-  # rename("Variable"="**Characteristic**",
-  #        "Sample 1"=  "**N = 1,800**",
-  #        "Sample 2" = "**N = 1,141**",
-  #        "Sample 3" = "**N = 1,496**",
-  #        "Sample 4" = "**N = 180**") %>% 
-  # mutate_all(~(replace(., is.na(.), ""))) %>%
-  # as_huxtable(add_colnames = F) %>% 
-  # set_bold(c(1,4,7,12,16,21),1) %>% 
-  # set_bottom_border(row = 0, value = 1) %>%  # the 1 here indicates the rownumber 
-  # set_font("times") %>% 
-  # set_font_size(10)  %>% 
-  # apa_table(caption = "Socio-demographic results of the samples", span_text_columns = F)
 ```
 
 $$\\[1in]$$
@@ -854,7 +858,9 @@ data.reg = data %>%
                                                      "Consecrated" = "Consecrated"))) %>%
   mutate_if(is.factor, droplevels) %>% 
   mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
-  filter(country %in% "CZ" | Source %in% "Representative")
+  filter(country %in% "CZ" |
+           country %in% "SK" |
+           Source %in% "Representative")
 
 ra.1 <-
   glm(hlth_hypertension ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
@@ -1027,8 +1033,6 @@ ra.31 <-
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain in the small pelvis"))%>%
   bold_p(t = 0.001388889) 
-
-# data.reg = data.reg %>% rename("hlth_for_wom_pain_in_the_small" = "hlth_for_wom_pain_in_the_small_")
 
 ra.32 <-
   glm(hlth_for_wom_pain_in_the_small_ ~ Source, family = binomial, data = data.reg) %>%
@@ -1205,16 +1209,18 @@ table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
 
 # the only step here which is required here is to manually divide dataset into four parts and then rbind these togather 
 
-         # even a little bit wider
-tr.4=tab.wide.1[,c(13:17)] %>% as_tibble()         
-tr.1=tab.wide.1[,c(1:4)] %>% as_tibble()
-tr.2=tab.wide.1[,c(5:8)] %>% as_tibble()
-tr.3=tab.wide.1[,c(9:12)] %>% as_tibble() 
+# even a little bit wider
+tr.4=tab.wide.1[,c(13:17)] %>% as_tibble(rownames = NA)         
+tr.1=tab.wide.1[,c(1:4)] %>% as_tibble(rownames = NA)
+tr.2=tab.wide.1[,c(5:8)] %>% as_tibble(rownames = NA)
+tr.3=tab.wide.1[,c(9:12)] %>% as_tibble(rownames = NA) 
          
-
          tab = bind_rows(tr.4,tr.1,tr.2,tr.3)
          tab = tab %>% 
-           as_tibble() %>% 
+           as_tibble(rownames = NA) %>% 
+           rownames_to_column()  %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "\\.+\\.+\\.+[[:digit:]]+", replacement = ""))) %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "Table 2", replacement = ""))) %>% 
            mutate_all(~(replace(., is.na(.), ""))) %>%
            janitor::row_to_names(row_number = 1) 
 ```

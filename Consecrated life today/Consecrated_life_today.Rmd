@@ -93,7 +93,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 miss.mach.url= "https://cran.r-project.org/src/contrib/Archive/MissMech/MissMech_1.0.2.tar.gz"
 Miss.Pack=any(rownames(installed.packages()) == "MissMech")
 if (any(Miss.Pack == FALSE)) {
-  install.packages(miss.mach.url, repos=NULL, type="source")
+  install.packages(miss.mach.url, repos=NULL, type="Source")
 }
 library(MissMech)
 #________________________________________________________________________-
@@ -1208,13 +1208,25 @@ tr.3=tab.wide.1[,c(9:12)] %>% as_tibble(rownames = NA)
            mutate(across(starts_with("rowname"), ~ str_replace_all(., "Table 2", replacement = ""))) %>% 
            mutate_all(~(replace(., is.na(.), ""))) %>%
            janitor::row_to_names(row_number = 1) 
-         
 ```
 
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronical mental and physical deseases") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval"), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+```
+
+```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
+vars.prev.tab = data %>% 
+  select(starts_with(c("Source","hlth_","General_"))) 
+  # vars.prev.tab %>% 
+  # dplyr::mutate(across(dplyr::starts_with("hlth_"), ~str_replace_all(., "hlth_", " "))) %>% view()
+
+vars.prev.tab  %>% 
+  tbl_summary(by = Source, missing = "no") %>% 
+  as_kable_extra(format = "latex",
+                 booktabs = TRUE) %>% 
+  kableExtra::kable_styling(latex_options = "hold_position")
 ```
 
 

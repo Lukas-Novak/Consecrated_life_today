@@ -748,8 +748,8 @@ cs.tab.3=data.vacc %>%
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2,) 
 
-cs.tab.4=data.cons %>%
-  dplyr::select(Gender, Education) %>%
+cs.tab.4=data.cons %>% # zvást česi a slováci a další soupec všichni
+  dplyr::select(Gender, Education, ) %>%
   tbl_summary( missing = "no",
                   statistic = list(all_continuous() ~  "{mean}({sd})",
                                    all_categorical() ~ "{n} ({p}%)"),

@@ -1,5 +1,5 @@
 ---
-title: General health characteristics of religious Sisters and Brothers. Comparison between non consecrated and consecrated samples 
+title: General health characteristics of religious Sisters and Brothers. Comparison between samples of non consecrated and consecrated persons 
 author:
   - name: Dana Jaksicova
     affil: 1,\ddagger,

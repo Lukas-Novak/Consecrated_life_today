@@ -435,7 +435,7 @@ data.vacc = data.vacc %>%
 "obtize_10a", "obtize_11a", "obtize_12a",  # variable "psychotherapy" was not selected because in this survey it also includes "psychiatrist" while in the panel data and consecrated dataset not 
 "OASIS","ODSIS","code","Source"))) %>% 
 select(!ends_with("education_type")) %>% 
-  select(!starts_with("Source_"))
+  select(!starts_with("source_"))
 
 # summ of all deseases
 data.vacc = data.vacc %>% 
@@ -777,7 +777,7 @@ tbl_merge(tbls = list(cs.tab.1, cs.tab.2,
                       cs.tab.5, cs.tab.6),
           tab_spanner = c("**Sample 1**", "**Sample 2**",
                           "**Sample 3**","**Sample 4 (CZ,SK)**",
-                          "**Sample 4 (CZ)**", "**Sample 4 (SK)**")) %>% 
+                          "**Sample 4 (CZ)**", "**Sample 5 (SK)**")) %>% 
     modify_footnote(update = everything() ~ NA) %>% 
   modify_caption("Socio-demographic table") %>% 
   as_kable_extra(format = "latex",
@@ -1195,14 +1195,12 @@ table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
 # the only step here which is required here is to manually divide dataset into four parts and then rbind these togather 
 
 # even a little bit wider
-# tab.wide.1 %>% ncol()
-
-tr.1=tab.wide.1[,c(16,1:3,18)] %>% as_tibble(rownames = NA)
-tr.4=tab.wide.1[,c(5,14:15,17)] %>% as_tibble(rownames = NA)         
-tr.2=tab.wide.1[,c(6:9,19)] %>% as_tibble(rownames = NA)
-tr.3=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA) 
+tr.4=tab.wide.1[,c(13:17)] %>% as_tibble(rownames = NA)         
+tr.1=tab.wide.1[,c(1:4)] %>% as_tibble(rownames = NA)
+tr.2=tab.wide.1[,c(5:8)] %>% as_tibble(rownames = NA)
+tr.3=tab.wide.1[,c(9:12)] %>% as_tibble(rownames = NA) 
          
-         tab = bind_rows(tr.1,tr.4,tr.2,tr.3)
+         tab = bind_rows(tr.4,tr.1,tr.2,tr.3)
          tab = tab %>% 
            as_tibble(rownames = NA) %>% 
            rownames_to_column()  %>% 
@@ -1215,7 +1213,7 @@ tr.3=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronical mental and physical deseases") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable obesity remained significant. All others were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval"), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
@@ -1227,13 +1225,10 @@ vars.prev.tab  %>%
   tbl_summary(by = Source, missing = "no") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
-  kableExtra::kable_styling(latex_options = c("hold_position","scale_down"),
-                            font_size = 3,
-                            position = "center") 
+  kableExtra::kable_styling(latex_options = "hold_position", font_size = 4)
 ```
 
 ```{r health complains table, include=FALSE}
-
 
 
 ```

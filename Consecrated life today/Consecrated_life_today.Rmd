@@ -844,7 +844,7 @@ knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated belo
 ```{r frist regression, include=FALSE}
 # Side-by-side Regression Models
 # logistic regression model
-# we have 18 analysis thus 0.05/36 = 0.001388889 = criterion P-value
+# we have 34 analysis thus 0.05/34 = 0.001470588 = criterion P-value
 
 # data$Source = relevel(data$Source, ref = "Less than once a week")
 
@@ -862,260 +862,260 @@ data.reg = data %>%
            country %in% "SK" |
            Source %in% "Representative")
 
-ra.1 <-
+ra.b.1 <-
   glm(hlth_hypertension ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Hypertension")) %>%
   bold_p(t = 0.001388889) 
-ra.2 <-
+ra.b.2 <-
   glm(hlth_hypertension ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Hypertension")) %>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.3 <-
+ra.b.3 <-
   glm(hlth_diabetes ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Diabetes"))%>%
   bold_p(t = 0.001388889) 
-ra.4 <-
+ra.b.4 <-
   glm(hlth_diabetes ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Diabetes"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.5 <-
+ra.b.5 <-
   glm(hlth_arthritis ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Arthritis"))%>%
   bold_p(t = 0.001388889) 
-ra.6 <-
+ra.b.6 <-
   glm(hlth_arthritis ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Arthritis"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.7 <-
+ra.b.7 <-
   glm(hlth_astma ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Astma"))%>%
   bold_p(t = 0.001388889) 
-ra.8 <-
+ra.b.8 <-
   glm(hlth_astma ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Astma"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.9 <-
+ra.b.9 <-
   glm(hlth_depression_anxiety ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Depression/Anxiety"))%>%
   bold_p(t = 0.001388889) 
-ra.10 <-
+ra.b.10 <-
   glm(hlth_depression_anxiety ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Depression/Anxiety"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.11 <-
+ra.b.11 <-
   glm(hlth_ICHS ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Ischemic heart disease"))%>%
   bold_p(t = 0.001388889) 
-ra.12 <-
+ra.b.12 <-
   glm(hlth_ICHS ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Ischemic heart disease"))%>%
   bold_p(t = 0.001388889)
 #_____________________________________________________________
-ra.13 <-
+ra.b.13 <-
   glm(hlth_obesity ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Obesity"))%>%
   bold_p(t = 0.001388889) 
-ra.14 <-
+ra.b.14 <-
   glm(hlth_obesity ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Obesity"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.15 <-
+ra.b.15 <-
   glm(hlth_stroke ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Stroke"))%>%
   bold_p(t = 0.001388889) 
-ra.16 <-
+ra.b.16 <-
   glm(hlth_stroke ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Stroke"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 
-ra.17 <-
+ra.b.17 <-
   glm(hlth_back_pain ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Back pain"))%>%
   bold_p(t = 0.001388889) 
-ra.18 <-
+ra.b.18 <-
   glm(hlth_back_pain ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Back pain"))%>%
   bold_p(t = 0.001388889) 
 #___________________________________________________________________________________________________________________
-ra.19 <-
+ra.b.19 <-
   glm(hlth_gastric_or_duodenal_ulcers ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Gastric or duodenal ulcers"))%>%
   bold_p(t = 0.001388889) 
-ra.20 <-
+ra.b.20 <-
   glm(hlth_gastric_or_duodenal_ulcers ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Gastric or duodenal ulcers"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.21 <-
+ra.b.21 <-
   glm(hlth_chronic_lung_disease ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Chronic lung disease"))%>%
   bold_p(t = 0.001388889) 
-ra.22 <-
+ra.b.22 <-
   glm(hlth_chronic_lung_disease ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Chronic lung disease"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.23 <-
+ra.b.23 <-
   glm(hlth_skin_diseases_eczema ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Skin diseases eczema"))%>%
   bold_p(t = 0.001388889) 
-ra.24 <-
+ra.b.24 <-
   glm(hlth_skin_diseases_eczema ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Skin diseases eczema"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.25 <-
+ra.b.25 <-
   glm(hlth_allergy ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Allergy"))%>%
   bold_p(t = 0.001388889) 
-ra.26 <-
+ra.b.26 <-
   glm(hlth_allergy ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Allergy"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.27 <-
+ra.b.27 <-
   glm(hlth_migraine ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Migraine"))%>%
   bold_p(t = 0.001388889) 
-ra.28 <-
+ra.b.28 <-
   glm(hlth_migraine ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Migraine"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.29 <-
+ra.b.29 <-
   glm(hlth_pain_of_unclear_origin ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain of unclear origin"))%>%
   bold_p(t = 0.001388889) 
-ra.30 <-
+ra.b.30 <-
   glm(hlth_pain_of_unclear_origin ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain of unclear origin"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.31 <-
+ra.b.31 <-
   glm(hlth_for_wom_pain_in_the_small_ ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain in the small pelvis"))%>%
   bold_p(t = 0.001388889) 
 
-ra.32 <-
+ra.b.32 <-
   glm(hlth_for_wom_pain_in_the_small_ ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain in the small pelvis"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.33 <-
+ra.b.33 <-
   glm(hlth_cancer ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Cancer"))%>%
   bold_p(t = 0.001388889) 
-ra.34 <-
+ra.b.34 <-
   glm(hlth_cancer ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Cancer"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
-ra.35 <-
+ra.b.35 <-
   glm(hlth_thyroid_disease ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Thyroid disease"))%>%
   bold_p(t = 0.001388889) 
-ra.36 <-
+ra.b.36 <-
   glm(hlth_thyroid_disease ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Thyroid disease"))%>%
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 
-ra.tab.pok1=tbl_stack(
-  tbls = list(ra.1,
-              ra.3,
-              ra.5,
-              ra.7,
-              ra.9,
-              ra.11,
-              ra.13,
-              ra.15,
-              ra.17,
-              ra.19,
-              ra.21,
-              ra.23,
-              ra.25,
-              ra.27,
-              ra.29,
-              ra.31,
-              ra.33,
-              ra.35)) %>% 
+ra.b.tab.pok1=tbl_stack(
+  tbls = list(ra.b.1,
+              ra.b.3,
+              ra.b.5,
+              ra.b.7,
+              ra.b.9,
+              ra.b.11,
+              ra.b.13,
+              ra.b.15,
+              ra.b.17,
+              ra.b.19,
+              ra.b.21,
+              ra.b.23,
+              ra.b.25,
+              ra.b.27,
+              ra.b.29,
+              ra.b.31,
+              ra.b.33,
+              ra.b.35)) %>% 
    modify_header(label = "**Table 2**") %>%  
      modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
                      abbreviation = T) 
 # printing merged table
-ra.tab.pok2=tbl_stack(
-  tbls = list(ra.2,
-              ra.4,
-              ra.6,
-              ra.8,
-              ra.10,
-              ra.12,
-              ra.14,
-              ra.16,
-              ra.18,
-              ra.20,
-              ra.22,
-              ra.24,
-              ra.26,
-              ra.28,
-              ra.30,
-              ra.32,
-              ra.34,
-              ra.36)) %>% 
+ra.b.tab.pok2=tbl_stack(
+  tbls = list(ra.b.2,
+              ra.b.4,
+              ra.b.6,
+              ra.b.8,
+              ra.b.10,
+              ra.b.12,
+              ra.b.14,
+              ra.b.16,
+              ra.b.18,
+              ra.b.20,
+              ra.b.22,
+              ra.b.24,
+              ra.b.26,
+              ra.b.28,
+              ra.b.30,
+              ra.b.32,
+              ra.b.34,
+              ra.b.36)) %>% 
    modify_header(label = "**Table 2.1**") %>%  
      modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
                      abbreviation = T) 
 
-ra.t1=tbl_merge(
-tbls = list(ra.tab.pok1,ra.tab.pok2),
+ra.b.t1=tbl_merge(
+tbls = list(ra.b.tab.pok1,ra.b.tab.pok2),
 tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
 ```
 
-```{r include=FALSE}
-table.2=ra.t1
+```{r convert gtsum tab into tible, include=FALSE}
+table.2=ra.b.t1
 
 #show_header_names(table.2)
 # if there is need to use this code in the some other research there is need to just replace the names of the columns (e.g. `95% CI_(RA)` by " `95% CI_(EMP)`) and delete or add the number of OR,p-val,CI columns
@@ -1190,7 +1190,7 @@ table.2 = expss::setnames(x = table.2.tib, new = names.tab2)
          t()
 ```
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r preparation to print tab, message=FALSE, warning=FALSE, include=FALSE}
 
 # the only step here which is required here is to manually divide dataset into four parts and then rbind these togather 
 
@@ -1219,23 +1219,320 @@ tr.3=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
+# creating another dataset ONLY FOR PUROUSES OF THE TABLE CREATION
+cons.part.all = data %>% 
+  filter(Source == "Consecrated") %>% 
+  mutate(sec_Source = 4)
+
+# in the variable source there is need to cut "Consecrated" groups into Czech and Slovak participants
 vars.prev.tab = data %>% 
-  select(starts_with(c("Source","hlth_","General_"))) %>% 
-    rename_all(~str_replace_all(., "hlth_", " "))
+  mutate(sec_Source = as.numeric(Source)) %>% 
+  mutate(sec_Source = case_when(sec_Source == "4" & country  == "CZ" ~ 5,
+                                sec_Source == "4" & country  == "SK" ~ 6,
+                                    TRUE ~ sec_Source)) %>% 
+  bind_rows(cons.part.all) %>%  # binding divided datasets together
+  mutate(sec_Source = dplyr::recode(sec_Source,
+                                    "1" = "Sample 1",
+                                    "2" = "Sample 2",
+                                    "3" = "Sample 3",
+                                    "4" = "Sample 4",
+                                    "5" = "Sample 4a",
+                                    "6" = "Sample 4b"))
+ 
+# renaming of the variables to be included in the table 
+
+vars.prev.tab = vars.prev.tab %>% 
+  select(starts_with(c("sec_Source","hlth_","General_"))) %>% 
+  rename(
+"ICHS" = "hlth_ICHS",
+"Chronic lung disease" = "hlth_chronic_lung_disease",
+"Diabetes" = "hlth_diabetes",
+"Astma" = "hlth_astma", 
+"Back pain" = "hlth_back_pain",
+"Arthritis" = "hlth_arthritis",
+"Allergy" = "hlth_allergy", 
+"Depression/Anxiety" = "hlth_depression_anxiety", 
+"Obesity" = "hlth_obesity", 
+"Gastric or duodenal ulcers" = "hlth_gastric_or_duodenal_ulcers",
+"Thyroid disease" = "hlth_thyroid_disease",
+"Hypertension" = "hlth_hypertension", 
+"Migraine" = "hlth_migraine",
+"Skin diseases eczema" = "hlth_skin_diseases_eczema",
+"Stroke" = "hlth_stroke",
+"Pain in the small pelvis" = "hlth_for_wom_pain_in_the_small_",
+"Pain of unclear origin" = "hlth_pain_of_unclear_origin",
+"Cancer" = "hlth_cancer")
+
+# rename_all(~str_replace_all(., "hlth_", " "))
     
 vars.prev.tab  %>% 
-  tbl_summary(by = Source, missing = "no") %>% 
+  tbl_summary(by = sec_Source, missing = "no",
+  statistic = list(all_continuous() ~  "{mean} ({sd})",
+                                   all_categorical() ~ "{n} ({p}%)"),
+              digits = all_continuous() ~ 2) %>% 
+  modify_footnote(update = everything() ~ "In the table") %>% 
+  modify_caption("Prevalence of chronical ilnesses among study samples") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
   kableExtra::kable_styling(latex_options = c("hold_position","scale_down"),
-                            font_size = 3,
+                            font_size = 5,
                             position = "center") 
 ```
 
+
+
 ```{r health complains table, include=FALSE}
+# Side-by-side Regression Models
+# logistic regression model
+# we have 46 analysis in total thus 0.05/52 = 0.0009615385 = criterion P-value
 
+data.reg.2 = data %>% 
+  mutate(across(starts_with("obtize_"), ~dplyr::recode_factor(.,
+                                                     "Not many times per week" = "Not many times per week",
+                                                     "Many times a week" = "Many times a week", .ordered = T))) %>% 
+  filter(Source %in% (c("Panel","Consecrated"))) %>% 
+    mutate(across(starts_with("Source"), ~dplyr::recode_factor(.,
+                                                     "Panel" = "Panel",
+                                                     "Consecrated" = "Consecrated"))) %>%
+  mutate_if(is.factor, droplevels) %>% 
+  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
+  filter(country %in% "CZ" |
+           country %in% "SK" |
+           Source %in% "Panel")
 
+ra.b.1 <-
+  glm(obtize_1a ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Headache")) %>%
+  bold_p(t = 0.0009615385) 
+ra.b.2 <-
+  glm(obtize_1a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Headache")) %>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
+ra.b.3 <-
+  glm(obtize_2a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Stomachache"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.4 <-
+  glm(obtize_2a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Stomachache"))%>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
+ra.b.5 <-
+  glm(obtize_3a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Backache"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.6 <-
+  glm(obtize_3a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Backache"))%>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
+ra.b.7 <-
+  glm(obtize_4a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Intestinal problems"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.8 <-
+  glm(obtize_4a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Intestinal problems"))%>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
+ra.b.9 <-
+  glm(obtize_5a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Feeling depressed"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.10 <-
+  glm(obtize_5a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Feeling depressed"))%>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
+ra.b.11 <-
+  glm(obtize_6a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Irritability, bad mood"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.12 <-
+  glm(obtize_6a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Irritability, bad mood"))%>%
+  bold_p(t = 0.0009615385)
+#_____________________________________________________________
+ra.b.13 <-
+  glm(obtize_7a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Nervousness"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.14 <-
+  glm(obtize_7a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Nervousness"))%>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
+ra.b.15 <-
+  glm(obtize_8a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Trouble falling asleep"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.16 <-
+  glm(obtize_8a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Trouble falling asleep"))%>%
+  bold_p(t = 0.0009615385) 
+#_____________________________________________________________
 
+ra.b.17 <-
+  glm(obtize_9a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Dizziness"))%>%
+  bold_p(t = 0.0009615385) 
+ra.b.18 <-
+  glm(obtize_9a ~ Source, family = binomial, data = data.reg.2) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Dizziness"))%>%
+  bold_p(t = 0.0009615385) 
+#___________________________________________________________________________________________________________________
+ra.b.tab.pok1b=tbl_stack(
+  tbls = list(ra.b.1,
+              ra.b.3,
+              ra.b.5,
+              ra.b.7,
+              ra.b.9,
+              ra.b.11,
+              ra.b.13,
+              ra.b.15,
+              ra.b.17)) %>% 
+   modify_header(label = "**Table 2**") %>%  
+     modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
+                     abbreviation = T) 
+# printing merged table
+ra.b.tab.pok2b=tbl_stack(
+  tbls = list(ra.b.2,
+              ra.b.4,
+              ra.b.6,
+              ra.b.8,
+              ra.b.10,
+              ra.b.12,
+              ra.b.14,
+              ra.b.16,
+              ra.b.18)) %>% 
+   modify_header(label = "**Table 2.1**") %>%  
+     modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
+                     abbreviation = T) 
+
+ra.b.t2=tbl_merge(
+tbls = list(ra.b.tab.pok1b,ra.b.tab.pok2b),
+tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
+```
+
+```{r convert gtsum tab into tible 2, include=FALSE}
+table.3=ra.b.t2
+
+#show_header_names(table.2)
+# if there is need to use this code in the some other research there is need to just replace the names of the columns (e.g. `95% CI_(RA)` by " `95% CI_(EMP)`) and delete or add the number of OR,p-val,CI columns
+
+  # convert to tibble object
+  table.3.tib= table.3 %>% as_tibble()
+  
+  # setting names
+names.tab3=c("Table 2",
+             "OR_(R)","95% CI_(R)","p-value_(R)", # the first names are crude and second for adjusted effect
+             "OR_(Rna)","95% CI_(Rna)","p-value_(Rna)")
+
+table.3 = expss::setnames(x = table.3.tib, new = names.tab3)
+
+  
+   #ds=gtsummary::as_tibble(re.tab.1)
+   table.3.tib.star = table.3.tib %>%
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '^>', ""))) %>%
+   dplyr::mutate(TF_P=across(dplyr::contains("p-val"), ~str_detect(., pattern = "_"))) %>% 
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '__', ""))) %>% 
+   dplyr::mutate(stars = across(dplyr::contains("p-val"), ~pander::add.significance.stars(., cutoffs = c(0.05, 0.01, 0.001))))
+   table.3.tib.star = table.3.tib.star %>% 
+   dplyr::mutate_at(dplyr::vars("OR_(R)"), ~paste0(., c(table.3.tib.star$stars$`p-value_(R)`))) %>%  # if more p value is present there is need add more rows here 
+   dplyr::mutate_at(dplyr::vars("OR_(Rna)"), ~paste0(., c(table.3.tib.star$stars$`p-value_(Rna)`))) %>%  
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., " ", ""))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\*+", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+", NA_character_))) 
+   # if command is not working there is need to remove in the last commant the ""sta"" column
+  
+      # creating the new column containing only: OR 95%CI(xx-xx)
+    table.3.tib.star = table.3.tib.star %>% 
+     mutate(cis1 = paste0('(',table.3.tib.star$`95% CI_(R)`,')'), 
+            cis2 = paste0('(',table.3.tib.star$`95% CI_(Rna)`,')'))
+    # replacing old columns
+    table.3.tib.star = table.3.tib.star %>% 
+      mutate(`OR_(R)`=paste(table.3.tib.star$`OR_(R)`, cis1, sep=" "),
+             `OR_(Rna)`=paste(table.3.tib.star$`OR_(Rna)`, cis2, sep=" "))
+    
+    # deleting undesired symbols
+    table.3.tib.star = table.3.tib.star %>% 
+      select(dplyr::contains(c("Table","OR","TF"))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\[ ]+", " "))) 
+    # Adding prefix to corrected values
+      # table.3.tib.star = table.3.tib.star %>% 
+      # mutate(`OR_(R)` = case_when(table.3.tib.star$TF_P$`p-value_(R)` == "TRUE" ~ paste0("B", sep = "_", `OR_(R)`), 
+      #                    TRUE ~ `OR_(R)`),
+      #        `OR_(Rna)`= case_when(table.3.tib.star$TF_P$`p-value_(Rna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(Rna)`), 
+      #                    TRUE ~ `OR_(Rna)`),
+      #         `OR_(RA)`= case_when(table.3.tib.star$TF_P$`p-value_(RA)` == "TRUE" ~ paste0("B", sep = "_",  `OR_(RA)`), 
+      #                    TRUE ~ `OR_(RA)`),
+      #         `OR_(RAna)` = case_when(table.3.tib.star$TF_P$`p-value_(RAna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(RAna)`), 
+      #                    TRUE ~  `OR_(RAna)`))
+      
+     # selecting only relevant columns
+         table.3.tib.star = table.3.tib.star %>% 
+          mutate(across(dplyr::contains("OR_"), ~str_replace_all(., "\\[+", " ["))) %>% 
+            select(!dplyr::starts_with("TF_P")) %>% 
+           tibble::add_row(.after = "Day structure") %>%  # there is need to add as much rows as is the number of rows in second part of the table 
+          mutate("Crude effect" = "") %>%  
+           mutate("Adjusted effect" = "") %>% 
+          select(`Table 2`, "Crude effect", `OR_(Rna)`, "Adjusted effect", `OR_(R)`) %>%    # changing the position of crude effect 
+             mutate_all( ~(na_if(., ""))) %>%
+           janitor::remove_empty(which = c("cols")) %>% 
+           rename("Crude effect" = `OR_(Rna)`,
+                  "Adjusted effect" = `OR_(R)`)
+         
+      # transposing table 
+         # convert to wider format
+       tab.wide.3 = table.3.tib.star %>%
+         t()
+```
+
+```{r preparation to print tab 2, message=FALSE, warning=FALSE, include=FALSE}
+
+# the only step here which is required here is to manually divide dataset into four parts and then rbind these togather 
+
+# even a little bit wider
+# tab.wide.3 %>% ncol()
+
+tr.b.1=tab.wide.3[,c(0:5)] %>% as_tibble(rownames = NA)
+tr.b.4=tab.wide.3[,c(6:10)] %>% as_tibble(rownames = NA)         
+         
+         tab2.b = bind_rows(tr.b.1,tr.b.4)
+         tab2.b = tab2.b %>% 
+           as_tibble(rownames = NA) %>% 
+           rownames_to_column()  %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "\\.+\\.+\\.+[[:digit:]]+", replacement = ""))) %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "Table 2", replacement = ""))) %>% 
+           mutate_all(~(replace(., is.na(.), ""))) %>%
+           janitor::row_to_names(row_number = 1) 
+```
+
+```{r Print regres tab 2, echo=FALSE, message=FALSE, warning=FALSE}
+  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month") %>% 
+  kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction no results remained significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
 

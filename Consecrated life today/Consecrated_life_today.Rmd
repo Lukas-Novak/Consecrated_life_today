@@ -791,11 +791,11 @@ $$\\[1in]$$
 
 \newpage
 
-## Chronotype differences
+<!-- ## Chronotype differences -->
 
-In the first step of the analysis, we compared clerics with non - clerics in their self - reported chronotype. Pearson, chi-square test revealed that there was no difference between these two groups across the two surveys see Table 2.
+<!-- In the first step of the analysis, we compared clerics with non - clerics in their self - reported chronotype. Pearson, chi-square test revealed that there was no difference between these two groups across the two surveys see Table 2. -->
 
-```{r contingenty tables, echo=FALSE, message=FALSE, warning=FALSE}
+```{r contingenty tables, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 # library(sjPlot)
 # sjt.xtab(data$Source, #rows
 #          data$hlth_thyroid_disease) #columns
@@ -839,7 +839,7 @@ knitr::kable(x = variab.co.fin ,format = "html", caption = "Table generated belo
 ```
 
 ## Chronic illness differences
-  Regression analysis indicated that there is a significant positive relationship between being a consecrated person and lower probability of suffering from chronic illnesses such as hypertension, diabetes or arthritis. However, there was positive relationship between being cleric and depression/anxiety see table 3 for more details.  
+The table 3 presents differences in chronic diseases between clerics and representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of chronic illnesses such as hypertension, diabetes or arthritis in adjusted effect. However, there was positive relationship between being cleric and obesity in crude effect and pain in the small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 4, there can be found prevalence of chronic diseases among study samples.
 
 ```{r frist regression, include=FALSE}
 # Side-by-side Regression Models
@@ -1215,7 +1215,7 @@ tr.3=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronical mental and physical deseases") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable obesity remained significant. All others were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable obesity remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
@@ -1270,7 +1270,7 @@ vars.prev.tab  %>%
   statistic = list(all_continuous() ~  "{mean} ({sd})",
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2) %>% 
-  modify_footnote(update = everything() ~ "In the table") %>% 
+  modify_footnote(update = everything() ~ "ICHS = Ischemic heart disease, 4a = Cleric sample consisting of Czech participants, 4b = Cleric sample consisting of Slovak participants") %>% 
   modify_caption("Prevalence of chronical ilnesses among study samples") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
@@ -1278,13 +1278,11 @@ vars.prev.tab  %>%
                             font_size = 5,
                             position = "center") 
 ```
-
-
-
+<!-- Health complains -->
 ```{r health complains table, include=FALSE}
 # Side-by-side Regression Models
 # logistic regression model
-# we have 46 analysis in total thus 0.05/52 = 0.0009615385 = criterion P-value
+# we have 52 analysis in total thus 0.05/52 = 0.0009615385 = criterion P-value
 
 data.reg.2 = data %>% 
   mutate(across(starts_with("obtize_"), ~dplyr::recode_factor(.,
@@ -1344,39 +1342,6 @@ ra.b.8 <-
                  label = list(Source ~ "Intestinal problems"))%>%
   bold_p(t = 0.0009615385) 
 #_____________________________________________________________
-ra.b.9 <-
-  glm(obtize_5a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
-  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Feeling depressed"))%>%
-  bold_p(t = 0.0009615385) 
-ra.b.10 <-
-  glm(obtize_5a ~ Source, family = binomial, data = data.reg.2) %>%
-  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Feeling depressed"))%>%
-  bold_p(t = 0.0009615385) 
-#_____________________________________________________________
-ra.b.11 <-
-  glm(obtize_6a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
-  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Irritability, bad mood"))%>%
-  bold_p(t = 0.0009615385) 
-ra.b.12 <-
-  glm(obtize_6a ~ Source, family = binomial, data = data.reg.2) %>%
-  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Irritability, bad mood"))%>%
-  bold_p(t = 0.0009615385)
-#_____________________________________________________________
-ra.b.13 <-
-  glm(obtize_7a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
-  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Nervousness"))%>%
-  bold_p(t = 0.0009615385) 
-ra.b.14 <-
-  glm(obtize_7a ~ Source, family = binomial, data = data.reg.2) %>%
-  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
-                 label = list(Source ~ "Nervousness"))%>%
-  bold_p(t = 0.0009615385) 
-#_____________________________________________________________
 ra.b.15 <-
   glm(obtize_8a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
@@ -1405,9 +1370,6 @@ ra.b.tab.pok1b=tbl_stack(
               ra.b.3,
               ra.b.5,
               ra.b.7,
-              ra.b.9,
-              ra.b.11,
-              ra.b.13,
               ra.b.15,
               ra.b.17)) %>% 
    modify_header(label = "**Table 2**") %>%  
@@ -1419,9 +1381,6 @@ ra.b.tab.pok2b=tbl_stack(
               ra.b.4,
               ra.b.6,
               ra.b.8,
-              ra.b.10,
-              ra.b.12,
-              ra.b.14,
               ra.b.16,
               ra.b.18)) %>% 
    modify_header(label = "**Table 2.1**") %>%  
@@ -1516,8 +1475,8 @@ table.3 = expss::setnames(x = table.3.tib, new = names.tab3)
 # even a little bit wider
 # tab.wide.3 %>% ncol()
 
-tr.b.1=tab.wide.3[,c(0:5)] %>% as_tibble(rownames = NA)
-tr.b.4=tab.wide.3[,c(6:10)] %>% as_tibble(rownames = NA)         
+tr.b.1=tab.wide.3[,c(0:3)] %>% as_tibble(rownames = NA)
+tr.b.4=tab.wide.3[,c(4:6)] %>% as_tibble(rownames = NA)         
          
          tab2.b = bind_rows(tr.b.1,tr.b.4)
          tab2.b = tab2.b %>% 
@@ -1528,6 +1487,9 @@ tr.b.4=tab.wide.3[,c(6:10)] %>% as_tibble(rownames = NA)
            mutate_all(~(replace(., is.na(.), ""))) %>%
            janitor::row_to_names(row_number = 1) 
 ```
+<!-- end HC -->
+## Health complains 
+  Table 5 refers to associations between health complains in clerics as compared to representative sample. After Bonferroni correction, no result remained significant. However, there were some trends relatively close to significance threshold: for instance, clerics had higher odds of troubles falling into sleep in crude effect. 
 
 ```{r Print regres tab 2, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month") %>% 
@@ -1535,10 +1497,585 @@ tr.b.4=tab.wide.3[,c(6:10)] %>% as_tibble(rownames = NA)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction no results remained significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
+$$\\[1in]$$
 
-porovnat řeholníky slováky s řeholníky čechy
+## Chronotype and chronic illnesses
+  Table 6 represents results of logistic regression comparing clerics being a "night owls" to clerics being "early birds". Although after Bonferroni correction all results were non - significant, several relationships were close to newly set significance threshold: night owns as compared to early birds had higher odds of developing chronic arthritis (adjusted effect) and anxiety/depression (crude and adjusted effect).   
+  
+```{r chronic ilnessess regression - chronotype, include=FALSE}
+# we have 86 analysis thus 0.05/86 = 0.0005813953 = criterion P-value
 
-<!-- This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn. -->
+# data.reg$daily_energy  = relevel(data.reg$daily_energy , ref = "Less than once a week")
+
+data.reg.relig = data %>% 
+  mutate(across(starts_with("hlth_"), ~dplyr::recode_factor(.,
+                                                     "0" = "no",
+                                                     "1" = "yes"))) %>% 
+  filter(Source %in% (c("Consecrated"))) %>% 
+  mutate_if(is.factor, droplevels) %>% 
+  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
+  filter(country %in% "CZ" |
+           country %in% "SK") %>% 
+  rename("Chronotype" = "daily_energy")
+
+ra.c.1 <-
+  glm(hlth_hypertension ~ Chronotype + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Hypertension")) %>%
+  bold_p(t = 0.0005813953) 
+ra.c.2 <-
+  glm(hlth_hypertension ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Hypertension")) %>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.3 <-
+  glm(hlth_diabetes ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Diabetes"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.4 <-
+  glm(hlth_diabetes ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Diabetes"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.5 <-
+  glm(hlth_arthritis ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Arthritis"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.6 <-
+  glm(hlth_arthritis ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Arthritis"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.7 <-
+  glm(hlth_astma ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Astma"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.8 <-
+  glm(hlth_astma ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Astma"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.9 <-
+  glm(hlth_depression_anxiety ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Depression/Anxiety"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.10 <-
+  glm(hlth_depression_anxiety ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Depression/Anxiety"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.11 <-
+  glm(hlth_ICHS ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Ischemic heart disease"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.12 <-
+  glm(hlth_ICHS ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Ischemic heart disease"))%>%
+  bold_p(t = 0.0005813953)
+#_____________________________________________________________
+ra.c.13 <-
+  glm(hlth_obesity ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Obesity"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.14 <-
+  glm(hlth_obesity ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Obesity"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.17 <-
+  glm(hlth_back_pain ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Back pain"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.18 <-
+  glm(hlth_back_pain ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Back pain"))%>%
+  bold_p(t = 0.0005813953) 
+#___________________________________________________________________________________________________________________
+ra.c.19 <-
+  glm(hlth_gastric_or_duodenal_ulcers ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Gastric or duodenal ulcers"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.20 <-
+  glm(hlth_gastric_or_duodenal_ulcers ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Gastric or duodenal ulcers"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.21 <-
+  glm(hlth_chronic_lung_disease ~ Chronotype + Age + Education + Gender, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Chronic lung disease"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.22 <-
+  glm(hlth_chronic_lung_disease ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Chronic lung disease"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.23 <-
+  glm(hlth_skin_diseases_eczema ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Skin diseases eczema"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.24 <-
+  glm(hlth_skin_diseases_eczema ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Skin diseases eczema"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.25 <-
+  glm(hlth_allergy ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Allergy"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.26 <-
+  glm(hlth_allergy ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Allergy"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.27 <-
+  glm(hlth_migraine ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Migraine"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.28 <-
+  glm(hlth_migraine ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Migraine"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.29 <-
+  glm(hlth_pain_of_unclear_origin ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Pain of unclear origin"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.30 <-
+  glm(hlth_pain_of_unclear_origin ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Pain of unclear origin"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.31 <-
+  glm(hlth_for_wom_pain_in_the_small_ ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Pain in the small pelvis"))%>%
+  bold_p(t = 0.0005813953) 
+
+ra.c.32 <-
+  glm(hlth_for_wom_pain_in_the_small_ ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Pain in the small pelvis"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.33 <-
+  glm(hlth_cancer ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Cancer"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.34 <-
+  glm(hlth_cancer ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Cancer"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+ra.c.35 <-
+  glm(hlth_thyroid_disease ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Thyroid disease"))%>%
+  bold_p(t = 0.0005813953) 
+ra.c.36 <-
+  glm(hlth_thyroid_disease ~ Chronotype, family = binomial, data = data.reg.relig) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Thyroid disease"))%>%
+  bold_p(t = 0.0005813953) 
+#_____________________________________________________________
+
+ra.c.tab.pok1=tbl_stack(
+  tbls = list(ra.c.1,
+              ra.c.3,
+              ra.c.5,
+              ra.c.7,
+              ra.c.9,
+              ra.c.11,
+              ra.c.13,
+              ra.c.17,
+              ra.c.19,
+              ra.c.21,
+              ra.c.23,
+              ra.c.25,
+              ra.c.27,
+              ra.c.29,
+              ra.c.31,
+              ra.c.33,
+              ra.c.35)) %>% 
+   modify_header(label = "**Table 2**") %>%  
+     modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
+                     abbreviation = T) 
+# printing merged table
+ra.c.tab.pok2=tbl_stack(
+  tbls = list(ra.c.2,
+              ra.c.4,
+              ra.c.6,
+              ra.c.8,
+              ra.c.10,
+              ra.c.12,
+              ra.c.14,
+              ra.c.18,
+              ra.c.20,
+              ra.c.22,
+              ra.c.24,
+              ra.c.26,
+              ra.c.28,
+              ra.c.30,
+              ra.c.32,
+              ra.c.34,
+              ra.c.36)) %>% 
+   modify_header(label = "**Table 2.1**") %>%  
+     modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
+                     abbreviation = T) 
+
+ra.c.t1=tbl_merge(
+tbls = list(ra.c.tab.pok1,ra.c.tab.pok2),
+tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
+```
+
+```{r convert gtsum tab into tible 3, include=FALSE}
+table.3=ra.c.t1
+
+#show_header_names(table.2)
+# if there is need to use this code in the some other research there is need to just replace the names of the columns (e.g. `95% CI_(RA)` by " `95% CI_(EMP)`) and delete or add the number of OR,p-val,CI columns
+
+  # convert to tibble object
+  table.3.tib= table.3 %>% as_tibble()
+  
+  # setting names
+names.tab3=c("Table 2",
+             "OR_(R)","95% CI_(R)","p-value_(R)", # the first names are crude and second for adjusted effect
+             "OR_(Rna)","95% CI_(Rna)","p-value_(Rna)")
+
+table.3 = expss::setnames(x = table.3.tib, new = names.tab3)
+
+  
+   #ds=gtsummary::as_tibble(re.tab.1)
+   table.3.tib.star = table.3.tib %>%
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '^>', ""))) %>%
+   dplyr::mutate(TF_P=across(dplyr::contains("p-val"), ~str_detect(., pattern = "_"))) %>% 
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '__', ""))) %>% 
+   dplyr::mutate(stars = across(dplyr::contains("p-val"), ~pander::add.significance.stars(., cutoffs = c(0.05, 0.01, 0.001))))
+   table.3.tib.star = table.3.tib.star %>% 
+   dplyr::mutate_at(dplyr::vars("OR_(R)"), ~paste0(., c(table.3.tib.star$stars$`p-value_(R)`))) %>%  # if more p value is present there is need add more rows here 
+   dplyr::mutate_at(dplyr::vars("OR_(Rna)"), ~paste0(., c(table.3.tib.star$stars$`p-value_(Rna)`))) %>%  
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., " ", ""))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\*+", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+", NA_character_))) 
+   # if command is not working there is need to remove in the last commant the ""sta"" column
+  
+      # creating the new column containing only: OR 95%CI(xx-xx)
+    table.3.tib.star = table.3.tib.star %>% 
+     mutate(cis1 = paste0('(',table.3.tib.star$`95% CI_(R)`,')'), 
+            cis2 = paste0('(',table.3.tib.star$`95% CI_(Rna)`,')'))
+    # replacing old columns
+    table.3.tib.star = table.3.tib.star %>% 
+      mutate(`OR_(R)`=paste(table.3.tib.star$`OR_(R)`, cis1, sep=" "),
+             `OR_(Rna)`=paste(table.3.tib.star$`OR_(Rna)`, cis2, sep=" "))
+    
+    # deleting undesired symbols
+    table.3.tib.star = table.3.tib.star %>% 
+      select(dplyr::contains(c("Table","OR","TF"))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\[ ]+", " "))) 
+    # Adding prefix to corrected values
+      # table.3.tib.star = table.3.tib.star %>% 
+      # mutate(`OR_(R)` = case_when(table.3.tib.star$TF_P$`p-value_(R)` == "TRUE" ~ paste0("B", sep = "_", `OR_(R)`), 
+      #                    TRUE ~ `OR_(R)`),
+      #        `OR_(Rna)`= case_when(table.3.tib.star$TF_P$`p-value_(Rna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(Rna)`), 
+      #                    TRUE ~ `OR_(Rna)`),
+      #         `OR_(RA)`= case_when(table.3.tib.star$TF_P$`p-value_(RA)` == "TRUE" ~ paste0("B", sep = "_",  `OR_(RA)`), 
+      #                    TRUE ~ `OR_(RA)`),
+      #         `OR_(RAna)` = case_when(table.3.tib.star$TF_P$`p-value_(RAna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(RAna)`), 
+      #                    TRUE ~  `OR_(RAna)`))
+      
+     # selecting only relevant columns
+         table.3.tib.star = table.3.tib.star %>% 
+          mutate(across(dplyr::contains("OR_"), ~str_replace_all(., "\\[+", " ["))) %>% 
+            select(!dplyr::starts_with("TF_P")) %>% 
+           tibble::add_row(.after = "Day structure") %>%  # there is need to add as much rows as is the number of rows in second part of the table 
+          mutate("Crude effect" = "") %>%  
+           mutate("Adjusted effect" = "") %>% 
+          select(`Table 2`, "Crude effect", `OR_(Rna)`, "Adjusted effect", `OR_(R)`) %>%    # changing the position of crude effect 
+             mutate_all( ~(na_if(., ""))) %>%
+           janitor::remove_empty(which = c("cols")) %>% 
+           rename("Crude effect" = `OR_(Rna)`,
+                  "Adjusted effect" = `OR_(R)`)
+         
+      # transposing table 
+         # convert to wider format
+       tab.wide.3 = table.3.tib.star %>%
+         t()
+```
+
+```{r preparation to print tab 3, message=FALSE, warning=FALSE, include=FALSE}
+# the only step here which is required here is to manually divide dataset into four parts and then rbind these together 
+
+# even a little bit wider
+# tab.wide.3 %>% ncol()
+
+tr.1.3=tab.wide.3[,c(9:13)] %>% as_tibble(rownames = NA)
+tr.4.3=tab.wide.3[,c(5:8)] %>% as_tibble(rownames = NA)         
+tr.2.3=tab.wide.3[,c(0:4)] %>% as_tibble(rownames = NA)
+tr.3.3=tab.wide.3[,c(14:18)] %>% as_tibble(rownames = NA) 
+         
+         tab_3 = bind_rows(tr.1.3,tr.4.3,tr.2.3,tr.3.3)
+         tab_3 = tab_3 %>% 
+           as_tibble(rownames = NA) %>% 
+           rownames_to_column()  %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "\\.+\\.+\\.+[[:digit:]]+", replacement = ""))) %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "Table 2", replacement = ""))) %>% 
+           mutate_all(~(replace(., is.na(.), ""))) %>%
+           janitor::row_to_names(row_number = 1) 
+```
+
+```{r Print regres tab 3, echo=FALSE, message=FALSE, warning=FALSE}
+  knitr::kable(tab_3, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases") %>% 
+  kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because model containing it did not converge."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+```
+
+\newpage
+
+## Chronotype and health complains
+  In the table 7 there can be found associations between early birds and night owls in health complains in clerical sample. The following trends were found after Bonferroni correction: night owls had higher probability of problems of falling into sleep as compared to early birds (crude and adjusted effect).   
+
+<!-- Health complains -->
+```{r health complains table 4, include=FALSE}
+# Side-by-side Regression Models
+# logistic regression model
+# we have 98 analysis in total thus 0.05/98 = 0.0002040816 = criterion P-value
+
+data.reg.3 = data %>% 
+  mutate(across(starts_with("obtize_"), ~dplyr::recode_factor(.,
+                                                     "Not many times per week" = "Not many times per week",
+                                                     "Many times a week" = "Many times a week", .ordered = T))) %>% 
+  filter(Source %in% (c("Consecrated"))) %>%
+  mutate_if(is.factor, droplevels) %>% 
+  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
+  filter(country %in% "CZ" |
+           country %in% "SK") %>% 
+    rename("Chronotype" = "daily_energy")
+
+ra.d.1 <-
+  glm(obtize_1a ~ Chronotype + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Headache")) %>%
+  bold_p(t = 0.0002040816) 
+ra.d.2 <-
+  glm(obtize_1a ~ Chronotype, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Headache")) %>%
+  bold_p(t = 0.0002040816) 
+#_____________________________________________________________
+ra.d.3 <-
+  glm(obtize_2a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Stomachache"))%>%
+  bold_p(t = 0.0002040816) 
+ra.d.4 <-
+  glm(obtize_2a ~ Chronotype, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Stomachache"))%>%
+  bold_p(t = 0.0002040816) 
+#_____________________________________________________________
+ra.d.5 <-
+  glm(obtize_3a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Backache"))%>%
+  bold_p(t = 0.0002040816) 
+ra.d.6 <-
+  glm(obtize_3a ~ Chronotype, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Backache"))%>%
+  bold_p(t = 0.0002040816) 
+#_____________________________________________________________
+ra.d.7 <-
+  glm(obtize_4a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Intestinal problems"))%>%
+  bold_p(t = 0.0002040816) 
+ra.d.8 <-
+  glm(obtize_4a ~ Chronotype, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Intestinal problems"))%>%
+  bold_p(t = 0.0002040816) 
+#_____________________________________________________________
+ra.d.15 <-
+  glm(obtize_8a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Trouble falling asleep"))%>%
+  bold_p(t = 0.0002040816) 
+ra.d.16 <-
+  glm(obtize_8a ~ Chronotype, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Trouble falling asleep"))%>%
+  bold_p(t = 0.0002040816) 
+#_____________________________________________________________
+
+ra.d.17 <-
+  glm(obtize_9a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Dizziness"))%>%
+  bold_p(t = 0.0002040816) 
+ra.d.18 <-
+  glm(obtize_9a ~ Chronotype, family = binomial, data = data.reg.3) %>%
+  tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
+                 label = list(Chronotype ~ "Dizziness"))%>%
+  bold_p(t = 0.0002040816) 
+#___________________________________________________________________________________________________________________
+ra.d.tab.pok1b=tbl_stack(
+  tbls = list(ra.d.1,
+              ra.d.3,
+              ra.d.5,
+              ra.d.7,
+              ra.d.15,
+              ra.d.17)) %>% 
+   modify_header(label = "**Table 2**") %>%  
+     modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
+                     abbreviation = T) 
+# printing merged table
+ra.d.tab.pok2b=tbl_stack(
+  tbls = list(ra.d.2,
+              ra.d.4,
+              ra.d.6,
+              ra.d.8,
+              ra.d.16,
+              ra.d.18)) %>% 
+   modify_header(label = "**Table 2.1**") %>%  
+     modify_footnote(ci ~ "CI = Confidence Interval, bold p value is corrected",
+                     abbreviation = T) 
+
+ra.d.t2=tbl_merge(
+tbls = list(ra.d.tab.pok1b,ra.d.tab.pok2b),
+tab_span = c("**ADJ(ra)**", "**NA(ra)**"))
+```
+
+```{r convert gtsum tab into tible 4, include=FALSE}
+table.4=ra.d.t2
+
+#show_header_names(table.2)
+# if there is need to use this code in the some other research there is need to just replace the names of the columns (e.g. `95% CI_(RA)` by " `95% CI_(EMP)`) and delete or add the number of OR,p-val,CI columns
+
+  # convert to tibble object
+  table.4.tib= table.4 %>% as_tibble()
+  
+  # setting names
+names.tab4=c("Table 2",
+             "OR_(R)","95% CI_(R)","p-value_(R)", # the first names are crude and second for adjusted effect
+             "OR_(Rna)","95% CI_(Rna)","p-value_(Rna)")
+
+table.4 = expss::setnames(x = table.4.tib, new = names.tab4)
+
+  
+   #ds=gtsummary::as_tibble(re.tab.1)
+   table.4.tib.star = table.4.tib %>%
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '^>', ""))) %>%
+   dplyr::mutate(TF_P=across(dplyr::contains("p-val"), ~str_detect(., pattern = "_"))) %>% 
+   dplyr::mutate(across(dplyr::contains("p-val"), ~str_replace_all(., '__', ""))) %>% 
+   dplyr::mutate(stars = across(dplyr::contains("p-val"), ~pander::add.significance.stars(., cutoffs = c(0.05, 0.01, 0.001))))
+   table.4.tib.star = table.4.tib.star %>% 
+   dplyr::mutate_at(dplyr::vars("OR_(R)"), ~paste0(., c(table.4.tib.star$stars$`p-value_(R)`))) %>%  # if more p value is present there is need add more rows here 
+   dplyr::mutate_at(dplyr::vars("OR_(Rna)"), ~paste0(., c(table.4.tib.star$stars$`p-value_(Rna)`))) %>%  
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., " ", ""))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\*+", " "))) %>% 
+   dplyr::mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+", NA_character_))) 
+   # if command is not working there is need to remove in the last commant the ""sta"" column
+  
+      # creating the new column containing only: OR 95%CI(xx-xx)
+    table.4.tib.star = table.4.tib.star %>% 
+     mutate(cis1 = paste0('(',table.4.tib.star$`95% CI_(R)`,')'), 
+            cis2 = paste0('(',table.4.tib.star$`95% CI_(Rna)`,')'))
+    # replacing old columns
+    table.4.tib.star = table.4.tib.star %>% 
+      mutate(`OR_(R)`=paste(table.4.tib.star$`OR_(R)`, cis1, sep=" "),
+             `OR_(Rna)`=paste(table.4.tib.star$`OR_(Rna)`, cis2, sep=" "))
+    
+    # deleting undesired symbols
+    table.4.tib.star = table.4.tib.star %>% 
+      select(dplyr::contains(c("Table","OR","TF"))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "NA", " "))) %>% 
+      mutate(across(dplyr::contains("OR"), ~str_replace_all(., "^\\s+\\[ ]+", " "))) 
+    # Adding prefix to corrected values
+      # table.4.tib.star = table.4.tib.star %>% 
+      # mutate(`OR_(R)` = case_when(table.4.tib.star$TF_P$`p-value_(R)` == "TRUE" ~ paste0("B", sep = "_", `OR_(R)`), 
+      #                    TRUE ~ `OR_(R)`),
+      #        `OR_(Rna)`= case_when(table.4.tib.star$TF_P$`p-value_(Rna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(Rna)`), 
+      #                    TRUE ~ `OR_(Rna)`),
+      #         `OR_(RA)`= case_when(table.4.tib.star$TF_P$`p-value_(RA)` == "TRUE" ~ paste0("B", sep = "_",  `OR_(RA)`), 
+      #                    TRUE ~ `OR_(RA)`),
+      #         `OR_(RAna)` = case_when(table.4.tib.star$TF_P$`p-value_(RAna)` == "TRUE" ~ paste0("B", sep = "_", `OR_(RAna)`), 
+      #                    TRUE ~  `OR_(RAna)`))
+      
+     # selecting only relevant columns
+         table.4.tib.star = table.4.tib.star %>% 
+          mutate(across(dplyr::contains("OR_"), ~str_replace_all(., "\\[+", " ["))) %>% 
+            select(!dplyr::starts_with("TF_P")) %>% 
+           tibble::add_row(.after = "Day structure") %>%  # there is need to add as much rows as is the number of rows in second part of the table 
+          mutate("Crude effect" = "") %>%  
+           mutate("Adjusted effect" = "") %>% 
+          select(`Table 2`, "Crude effect", `OR_(Rna)`, "Adjusted effect", `OR_(R)`) %>%    # changing the position of crude effect 
+             mutate_all( ~(na_if(., ""))) %>%
+           janitor::remove_empty(which = c("cols")) %>% 
+           rename("Crude effect" = `OR_(Rna)`,
+                  "Adjusted effect" = `OR_(R)`)
+         
+      # transposing table 
+         # convert to wider format
+       tab.wide.4 = table.4.tib.star %>%
+         t()
+```
+
+```{r preparation to print tab 4, message=FALSE, warning=FALSE, include=FALSE}
+# the only step here which is required here is to manually divide dataset into four parts and then rbind these togather 
+
+# even a little bit wider
+# tab.wide.4%>% ncol()
+
+tr.d.1=tab.wide.4[,c(0:3)] %>% as_tibble(rownames = NA)
+tr.d.4=tab.wide.4[,c(4:6)] %>% as_tibble(rownames = NA)         
+         
+         tab2.d = bind_rows(tr.d.1,tr.d.4)
+         tab2.d = tab2.d %>% 
+           as_tibble(rownames = NA) %>% 
+           rownames_to_column()  %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "\\.+\\.+\\.+[[:digit:]]+", replacement = ""))) %>% 
+           mutate(across(starts_with("rowname"), ~ str_replace_all(., "Table 2", replacement = ""))) %>% 
+           mutate_all(~(replace(., is.na(.), ""))) %>%
+           janitor::row_to_names(row_number = 1) 
+```
+
+```{r Print regres tab 4, echo=FALSE, message=FALSE, warning=FALSE}
+  knitr::kable(tab2.d, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns and health complains (cleric sample)") %>% 
+  kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+```
+<!-- end HC -->
 
 ## Subsection Heading Here
 

@@ -858,16 +858,22 @@ data.reg = data %>%
                                                      "Representative" = "Representative",
                                                      "Consecrated" = "Consecrated"))) %>%
   mutate_if(is.factor, droplevels) %>% 
-  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
   filter(country %in% "CZ" |
            country %in% "SK" |
            Source %in% "Representative")
 
 ra.b.1 <-
-  glm(hlth_hypertension ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_hypertension ~ Source + Age + Education  + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Hypertension")) %>%
   bold_p(t = 0.001388889) 
+#...... assumptions.......  # THERE IS NO NEED TO EXPLORE VIF IN THE REST OF THE MODELS HERE ONLY IN THE FIST ONE. THIS IS BECAUSE THE VALUES ARE THE SAME IN THE REST OF THE MODELS IN THIS CHUNK. 
+#.........................
+lm(as.numeric(hlth_hypertension)  ~ Source + Age + Education  + Gender, data = data.reg) %>%
+  car::vif() # VIF has  adequate values
+#.........................
+# variable religious age is causing the problem which is understandable regarding the fact that all values in the representative sample are 0 (replaced NAs) and all values in sample 4 are > 1 given that all are clerics. This manual insertion of "0" value to all participants in representative sample seems not to be adequate reference level to which variable religious age in sample 4 should be compared with. One of the reasons is that we can not deny that there are are no clerics (even a very few) in the representative sample. Code illustrating the problem can be found in the script called Multicolineairty.    
+#.........................
 ra.b.2 <-
   glm(hlth_hypertension ~ Source, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
@@ -875,7 +881,7 @@ ra.b.2 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.3 <-
-  glm(hlth_diabetes ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_diabetes ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Diabetes"))%>%
   bold_p(t = 0.001388889) 
@@ -886,7 +892,7 @@ ra.b.4 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.5 <-
-  glm(hlth_arthritis ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_arthritis ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Arthritis"))%>%
   bold_p(t = 0.001388889) 
@@ -897,7 +903,7 @@ ra.b.6 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.7 <-
-  glm(hlth_astma ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_astma ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Astma"))%>%
   bold_p(t = 0.001388889) 
@@ -908,7 +914,7 @@ ra.b.8 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.9 <-
-  glm(hlth_depression_anxiety ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_depression_anxiety ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Depression/Anxiety"))%>%
   bold_p(t = 0.001388889) 
@@ -919,7 +925,7 @@ ra.b.10 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.11 <-
-  glm(hlth_ICHS ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_ICHS ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Ischemic heart disease"))%>%
   bold_p(t = 0.001388889) 
@@ -930,7 +936,7 @@ ra.b.12 <-
   bold_p(t = 0.001388889)
 #_____________________________________________________________
 ra.b.13 <-
-  glm(hlth_obesity ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_obesity ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Obesity"))%>%
   bold_p(t = 0.001388889) 
@@ -941,7 +947,7 @@ ra.b.14 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.15 <-
-  glm(hlth_stroke ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_stroke ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Stroke"))%>%
   bold_p(t = 0.001388889) 
@@ -953,7 +959,7 @@ ra.b.16 <-
 #_____________________________________________________________
 
 ra.b.17 <-
-  glm(hlth_back_pain ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_back_pain ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Back pain"))%>%
   bold_p(t = 0.001388889) 
@@ -964,7 +970,7 @@ ra.b.18 <-
   bold_p(t = 0.001388889) 
 #___________________________________________________________________________________________________________________
 ra.b.19 <-
-  glm(hlth_gastric_or_duodenal_ulcers ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_gastric_or_duodenal_ulcers ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Gastric or duodenal ulcers"))%>%
   bold_p(t = 0.001388889) 
@@ -986,7 +992,7 @@ ra.b.22 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.23 <-
-  glm(hlth_skin_diseases_eczema ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_skin_diseases_eczema ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Skin diseases eczema"))%>%
   bold_p(t = 0.001388889) 
@@ -997,7 +1003,7 @@ ra.b.24 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.25 <-
-  glm(hlth_allergy ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_allergy ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Allergy"))%>%
   bold_p(t = 0.001388889) 
@@ -1008,7 +1014,7 @@ ra.b.26 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.27 <-
-  glm(hlth_migraine ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_migraine ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Migraine"))%>%
   bold_p(t = 0.001388889) 
@@ -1019,7 +1025,7 @@ ra.b.28 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.29 <-
-  glm(hlth_pain_of_unclear_origin ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_pain_of_unclear_origin ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain of unclear origin"))%>%
   bold_p(t = 0.001388889) 
@@ -1030,7 +1036,7 @@ ra.b.30 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.31 <-
-  glm(hlth_for_wom_pain_in_the_small_ ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_for_wom_pain_in_the_small_ ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Pain in the small pelvis"))%>%
   bold_p(t = 0.001388889) 
@@ -1042,7 +1048,7 @@ ra.b.32 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.33 <-
-  glm(hlth_cancer ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_cancer ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Cancer"))%>%
   bold_p(t = 0.001388889) 
@@ -1053,7 +1059,7 @@ ra.b.34 <-
   bold_p(t = 0.001388889) 
 #_____________________________________________________________
 ra.b.35 <-
-  glm(hlth_thyroid_disease ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg) %>%
+  glm(hlth_thyroid_disease ~ Source + Age + Education + Gender, family = binomial, data = data.reg) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Thyroid disease"))%>%
   bold_p(t = 0.001388889) 
@@ -1294,13 +1300,18 @@ data.reg.2 = data %>%
                                                      "Panel" = "Panel",
                                                      "Consecrated" = "Consecrated"))) %>%
   mutate_if(is.factor, droplevels) %>% 
-  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
   filter(country %in% "CZ" |
            country %in% "SK" |
            Source %in% "Panel")
 
+#...... assumptions.......  # THERE IS NO NEED TO EXPLORE VIF IN THE REST OF THE MODELS HERE ONLY IN THE FIST ONE. THIS IS BECAUSE THE VALUES ARE THE SAME IN THE REST OF THE MODELS IN THIS CHUNK. 
+#.........................
+lm(as.numeric(obtize_1a)  ~ Source + Age + Education  + Gender, data = data.reg.2) %>%
+  car::vif() # VIF has  adequate values
+#.........................
+
 ra.b.1 <-
-  glm(obtize_1a ~ Source + Age + Education  + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  glm(obtize_1a ~ Source + Age + Education  + Gender, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Headache")) %>%
   bold_p(t = 0.0009615385) 
@@ -1311,7 +1322,7 @@ ra.b.2 <-
   bold_p(t = 0.0009615385) 
 #_____________________________________________________________
 ra.b.3 <-
-  glm(obtize_2a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  glm(obtize_2a ~ Source + Age + Education + Gender, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Stomachache"))%>%
   bold_p(t = 0.0009615385) 
@@ -1322,7 +1333,7 @@ ra.b.4 <-
   bold_p(t = 0.0009615385) 
 #_____________________________________________________________
 ra.b.5 <-
-  glm(obtize_3a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  glm(obtize_3a ~ Source + Age + Education + Gender, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Backache"))%>%
   bold_p(t = 0.0009615385) 
@@ -1333,7 +1344,7 @@ ra.b.6 <-
   bold_p(t = 0.0009615385) 
 #_____________________________________________________________
 ra.b.7 <-
-  glm(obtize_4a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  glm(obtize_4a ~ Source + Age + Education + Gender, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Intestinal problems"))%>%
   bold_p(t = 0.0009615385) 
@@ -1344,7 +1355,7 @@ ra.b.8 <-
   bold_p(t = 0.0009615385) 
 #_____________________________________________________________
 ra.b.15 <-
-  glm(obtize_8a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  glm(obtize_8a ~ Source + Age + Education + Gender, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Trouble falling asleep"))%>%
   bold_p(t = 0.0009615385) 
@@ -1356,7 +1367,7 @@ ra.b.16 <-
 #_____________________________________________________________
 
 ra.b.17 <-
-  glm(obtize_9a ~ Source + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.2) %>%
+  glm(obtize_9a ~ Source + Age + Education + Gender, family = binomial, data = data.reg.2) %>%
   tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
                  label = list(Source ~ "Dizziness"))%>%
   bold_p(t = 0.0009615385) 
@@ -1512,7 +1523,7 @@ data.reg.relig = data %>%
                                                      "1" = "yes"))) %>% 
   filter(Source %in% (c("Consecrated"))) %>% 
   mutate_if(is.factor, droplevels) %>% 
-  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
+  # mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
   filter(country %in% "CZ" |
            country %in% "SK") %>% 
   rename("Chronotype" = "daily_energy") %>% 
@@ -1546,7 +1557,42 @@ MASS::polr(cut_General_health  ~ Chronotype + Age + Education  + Gender + religi
 #.......................
 ```
   Ordinal logistic regression indicated that in crude effect there was a trend showing that clerics being night owls had a higher chance of developing chronic illnesses as compared to early birds (`r inline_text(ra.c.2, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the varible GH and chronotype, there is no need to use Bonferroni --> However, in adjusted effect, this result was non significant (`r inline_text(ra.c.1, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).
-  In the next step, we compared clerics with representative sample in the General health. 
+```{r chronic ilnessess regression - chronotype, include=FALSE}
+# we have 86 analysis thus 0.05/86 = 0.0005813953 = criterion P-value
+
+# data.reg$daily_energy  = relevel(data.reg$daily_energy , ref = "Less than once a week")
+
+data.reg = data.reg %>% 
+    mutate(cut_General_health = cut(General_health, 
+                                  breaks=c(-Inf, 0, 2, 5, Inf), 
+                                  labels=c("No","fiew","several","many")))
+#_____________________________________________________________
+ra.e.1 <-
+  clm(cut_General_health ~ Source + Age + Education  + Gender, family = binomial, data = data.reg) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Hypertension")) %>%
+  bold_p(t = 0.0005813953) 
+
+#...... assumptions.......
+lm(as.numeric(cut_General_health)  ~ Source + Age + Education  + Gender, data = data.reg) %>%
+  car::vif() # VIF must be < 10, which is ok here
+MASS::polr(cut_General_health  ~ Source + Age + Education  + Gender, data = data.reg,Hess = T) %>%
+  brant() # in Brand test, value in column Probability in omnibus test must not be < 0.05 - in this case multinom needs to be used. In our case, value is ok  # for interpretation of the Brant test see: https://rpubs.com/rslbliss/r_logistic_ws
+#.......................
+ra.e.2 <-
+  clm(cut_General_health ~ Source, family = binomial, data = data.reg) %>%
+  tbl_regression(exponentiate = TRUE, include = "Source", show_single_row = "Source", 
+                 label = list(Source ~ "Hypertension")) %>%
+  bold_p(t = 0.0005813953) 
+
+#...... assumptions.......
+lm(as.numeric(cut_General_health)  ~ Source + Age + Education  + Gender, data = data.reg) %>%
+  car::vif() # VIF must be < 10, which is ok here
+MASS::polr(cut_General_health  ~ Source + Age + Education  + Gender, data = data.reg,Hess = T) %>%
+  brant() # in Brand test, value in column Probability in omnibus test must not be < 0.05 - in this case multinom needs to be used. In our case, value is ok  # for interpretation of the Brant test see: https://rpubs.com/rslbliss/r_logistic_ws
+#.......................
+```
+  In the next step, we compared clerics with representative sample in the General health. It was revealed that (`r inline_text(ra.e.2, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).. <!-- As this is the first use of the varible GH and chronotype, there is no need to use Bonferroni --> However, in adjusted effect, this result was non significant (`r inline_text(ra.e.1, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).  
   
    
 
@@ -1569,7 +1615,7 @@ data.reg.3 = data %>%
                                                      "Many times a week" = "Many times a week", .ordered = T))) %>% 
   filter(Source %in% (c("Consecrated"))) %>%
   mutate_if(is.factor, droplevels) %>% 
-  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
+  # mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
   filter(country %in% "CZ" |
            country %in% "SK") %>% 
     rename("Chronotype" = "daily_energy")

@@ -287,7 +287,10 @@ listed in table 3.
 
 The GH was assessed by composite variable created by summing up number
 of chronic illnesses. This variable was consequently divided into
-several categories based on the following key:
+several categories based on the following approch: having \textless{} 1
+desease was clasified as ``no deseases'', 1 - 2 deseases was clasified
+as ``fiew deseases'' 3 - 5 deseases as ``several deseases'' and more
+than 6 as ``many deseases''.
 
 \hypertarget{chronotype}{%
 \subsubsection{Chronotype}\label{chronotype}}
@@ -376,23 +379,24 @@ all our surveys was not rejected, we deleted missing values listwise.
 Outliers were explored by the Median Absolute Deviation (MAD). Outliers
 identified by the MED were consequently screened and if there were signs
 of uniform pattern of responding i.e.~answering the number of items in
-the same manner, than outlier were removed from the dataset.\\
+the same manner, than outlier were removed from the dataset.
+
 To explore differences in health status among clerics and non - clerics,
 we compared in logistic regression models long lasting illnesses of
-clerics to reported long lasting illnesses of participants from
-representative sample. In these models, reported long lasting illness
-was was as a dependent variable, grouping variable distinguishing
-clerics from non - clerics was regressor and covariates were are,
-gender, education and length of a life in clerical order. Proportional
-odds model was used to compare clerincs and non - clerics to composite
-variable created as summ of all illnesses and reflecting general health.
-The same method was applied to explore associations between chronotype
-and chronic illnesses and helth complains in clerics. Proportional odds
-assumption in each of the ordinal regression model by the Brant test and
-it was suggested that this assumption hodls for each model.
-Multicolineariy was assessed by variance inflation factor (VIF) and its
-results (VIF \textless{} 10 \citep{TAY2017}) did not suggest
-multicolinearity.
+clerics to chronic illnesses of participants from representative sample.
+In these models, long lasting illness were set as dependent variables.
+Grouping variable distinguishing clerics from non - clerics was a
+regressor. Covariates consists of gender, education and age. Ordinal
+logistic regression was used to compare clerincs and non - clerics in
+the GH. The same regressin type was applied to explore associations
+between chronotype and GH in clerics. In the orinal regression models,
+the following variables were controled: age, education, gender and
+length of a life in clerical order. Brant test indicated that
+proportional odds assumption holded for each of the orinal regression
+models. Variance inflation factor (VIF) used to assess multicolinearity
+in all regression models. The VIF values \textless{} 10 indicates
+acceptable association between variables \citep{TAY2017}. The R
+{[}Version 4.1.0; \citet{R-base}{]} was utilized for all analysis.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -444,23 +448,21 @@ Faith &  &  &  &  &  & \\
 \end{tabular}}
 \end{table}
 
-\[\\[1in]\]
-
 \newpage
 
 \hypertarget{chronic-illness-differences}{%
 \subsection{Chronic illness
 differences}\label{chronic-illness-differences}}
 
-The table 3 presents differences in chronic diseases between clerics and
+The table 2 presents differences in chronic diseases between clerics and
 representative sample. It was revealed that there is a significant
 positive relationship between being a consecrated person and lower
-probability of chronic illnesses such as hypertension, diabetes or
-arthritis in adjusted effect. However, there was positive relationship
-between being cleric and obesity in crude effect and pain in the small
-pelvis in both crude and adjusted effect. After Bonferroni correction,
-no further significant results were found. In the table 4, there can be
-found prevalence of chronic diseases among study samples.
+probability of chronic illnesses such as diabetes in crude effect.
+However, there was positive relationship between being cleric and
+obesity in crude and adjusted effect, pain in the small pelvis in both
+crude and adjusted effect. After Bonferroni correction, no further
+significant results were found. In the table 3, there can be found
+prevalence of chronic diseases among study samples.
 
 \begin{table}[!h]
 
@@ -471,19 +473,19 @@ found prevalence of chronic diseases among study samples.
 \begin{threeparttable}
 \begin{tabular}[t]{llllll}
 \toprule
- & Pain in the small pelvis & Hypertension & Diabetes & Arthritis & Thyroid disease\\
+ & Pain in the small pelvis & Obesity & Diabetes & Arthritis & Thyroid disease\\
 \midrule
-Crude effect & 3.12*** (2.04, 4.72) & 0.98 (0.73, 1.31) & 0.33*** (0.17, 0.57) & 1.30 (0.84, 1.95) & 1.70** (1.19, 2.40)\\
-Adjusted effect & 4.11** (1.55, 10.6) & 0.30** (0.12, 0.69) & 0.18* (0.03, 0.85) & 0.08*** (0.01, 0.32) & 0.58 (0.21, 1.45)\\
+Crude effect & 3.12*** (2.04, 4.72) & 1.75*** (1.25, 2.41) & 0.33*** (0.17, 0.57) & 1.30 (0.84, 1.95) & 1.70** (1.19, 2.40)\\
+Adjusted effect & 1.99* (1.16, 3.40) & 1.85** (1.23, 2.78) & 0.46* (0.23, 0.86) & 1.62 (0.94, 2.74) & 1.57* (1.01, 2.45)\\
  & Depression/Anxiety & Migraine & Pain of unclear origin & Cancer & \\
 Crude effect & 1.79** (1.22, 2.59) & 1.00 (0.70, 1.41) & 0.74 (0.40, 1.27) & 1.34 (0.60, 2.68) & \\
-Adjusted effect & 1.19 (0.46, 2.95) & 0.38* (0.15, 0.94) & 0.75 (0.16, 2.86) & 0.14 (0.01, 1.18) & \\
- & Ischemic heart disease & Obesity & Stroke & Back pain & \\
-Crude effect & 0.77 (0.37, 1.45) & 1.75*** (1.25, 2.41) & 0.79 (0.19, 2.33) & 1.17 (0.92, 1.48) & \\
-Adjusted effect & 0.06* (0.00, 0.53) & 0.70 (0.28, 1.63) & 0.00* (0.00, 0.27) & 0.97 (0.53, 1.78) & \\
+Adjusted effect & 1.58 (0.98, 2.53) & 0.74 (0.49, 1.12) & 0.77 (0.38, 1.46) & 1.69 (0.64, 4.21) & \\
+ & Hypertension & Ischemic heart disease & Stroke & Back pain & \\
+Crude effect & 0.98 (0.73, 1.31) & 0.77 (0.37, 1.45) & 0.79 (0.19, 2.33) & 1.17 (0.92, 1.48) & \\
+Adjusted effect & 1.26 (0.89, 1.79) & 1.72 (0.72, 3.85) & 1.91 (0.36, 8.45) & 1.27 (0.95, 1.70) & \\
  & Gastric or duodenal ulcers & Chronic lung disease & Skin diseases eczema & Allergy & \\
 Crude effect & 1.14 (0.58, 2.08) & 1.56 (0.62, 3.47) & 1.33 (0.90, 1.92) & 1.28 (0.97, 1.67) & \\
-Adjusted effect & 0.22 (0.03, 1.17) & 1.51 (0.50, 4.29) & 0.61 (0.22, 1.58) & 0.97 (0.49, 1.90) & \\
+Adjusted effect & 1.28 (0.57, 2.74) & 1.51 (0.50, 4.29) & 1.31 (0.82, 2.07) & 1.15 (0.83, 1.60) & \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[para]
@@ -495,7 +497,7 @@ Adjusted effect & 0.22 (0.03, 1.17) & 1.51 (0.50, 4.29) & 0.61 (0.22, 1.58) & 0.
 
 \begin{table}[!h]
 
-\caption{\label{tab:prevalence table}Prevalence of chronical ilnesses among study samples}
+\caption{\label{tab:prevalence table}General health and chronic ilnesses among study samples}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{5}{7}\selectfont
@@ -526,14 +528,16 @@ Depression/Anxiety & 125 (6.9\%) & 102 (10\%) & 150 (10\%) & 40 (12\%) & 22 (14\
 Thyroid disease & 152 (8.4\%) & 110 (11\%) & 134 (9.1\%) & 46 (14\%) & 20 (13\%) & 26 (14\%)\\
 General\_health & 1.69 (1.54) & 2.01 (1.93) & 1.60 (1.68) & 1.98 (1.71) & 1.74 (1.57) & 2.18 (1.81)\\
 \bottomrule
-\multicolumn{7}{l}{\rule{0pt}{1em}\textsuperscript{1} ICHS = Ischemic heart disease, 4a = Cleric sample consisting of Czech participants, 4b = Cleric sample consisting of Slovak participants}\\
+\multicolumn{7}{l}{\rule{0pt}{1em}\textsuperscript{1} ICHS = Ischemic heart disease, 4a = Cleric sample consisting of Czech participants, 4b = Cleric sample consisting of Slovak participants, In General helath values refers to M(SD)}\\
 \end{tabular}}
 \end{table}
+
+\[\\[1in]\]
 
 \hypertarget{health-complains-1}{%
 \subsection{Health complains}\label{health-complains-1}}
 
-Table 5 refers to associations between health complains in clerics as
+Table 4 refers to associations between health complains in clerics as
 compared to representative sample. After Bonferroni correction, no
 result remained significant. However, there were some trends relatively
 close to significance threshold: for instance, clerics had higher odds
@@ -551,10 +555,10 @@ of troubles falling into sleep in crude effect.
  & Headache & Stomachache & Backache\\
 \midrule
 Crude effect & 0.87 (0.54, 1.36) & 0.68 (0.33, 1.28) & 0.99 (0.74, 1.31)\\
-Adjusted effect & 0.53 (0.15, 1.67) & 2.49 (0.52, 10.2) & 0.89 (0.41, 1.89)\\
+Adjusted effect & 0.99 (0.53, 1.83) & 0.61 (0.25, 1.43) & 1.00 (0.67, 1.48)\\
  & Intestinal problems & Trouble falling asleep & Dizziness\\
 Crude effect & 1.31 (0.78, 2.16) & 0.65* (0.45, 0.92) & 0.85 (0.41, 1.64)\\
-Adjusted effect & 2.50 (0.69, 8.56) & 1.15 (0.46, 2.75) & 1.64 (0.26, 8.90)\\
+Adjusted effect & 1.37 (0.67, 2.81) & 0.84 (0.52, 1.34) & 1.41 (0.53, 3.60)\\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[para]
@@ -564,44 +568,36 @@ Adjusted effect & 2.50 (0.69, 8.56) & 1.15 (0.46, 2.75) & 1.64 (0.26, 8.90)\\
 \end{threeparttable}}
 \end{table}
 
-\[\\[1in]\]
-
-\hypertarget{general-health-chronotype-and-comparison-between}{%
-\subsection{General health, chronotype and comparison
-between}\label{general-health-chronotype-and-comparison-between}}
+\hypertarget{general-health}{%
+\subsection{General health}\label{general-health}}
 
 Ordinal logistic regression indicated that in crude effect there was a
 trend showing that clerics being night owls had a higher chance of
 developing chronic illnesses as compared to early birds (OR 1.53; 95\%
-CI (1.02, 2.30); p=0.039). . However, in adjusted effect, this result
-was non significnat (OR 1.45; 95\% CI (0.96, 2.21); p=0.078).
+CI (1.02, 2.30); p=0.039). However, in adjusted effect, this result was
+non significant (OR 1.45; 95\% CI (0.96, 2.21); p=0.078).
 
-Table 6 represents results of logistic regression comparing clerics
-being a ``night owls'' to clerics being ``early birds''. Although after
-Bonferroni correction all results were non - significant, several
-relationships were close to newly set significance threshold: night owns
-as compared to early birds had higher odds of developing chronic
-arthritis (adjusted effect) and anxiety/depression (crude and adjusted
-effect).\\
-OR 1.45; 95\% CI (0.96, 2.21); p=0.078
+In the next step, we compared clerics with representative sample in the
+General health. It was revealed that clerics had significantly higher
+odds of having lower GH in crude effect (OR 1.36; 95\% CI (1.09, 1.69);
+p=0.007). Moreover, in the adjusted effect, the odds of having lower GH
+slightly increased (OR 1.39; 95\% CI (1.07, 1.81); p=0.013).
 
-OR 1.53; 95\% CI (1.02, 2.30); p=0.039
-
-\newpage
+\[\\[1in]\]
 
 \hypertarget{chronotype-and-health-complains}{%
 \subsection{Chronotype and health
 complains}\label{chronotype-and-health-complains}}
 
-In the table 7 there can be found associations between early birds and
+In the table 5 there can be found associations between early birds and
 night owls in health complains in clerical sample. The following trends
 were found after Bonferroni correction: night owls had higher
-probability of problems of falling into sleep as compared to early birds
-(crude and adjusted effect).
+probability of suffering from problems of falling into sleep and
+backache as compared to early birds (in both crude and adjusted effect).
 
 \begin{table}[!h]
 
-\caption{\label{tab:Print regres tab 4}Depicts associations (in Odds rations) between eary bird and night owns and health complains (cleric sample)}
+\caption{\label{tab:Print regres tab 5}Depicts associations (in Odds rations) between eary bird and night owns and health complains (cleric sample)}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{7}{9}\selectfont
@@ -624,16 +620,48 @@ Adjusted effect & 1.61 (0.68, 3.84) & 2.59** (1.35, 5.11) & 1.29 (0.37, 4.42)\\
 \end{threeparttable}}
 \end{table}
 
-\begin{itemize}
-\tightlist
-\item
-  další krok spočítat dvě série ordinální regrese pro chronotyp a
-  chronická onemocnění - předešlé se tedy asi nepoužije
-\end{itemize}
+\hypertarget{chronotype-and-chronic-ilnessess}{%
+\subsection{Chronotype and chronic
+ilnessess}\label{chronotype-and-chronic-ilnessess}}
 
-\hypertarget{sourceknitrpurlregres_chronotype_chron_ilness_both_binary.rmd-quiettrue}{%
-\section{source(knitr::purl(``regres\_chronotype\_chron\_ilness\_both\_binary.rmd'',
-quiet=TRUE))}\label{sourceknitrpurlregres_chronotype_chron_ilness_both_binary.rmd-quiettrue}}
+Table 6 represents results of logistic regression comparing clerics
+being a ``night owls'' to clerics being ``early birds''. Although after
+Bonferroni correction all results were non - significant, several
+relationships were close to newly set significance threshold: night owns
+as compared to early birds had higher odds of developing chronic
+arthritis (adjusted effect) and anxiety/depression (crude and adjusted
+effect).
+
+\begin{table}[!h]
+
+\caption{\label{tab:Print regres tab 6}Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases}
+\centering
+\resizebox{\linewidth}{!}{
+\fontsize{7}{9}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{llllll}
+\toprule
+ & Gastric or duodenal ulcers & Chronic lung disease & Skin diseases eczema & Allergy & Migraine\\
+\midrule
+Crude effect & 2.23 (0.66, 8.64) & 1.67 (0.36, 8.60) & 1.27 (0.65, 2.52) & 0.93 (0.56, 1.54) & 1.15 (0.60, 2.20)\\
+Adjusted effect & 2.03 (0.57, 7.26) & 1.60 (0.35, 7.35) & 1.28 (0.64, 2.55) & 0.94 (0.57, 1.57) & 1.04 (0.53, 2.01)\\
+ & Depression/Anxiety & Ischemic heart disease & Obesity & Back pain & \\
+Crude effect & 2.02* (1.04, 4.03) & 0.82 (0.21, 2.93) & 1.41 (0.79, 2.52) & 1.02 (0.66, 1.59) & \\
+Adjusted effect & 2.00* (1.03, 4.01) & 0.54 (0.11, 2.30) & 1.47 (0.81, 2.67) & 1.01 (0.64, 1.60) & \\
+ & Hypertension & Diabetes & Arthritis & Astma & \\
+Crude effect & 1.26 (0.74, 2.15) & 0.88 (0.26, 2.82) & 2.55* (1.17, 5.89) & 1.93 (0.93, 4.14) & \\
+Adjusted effect & 1.25 (0.71, 2.18) & 0.94 (0.28, 3.11) & 3.49** (1.43, 9.31) & 1.89 (0.90, 4.08) & \\
+ & Pain of unclear origin & Pain in the small pelvis & Cancer & Thyroid disease & \\
+Crude effect & 0.32 (0.07, 1.06) & 0.64 (0.31, 1.29) & 0.35 (0.05, 1.46) & 1.16 (0.62, 2.17) & \\
+Adjusted effect & 0.36 (0.08, 1.21) & 0.63 (0.29, 1.30) & 0.25 (0.04, 1.42) & 1.03 (0.54, 1.95) & \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[para]
+\item \textit{Note:} 
+\item p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95\% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because model containing it did not converge.
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}
 
 \hypertarget{subsection-heading-here}{%
 \subsection{Subsection Heading Here}\label{subsection-heading-here}}

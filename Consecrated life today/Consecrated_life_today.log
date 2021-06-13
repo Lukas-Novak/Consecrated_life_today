@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.12)  13 JUN 2021 13:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.6.12)  13 JUN 2021 23:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1264,52 +1264,51 @@ x.map} <./ijerph-logo-eps-converted-to.pdf> <./logo-mdpi.pdf> <./logo-orcid.pdf
 > <./logo-updates.pdf>] [2]
 LaTeX Info: Symbol \textasciiacute not provided by
             font family ppl in TS1 encoding.
-            Default family used instead on input line 347.
+            Default family used instead on input line 350.
 
 (c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/microtype/mt-cmr.c
 fg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
-) [3] [4] [5]
+) [3] [4]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[6] [7]
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 6
-28.
-(c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
-File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-) [8]
-Underfull \hbox (badness 10000) in paragraph at lines 705--705
+[5] [6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 733--733
 
  []
 
-(./appendix.tex) (./Consecrated_life_today.bbl [9])
-<logo-ccby.pdf, id=303, 597.23125pt x 845.1575pt>
+(./appendix.tex) (./Consecrated_life_today.bbl [8]) [9]
+<logo-ccby.pdf, id=307, 597.23125pt x 845.1575pt>
 File: logo-ccby.pdf Graphic file (type pdf)
 <use logo-ccby.pdf>
-Package pdftex.def Info: logo-ccby.pdf  used on input line 750.
+Package pdftex.def Info: logo-ccby.pdf  used on input line 778.
 (pdftex.def)             Requested size: 83.4452pt x 118.07622pt.
-
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 7
+78.
+(c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+) 
 AED: lastpage setting LastPage
 
-Underfull \hbox (badness 10000) in paragraph at lines 750--750
+Underfull \hbox (badness 10000) in paragraph at lines 778--778
 
  []
 
 [10 <./logo-ccby.pdf>] (./Consecrated_life_today.aux)
 Package rerunfilecheck Info: File `Consecrated_life_today.out' has not changed.
 
-(rerunfilecheck)             Checksum: 98F7684C319C580106C6C771D014DB96;3968.
+(rerunfilecheck)             Checksum: D4853634CEA17E3204E086F27D019842;3519.
  ) 
 Here is how much of TeX's memory you used:
- 27638 strings out of 480496
- 492051 string characters out of 5897905
- 833847 words of memory out of 5000000
+ 27652 strings out of 480496
+ 492062 string characters out of 5897905
+ 842950 words of memory out of 5000000
  44308 multiletter control sequences out of 15000+600000
- 460606 words of font info for 337 fonts, out of 8000000 for 9000
+ 460913 words of font info for 344 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 99i,14n,97p,2408b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,14n,97p,2408b,494s stack positions out of 5000i,500n,10000p,200000b,80000s
  <c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/e
 c/tcrm1000.600pk>{c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/d
 vips/base/8r.enc}<c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
@@ -1317,10 +1316,10 @@ vips/base/8r.enc}<c:/Users/OUSHI/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
 ist/fonts/type1/urw/palatino/uplb8a.pfb><c:/Users/OUSHI/AppData/Roaming/TinyTeX
 /texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/Users/OUSHI/AppData/Roaming
 /TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Consecrated_life_today.pdf (10 pages, 163781 bytes).
+Output written on Consecrated_life_today.pdf (10 pages, 163548 bytes).
 PDF statistics:
- 370 PDF objects out of 1000 (max. 8388607)
- 330 compressed objects within 4 object streams
- 98 named destinations out of 1000 (max. 500000)
- 87814 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 374 PDF objects out of 1000 (max. 8388607)
+ 334 compressed objects within 4 object streams
+ 101 named destinations out of 1000 (max. 500000)
+ 83718 words of extra memory for PDF output out of 89155 (max. 10000000)
 

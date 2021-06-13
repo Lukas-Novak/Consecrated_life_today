@@ -383,9 +383,16 @@ clerics to reported long lasting illnesses of participants from
 representative sample. In these models, reported long lasting illness
 was was as a dependent variable, grouping variable distinguishing
 clerics from non - clerics was regressor and covariates were are,
-gender, education and length of a life in clerical order. Multinominal
-regression was used to compare clerincs and non - clerics to composite
+gender, education and length of a life in clerical order. Proportional
+odds model was used to compare clerincs and non - clerics to composite
 variable created as summ of all illnesses and reflecting general health.
+The same method was applied to explore associations between chronotype
+and chronic illnesses and helth complains in clerics. Proportional odds
+assumption in each of the ordinal regression model by the Brant test and
+it was suggested that this assumption hodls for each model.
+Multicolineariy was assessed by variance inflation factor (VIF) and its
+results (VIF \textless{} 10 \citep{TAY2017}) did not suggest
+multicolinearity.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -559,9 +566,15 @@ Adjusted effect & 2.50 (0.69, 8.56) & 1.15 (0.46, 2.75) & 1.64 (0.26, 8.90)\\
 
 \[\\[1in]\]
 
-\hypertarget{chronotype-and-chronic-illnesses}{%
-\subsection{Chronotype and chronic
-illnesses}\label{chronotype-and-chronic-illnesses}}
+\hypertarget{general-health-chronotype-and-comparison-between}{%
+\subsection{General health, chronotype and comparison
+between}\label{general-health-chronotype-and-comparison-between}}
+
+Ordinal logistic regression indicated that in crude effect there was a
+trend showing that clerics being night owls had a higher chance of
+developing chronic illnesses as compared to early birds (OR 1.53; 95\%
+CI (1.02, 2.30); p=0.039). . However, in adjusted effect, this result
+was non significnat (OR 1.45; 95\% CI (0.96, 2.21); p=0.078).
 
 Table 6 represents results of logistic regression comparing clerics
 being a ``night owls'' to clerics being ``early birds''. Although after
@@ -569,38 +582,10 @@ Bonferroni correction all results were non - significant, several
 relationships were close to newly set significance threshold: night owns
 as compared to early birds had higher odds of developing chronic
 arthritis (adjusted effect) and anxiety/depression (crude and adjusted
-effect).
+effect).\\
+OR 1.45; 95\% CI (0.96, 2.21); p=0.078
 
-\begin{table}[!h]
-
-\caption{\label{tab:Print regres tab 3}Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases}
-\centering
-\resizebox{\linewidth}{!}{
-\fontsize{7}{9}\selectfont
-\begin{threeparttable}
-\begin{tabular}[t]{llllll}
-\toprule
- & Gastric or duodenal ulcers & Chronic lung disease & Skin diseases eczema & Allergy & Migraine\\
-\midrule
-Crude effect & 2.23 (0.66, 8.64) & 1.67 (0.36, 8.60) & 1.27 (0.65, 2.52) & 0.93 (0.56, 1.54) & 1.15 (0.60, 2.20)\\
-Adjusted effect & 2.04 (0.57, 7.28) & 1.60 (0.35, 7.35) & 1.28 (0.64, 2.55) & 0.94 (0.56, 1.56) & 1.08 (0.55, 2.10)\\
- & Depression/Anxiety & Ischemic heart disease & Obesity & Back pain & \\
-Crude effect & 2.02* (1.04, 4.03) & 0.82 (0.21, 2.93) & 1.41 (0.79, 2.52) & 1.02 (0.66, 1.59) & \\
-Adjusted effect & 2.00* (1.02, 4.01) & 0.52 (0.12, 2.32) & 1.47 (0.82, 2.68) & 1.00 (0.63, 1.58) & \\
- & Hypertension & Diabetes & Arthritis & Astma & \\
-Crude effect & 1.26 (0.74, 2.15) & 0.88 (0.26, 2.82) & 2.55* (1.17, 5.89) & 1.93 (0.93, 4.14) & \\
-Adjusted effect & 1.24 (0.71, 2.18) & 1.03 (0.31, 3.51) & 3.50** (1.43, 9.30) & 1.91 (0.91, 4.12) & \\
- & Pain of unclear origin & Pain in the small pelvis & Cancer & Thyroid disease & \\
-Crude effect & 0.32 (0.07, 1.06) & 0.64 (0.31, 1.29) & 0.35 (0.05, 1.46) & 1.16 (0.62, 2.17) & \\
-Adjusted effect & 0.36 (0.08, 1.21) & 0.63 (0.29, 1.32) & 0.25 (0.04, 1.45) & 1.02 (0.53, 1.94) & \\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}[para]
-\item \textit{Note:} 
-\item p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95\% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because model containing it did not converge.
-\end{tablenotes}
-\end{threeparttable}}
-\end{table}
+OR 1.53; 95\% CI (1.02, 2.30); p=0.039
 
 \newpage
 
@@ -638,6 +623,17 @@ Adjusted effect & 1.61 (0.68, 3.84) & 2.59** (1.35, 5.11) & 1.29 (0.37, 4.42)\\
 \end{tablenotes}
 \end{threeparttable}}
 \end{table}
+
+\begin{itemize}
+\tightlist
+\item
+  další krok spočítat dvě série ordinální regrese pro chronotyp a
+  chronická onemocnění - předešlé se tedy asi nepoužije
+\end{itemize}
+
+\hypertarget{sourceknitrpurlregres_chronotype_chron_ilness_both_binary.rmd-quiettrue}{%
+\section{source(knitr::purl(``regres\_chronotype\_chron\_ilness\_both\_binary.rmd'',
+quiet=TRUE))}\label{sourceknitrpurlregres_chronotype_chron_ilness_both_binary.rmd-quiettrue}}
 
 \hypertarget{subsection-heading-here}{%
 \subsection{Subsection Heading Here}\label{subsection-heading-here}}

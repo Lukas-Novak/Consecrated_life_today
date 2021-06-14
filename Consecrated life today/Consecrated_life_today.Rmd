@@ -26,7 +26,7 @@ firstnote: |
 secondnote: |
   These authors contributed equally to this work.
 correspondence: |
-  lukas.novak@oushi.upol.cz; Tel.: +XX-000-00-0000.
+  lukas.novak@oushi.upol.cz; Tel.: +XX-737-823-971.
 journal: ijerph
 type: article
 status: accept
@@ -676,19 +676,19 @@ Therefore, the aim of this study is to explore the possible relations between th
   First sample (*n* = `r nrow(data.rep)`, Age: *M* = `r mean(data.rep$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.rep$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s1[["Female"]]*100,digits = 2)`%) consisted of participants from Czech nationally representative sample of the study on health, life experience, attitudes and lifestyle collected in 2016 [@malinakova2020religiosity]. In this dataset we did not find subjects responding incongruently to the control items i.e. feeling the God presence despite being Non-religious or atheist. Thus, no participant was excluded from a dataset. 
 
 ### Sample two
-   The second sample was collected in April 2020. It was a survey made in the Czech population during the first Covid 19-lockdown. From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.hq)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders i.e. time spend filling questionnaire was < 10 min. The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimes). Hence, the number of participants was `r nrow(data.pa.out)`. Based on the results of outliers screening procedure (see statistical analysis secion), we also removed subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%). 
+   The second sample was collected in April 2020. It was a survey made in the Czech population during the first Covid 19-lockdown. From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.hq)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders i.e. time spend filling questionnaire was < 10 min. The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimes). Hence, the number of participants was `r nrow(data.pa.out)`. Based on the results of outliers screening procedure (see statistical analysis section), we also removed subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%). 
+
+<!-- ### Sample three -->
+<!--   The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.        -->
 
 ### Sample three
-  The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.       
-
-### Sample four
 A sample of Catholic order members in the Czech Republic and in the Slovak Republic was recruited to take part in a survey regarding various aspects of today´s consecrated life. The respondents were recruited by contacting the major superiors of all male and female religious institutes in both countries. After six weeks, the information about the survey was sent directly into the local communities in order to increase the number of respondents. The research was done under the auspices of the Conference of Major Religious Superiors of the Czech and Slovak Republic. The superiors were asked to spread an online or a paper-and-pencil questionnaire among the members of their communities and to support its completing. Data was collected from March to May 2021. 
   This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (n = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (n = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (n = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: M = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, SD = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample. The mean duration of being part of a religious community was `r round(mean(data.cons$religious_age.y,na.rm = T),digits = 2)`.   
 
 ## Statistical analysis
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
   
-  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to chronic illnesses of participants from representative sample. In these models, long lasting illness were set as dependent variables. Grouping variable distinguishing clerics from non - clerics was a regressor. Covariates consists of gender, education and age. Ordinal logistic regression was used to compare clerincs and non - clerics in the GH. The same regressin type was applied to explore associations between chronotype and GH in clerics. In the orinal regression models, the following variables were controled: age, education, gender and length of a life in clerical order. Brant test indicated that proportional odds assumption holded for each of the orinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. The VIF values < 10 indicates acceptable association between variables [@TAY2017]. The `r cite_r()` was utilized for all analysis.
+  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to chronic illnesses of participants from representative sample. In these models, long lasting illness were set as dependent variables. Grouping variable distinguishing clerics from non - clerics was a regressor. Covariates consists of gender, education and age. Ordinal logistic regression was used to compare clerincs and non - clerics in the GH. The same regressin type was applied to explore associations between chronotype and GH in clerics. In the orinal regression models, the following variables were controled: age, education, gender and length of a life in clerical order. Brant test indicated that proportional odds assumption holded for each of the orinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. Bonfferoni correction was used to correct p-values in all regression models. When the significnance was lost after correction, we used the term "trends" to describe relationships after correction. The VIF values < 10 indicates acceptable association between variables [@TAY2017]. The `r cite_r()` was utilized for all analysis.
 
 # Results
 
@@ -739,43 +739,17 @@ cs.tab.2=data.pa %>%
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2,) 
 
-cs.tab.3=data.vacc %>%
-  dplyr::select(Gender, Family_status , Education, Economical_status, Faith) %>%
-  tbl_summary( missing = "no",
-                  statistic = list(all_continuous() ~  "{mean}({sd})",
-                                   all_categorical() ~ "{n} ({p}%)"),
-              digits = all_continuous() ~ 2,) 
-
-cs.tab.4=data.cons %>% 
+cs.tab.3=data.cons %>% 
   dplyr::select(Gender, Education, ) %>%
   tbl_summary( missing = "no",
                   statistic = list(all_continuous() ~  "{mean}({sd})",
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2,) 
 #[......................................................................]
-
-cs.tab.5=data.cons.cz %>% 
-  dplyr::select(Gender, Education) %>%
-  tbl_summary( missing = "no",
-                  statistic = list(all_continuous() ~  "{mean}({sd})",
-                                   all_categorical() ~ "{n} ({p}%)"),
-              digits = all_continuous() ~ 2,) 
-
-cs.tab.6=data.cons.sk %>% 
-  dplyr::select(Gender, Education) %>%
-  tbl_summary( missing = "no",
-                  statistic = list(all_continuous() ~  "{mean}({sd})",
-                                   all_categorical() ~ "{n} ({p}%)"),
-              digits = all_continuous() ~ 2,) 
-#................................................................................
-#....................Czech and Slovak clerics .................................
-#................................................................................
-tbl_merge(tbls = list(cs.tab.1, cs.tab.2,
-                      cs.tab.3, cs.tab.4,
-                      cs.tab.5, cs.tab.6),
-          tab_spanner = c("**Sample 1**", "**Sample 2**",
-                          "**Sample 3**","**Sample 4 (CZ,SK)**",
-                          "**Sample 4 (CZ)**", "**Sample 4 (SK)**")) %>% 
+tbl_merge(tbls = list(cs.tab.1, cs.tab.2,cs.tab.3),
+          tab_spanner = c("**Sample 1**",
+                          "**Sample 2**",
+                          "**Sample 3 (CZ,SK)**")) %>% 
     modify_footnote(update = everything() ~ NA) %>% 
   modify_caption("Socio-demographic table") %>% 
   as_kable_extra(format = "latex",
@@ -786,7 +760,7 @@ tbl_merge(tbls = list(cs.tab.1, cs.tab.2,
 \newpage
 
 ## Chronic illness differences
-  The table 2 presents differences in chronic diseases between clerics and representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of chronic illnesses such as diabetes in crude effect. However, there was positive relationship between being cleric and obesity in crude and adjusted effect, pain in the small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 3, there can be found prevalence of chronic diseases among study samples.
+  The table 2 presents differences in chronic diseases between clerics and representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of diabetes in crude effect. However, there was significant positive relationship between being cleric and obesity in crude and adjusted effect, pain in the small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 3, there can be found prevalence of chronic diseases among study samples.
 
 <!-- Chronic illnesses -->
 ```{r frist regression, include=FALSE}
@@ -1167,31 +1141,19 @@ tr.4=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronical mental and physical deseases") %>% 
+  knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronic deseases (Sample 1 and 3)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable obesity remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable arthritis remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 <!-- Prevalence table -->
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
-# creating another dataset ONLY FOR PUROUSES OF THE TABLE CREATION
-cons.part.all = data %>% 
-  filter(Source == "Consecrated") %>% 
-  mutate(sec_Source = 4)
-
 # in the variable source there is need to cut "Consecrated" groups into Czech and Slovak participants
 vars.prev.tab = data %>% 
   mutate(sec_Source = as.numeric(Source)) %>% 
-  mutate(sec_Source = case_when(sec_Source == "4" & country  == "CZ" ~ 5,
-                                sec_Source == "4" & country  == "SK" ~ 6,
-                                    TRUE ~ sec_Source)) %>% 
-  bind_rows(cons.part.all) %>%  # binding divided datasets together
   mutate(sec_Source = dplyr::recode(sec_Source,
                                     "1" = "Sample 1",
                                     "2" = "Sample 2",
-                                    "3" = "Sample 3",
-                                    "4" = "Sample 4",
-                                    "5" = "Sample 4a",
-                                    "6" = "Sample 4b"))
+                                    "4" = "Sample 3")) # it ok to name it like this here
  
 # renaming of the variables to be included in the table 
 
@@ -1224,12 +1186,12 @@ vars.prev.tab  %>%
   statistic = list(all_continuous() ~  "{mean} ({sd})",
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2) %>% 
-  modify_footnote(update = everything() ~ "ICHS = Ischemic heart disease, 4a = Cleric sample consisting of Czech participants, 4b = Cleric sample consisting of Slovak participants, In General helath values refers to M(SD)") %>% 
+  modify_footnote(update = everything() ~ "ICHS = Ischemic heart disease, In the General helath variable, values refers to M(SD)") %>% 
   modify_caption("General health and chronic ilnesses among study samples") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
   kableExtra::kable_styling(latex_options = c("hold_position","scale_down"),
-                            font_size = 5,
+                            font_size = 8,
                             position = "center") 
 ```
 <!-- Health complains -->
@@ -1434,8 +1396,8 @@ table.3 = expss::setnames(x = table.3.tib, new = names.tab3)
 # even a little bit wider
 # tab.wide.3 %>% ncol()
 
-tr.b.1=tab.wide.3[,c(0:3)] %>% as_tibble(rownames = NA)
-tr.b.4=tab.wide.3[,c(4:6)] %>% as_tibble(rownames = NA)         
+tr.b.1=tab.wide.3[,c(5,0:2)] %>% as_tibble(rownames = NA)
+tr.b.4=tab.wide.3[,c(3,4,6)] %>% as_tibble(rownames = NA)         
          
          tab2.b = bind_rows(tr.b.1,tr.b.4)
          tab2.b = tab2.b %>% 
@@ -1449,15 +1411,18 @@ tr.b.4=tab.wide.3[,c(4:6)] %>% as_tibble(rownames = NA)
 <!-- end HC -->
 
 $$\\[1in]$$
+$$\\[1in]$$
 
 ## Health complains 
-  Table 4 refers to associations between health complains in clerics as compared to representative sample. After Bonferroni correction, no result remained significant. However, there were some trends relatively close to significance threshold: for instance, clerics had higher odds of troubles falling into sleep in crude effect. 
+  Table 4 refers to associations between health complains in clerics as compared to sample 2. Logistic regression indicated significant relationship between clerics and sleep problems: in crude effect, clerics had a lower odds of having trouble falling asleep. No other results were significant.      
 
 ```{r Print regres tab 2, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 1 and 4)") %>% 
+  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 2 and 4)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction no results remained significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
+
+$$\\[1in]$$
 
 ## General health
 ```{r chronic ilnessess regression - chronotype, include=FALSE}
@@ -1504,7 +1469,7 @@ MASS::polr(cut_General_health  ~ Chronotype + Age + Education  + Gender + religi
   brant() # in Brand test, value in column Probability in omnibus test must not be < 0.05 - in this case multinom needs to be used. In our case, value is ok  # for interpretation of the Brant test see: https://rpubs.com/rslbliss/r_logistic_ws
 #.......................
 ```
-  Ordinal logistic regression indicated that in crude effect there was a trend showing that clerics being night owls had a higher chance of developing chronic illnesses as compared to early birds (`r inline_text(ra.c.2, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the variable GH and chronotype, there is no need to use Bonferroni --> However, in adjusted effect, this result was non significant (`r inline_text(ra.c.1, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).
+  Ordinal logistic regression revealed the following trend: clerics being night owls had a higher chance of developing chronic illnesses as compared to early birds - in crude effect (`r inline_text(ra.c.2, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the variable GH and chronotype, there is no need to use Bonferroni --> In the adjusted effect however, this result was non - significant (`r inline_text(ra.c.1, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).
 ```{r chronic ilnessess regression - cut_General_health, include=FALSE}
 # we have 86 analysis thus 0.05/86 = 0.0005813953 = criterion P-value
 
@@ -1540,9 +1505,7 @@ MASS::polr(cut_General_health  ~ Source + Age + Education  + Gender, data = data
   brant() # in Brand test, value in column Probability in omnibus test must not be < 0.05 - in this case multinom needs to be used. In our case, value is ok  # for interpretation of the Brant test see: https://rpubs.com/rslbliss/r_logistic_ws
 #.......................
 ```
-  In the next step, we compared clerics with representative sample in the General health. It was revealed that clerics had significantly higher odds of having lower GH in crude effect (`r inline_text(ra.e.2, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the varible GH and chronotype, there is no need to use Bonferroni --> Moreover, in the adjusted effect, the odds of having lower GH slightly increased (`r inline_text(ra.e.1, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).  
-
-$$\\[1in]$$
+  In the next step, we compared clerics with representative sample in the General health. It was found that clerics had significantly higher odds of having lower GH in crude effect (`r inline_text(ra.e.2, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the varible GH and chronotype, there is no need to use Bonferroni --> Moreover, in the adjusted effect, the odds of having lower GH slightly increased (`r inline_text(ra.e.1, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).  
 
 ## Chronotype and health complains
   In the table 5 there can be found associations between early birds and night owls in health complains in clerical sample. The following trends were found after Bonferroni correction: night owls had higher probability of suffering from problems of falling into sleep and backache as compared to early birds (in both crude and adjusted effect).   
@@ -1758,14 +1721,14 @@ tr.d.4=tab.wide.4[,c(4:6)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r Print regres tab 5, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab2.d, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns and health complains (cleric sample)") %>% 
+  knitr::kable(tab2.d, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns and health complains (Sample 3)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and yeas being in clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 <!-- end HC -->
 
 ## Chronotype and chronic ilnessess
-  Table 6 represents results of logistic regression comparing clerics being a "night owls" to clerics being "early birds". Although after Bonferroni correction all results were non - significant, several relationships were close to newly set significance threshold: night owns as compared to early birds had higher odds of developing chronic arthritis (adjusted effect) and anxiety/depression (crude and adjusted effect).
+  Table 6 represents results of logistic regression comparing clerics being a night owls to clerics being early birds. Although after Bonferroni correction all results were non - significant, several trends might be observed: night owns as compared to early birds had higher odds of developing chronic arthritis (adjusted effect) and anxiety/depression (crude and adjusted effect).
 
 ```{r chronic ilnessess regression 6 - chronotype, include=FALSE}
 # we have 86 analysis thus 0.05/86 = 0.0005813953 = criterion P-value
@@ -1778,8 +1741,7 @@ data.reg.relig = data %>%
                                                      "1" = "yes"))) %>% 
   filter(Source %in% (c("Consecrated"))) %>% 
   mutate_if(is.factor, droplevels) %>% 
-  mutate(religious_age.y = ifelse(is.na(religious_age.y), 0, religious_age.y)) %>% 
-  filter(country %in% "CZ" |
+   filter(country %in% "CZ" |
            country %in% "SK") %>% 
   rename("Chronotype" = "daily_energy")
 
@@ -2124,78 +2086,12 @@ tr.3.3=tab.wide.3[,c(14:18)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r Print regres tab 6, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab_3, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases") %>% 
+  knitr::kable(tab_3, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases (Sample 3)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and number of years being part of the clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because model containing it did not converge."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
-
-<!-- source(knitr::purl("regres_chronotype_chron_ilness_both_binary.rmd", quiet=TRUE))  -->
-
-
-## Subsection Heading Here
-
-<!-- Subsection text here. -->
-
-### Subsubsection Heading Here
-
-Bulleted lists look like this:
-
-<!-- * First bullet -->
-<!-- * Second bullet -->
-<!-- * Third bullet -->
-
-<!-- Numbered lists can be added as follows: -->
-
-<!-- 1. First item -->
-<!-- 2. Second item -->
-<!-- 3. Third item -->
-
-<!-- The text continues here. -->
-
-<!-- All figures and tables should be cited in the main text as Figure 1, Table 1, etc. -->
-
-<!-- \begin{figure}[H] -->
-<!-- \centering -->
-<!-- \includegraphics[width=3 cm]{logo-mdpi} -->
-<!-- \caption{This is a figure, Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.} -->
-<!-- \end{figure} -->
-
-
-<!-- \begin{table}[H] -->
-<!-- \caption{This is a table caption. Tables should be placed in the main text near to the first time they are cited.} -->
-<!-- \centering -->
-<!-- %% \tablesize{} %% You can specify the fontsize here, e.g.  \tablesize{\footnotesize}. If commented out \small will be used. -->
-<!-- \begin{tabular}{ccc} -->
-<!-- \toprule -->
-<!-- \textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\ -->
-<!-- \midrule -->
-<!-- entry 1		& data			& data\\ -->
-<!-- entry 2		& data			& data\\ -->
-<!-- \bottomrule -->
-<!-- \end{tabular} -->
-<!-- \end{table} -->
-
-<!-- This is an example of an equation: -->
-
-<!-- \begin{equation} -->
-<!-- \mathbb{S} -->
-<!-- \end{equation} -->
-<!-- If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph. -->
-
-<!-- Please punctuate equations as regular text. Theorem-type environments (including propositions, lemmas, corollaries etc.) can be formatted as follows: -->
-<!-- Example of a theorem: -->
-<!-- \begin{Theorem} -->
-<!-- Example text of a theorem. -->
-<!-- \end{Theorem} -->
-
-<!-- The text continues here. Proofs must be formatted as follows: -->
-
-<!-- Example of a proof: -->
-<!-- \begin{proof}[Proof of Theorem 1] -->
-<!-- Text of the proof. Note that the phrase `of Theorem 1' is optional if it is clear which theorem is being referred to. -->
-<!-- \end{proof} -->
-<!-- The text continues here. -->
+$$\\[1in]$$
 
 # Discussion
 

@@ -35,7 +35,15 @@ appendix: appendix.tex
 simplesummary: |
   A Simple summary goes here.
 abstract: |
-  dfdfdf
+  After age, gender and education was statistically controled, clerics compared to 
+  representative sample had a higher chance of suffering from chronical health issues
+   such as pain in a small pelvis and obesity. It was also found that clerics had a 
+   higher odds of having worst general health. When no variables were
+   controled, clerics had a lower chance of suffering from diabets. Moreover, clerics
+   also had a lower chance of suffering from falling a sleep problems in the 
+   last month as compared with sample collected during the second wave of
+   COVID - 19 pandemic (in crude effect). Finally, clerics being night owls had a 
+   significantly higher chance of suffering from worst general health when no variables were controled.         
 keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
   to the article, yet reasonably common within the subject discipline.).
@@ -692,21 +700,20 @@ A sample of Catholic order members in the Czech Republic and in the Slovak Repub
 
 # Results
 
-```{r merge of the datasets, echo=FALSE, message=FALSE, warning=FALSE}
+```{r merge of the datasets and soc-dem compar, echo=FALSE, message=FALSE, warning=FALSE}
 data = bind_rows(data.rep, 
                  data.pa,
-                 data.vacc,
                  data.cons)
 
-# data %>% 
-# ggplot(aes(x=Source, 
-#              y = ..prop.., 
+# data %>%
+# ggplot(aes(x=Source,
+#              y = ..prop..,
 #              group = hlth_depression_anxiety,
-#              fill = hlth_depression_anxiety)) + 
+#              fill = hlth_depression_anxiety)) +
 #   geom_bar(position = 'dodge') +
-#   geom_text(stat='count', 
-#             aes(label = scales::percent(..prop..)), 
-#             vjust=-1, 
+#   geom_text(stat='count',
+#             aes(label = scales::percent(..prop..)),
+#             vjust=-1,
 #             position = position_dodge(width = 1)) +
 #   ylab(NULL) +
 #   ylim(0,.80) +
@@ -719,7 +726,7 @@ data = bind_rows(data.rep,
 # aov(General_health ~ Source, data = data) %>% TukeyHSD()
 ```
 
-The table 1 depicts basic socio-demographic characteristics of the study samples. 
+The table 1 depicts basic socio-demographic characteristics of the study samples.  
 
 \newpage
 
@@ -1153,7 +1160,7 @@ vars.prev.tab = data %>%
   mutate(sec_Source = dplyr::recode(sec_Source,
                                     "1" = "Sample 1",
                                     "2" = "Sample 2",
-                                    "4" = "Sample 3")) # it ok to name it like this here
+                                    "3" = "Sample 3")) 
  
 # renaming of the variables to be included in the table 
 
@@ -1417,7 +1424,7 @@ $$\\[1in]$$
   Table 4 refers to associations between health complains in clerics as compared to sample 2. Logistic regression indicated significant relationship between clerics and sleep problems: in crude effect, clerics had a lower odds of having trouble falling asleep. No other results were significant.      
 
 ```{r Print regres tab 2, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 2 and 4)") %>% 
+  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 2 and 3)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
@@ -1469,7 +1476,7 @@ MASS::polr(cut_General_health  ~ Chronotype + Age + Education  + Gender + religi
   brant() # in Brand test, value in column Probability in omnibus test must not be < 0.05 - in this case multinom needs to be used. In our case, value is ok  # for interpretation of the Brant test see: https://rpubs.com/rslbliss/r_logistic_ws
 #.......................
 ```
-  Ordinal logistic regression revealed the following trend: clerics being night owls had a higher chance of developing chronic illnesses as compared to early birds - in crude effect (`r inline_text(ra.c.2, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the variable GH and chronotype, there is no need to use Bonferroni --> In the adjusted effect however, this result was non - significant (`r inline_text(ra.c.1, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).
+  Ordinal logistic regression revealed that clerics being night owls had significantly higher chance of lower GH as compared to early birds - in crude effect (`r inline_text(ra.c.2, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the variable GH and chronotype, there is no need to use Bonferroni --> In the adjusted effect however, this result was non - significant (`r inline_text(ra.c.1, variable = Chronotype, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).
 ```{r chronic ilnessess regression - cut_General_health, include=FALSE}
 # we have 86 analysis thus 0.05/86 = 0.0005813953 = criterion P-value
 

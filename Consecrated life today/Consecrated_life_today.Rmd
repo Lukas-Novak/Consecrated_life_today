@@ -696,7 +696,7 @@ A sample of Catholic order members in the Czech Republic and in the Slovak Repub
 ## Statistical analysis
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
   
-  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to chronic illnesses of participants from representative sample. In these models, long lasting illness were set as dependent variables. Grouping variable distinguishing clerics from non - clerics was a regressor. Covariates consists of gender, education and age. Ordinal logistic regression was used to compare clerincs and non - clerics in the GH. The same regressin type was applied to explore associations between chronotype and GH in clerics. In the orinal regression models, the following variables were controled: age, education, gender and length of a life in clerical order. Brant test indicated that proportional odds assumption holded for each of the orinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. Bonfferoni correction was used to correct p-values in all regression models. When the significnance was lost after correction, we used the term "trends" to describe relationships after correction. The VIF values < 10 indicates acceptable association between variables [@TAY2017]. The `r cite_r()` was utilized for all analysis.
+  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to chronic illnesses of participants from representative sample. In these models, long lasting illness were set as dependent variables. Grouping variable distinguishing clerics from non - clerics was a regressor. Covariates consisted of gender, education and age. Ordinal logistic regression was used to compare clerincs and non - clerics in the GH. The same regressin type was applied to explore associations between chronotype and GH in clerics. In the orinal regression models, the following variables were controled: age, education, gender and length of a life in clerical order. The Brant test indicated that proportional odds assumption holded for each of the orinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. The VIF values < 10 indicated acceptable degree association between variables [@TAY2017]. Bonferroni correction was used to correct p-values in all regression models. When the significnance was lost after correction, we used the term "trends" to describe relationships after correction. The `r cite_r()` was utilized for all analysis.
 
 # Results
 
@@ -767,7 +767,7 @@ tbl_merge(tbls = list(cs.tab.1, cs.tab.2,cs.tab.3),
 \newpage
 
 ## Chronic illness differences
-  The table 2 presents differences in chronic diseases between clerics and representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of diabetes in crude effect. However, there was significant positive relationship between being cleric and obesity in crude and adjusted effect, pain in the small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 3, there can be found prevalence of chronic diseases among study samples.
+  The table 2 presents differences in chronic diseases between clerics and representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of diabetes in crude effect. Moreover, there was significant positive relationship between being cleric and obesity and also in pain in a small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 3, there can be found prevalence of chronic diseases across the study samples.
 
 <!-- Chronic illnesses -->
 ```{r frist regression, include=FALSE}
@@ -1150,7 +1150,7 @@ tr.4=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronic deseases (Sample 1 and 3)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable arthritis remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 <!-- Prevalence table -->
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
@@ -1421,7 +1421,7 @@ $$\\[1in]$$
 $$\\[1in]$$
 
 ## Health complains 
-  Table 4 refers to associations between health complains in clerics as compared to sample 2. Logistic regression indicated significant relationship between clerics and sleep problems: in crude effect, clerics had a lower odds of having trouble falling asleep. No other results were significant.      
+  Table 4 refers to associations between health complains in clerics as compared to sample 2. Logistic regression indicated significant relationship between clerics and sleep problems: in crude effect, clerics had a lower odds of having trouble falling asleep. No further significant associations were found.       
 
 ```{r Print regres tab 2, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 2 and 3)") %>% 
@@ -2095,7 +2095,7 @@ tr.3.3=tab.wide.3[,c(14:18)] %>% as_tibble(rownames = NA)
 ```{r Print regres tab 6, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab_3, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases (Sample 3)") %>% 
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and number of years being part of the clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because model containing it did not converge."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and number of years being part of the clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because regression model containing this variable not converge."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
 $$\\[1in]$$

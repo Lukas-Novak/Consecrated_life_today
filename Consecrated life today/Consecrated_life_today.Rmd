@@ -35,15 +35,15 @@ appendix: appendix.tex
 simplesummary: |
   A Simple summary goes here.
 abstract: |
-  After age, gender and education was statistically controled, clerics compared to 
+  After age, gender and education was statistically controled, clerics compared to
   representative sample had a higher chance of suffering from chronical health issues
-   such as pain in a small pelvis and obesity. It was also found that clerics had a 
+   such as pain in a small pelvis and obesity. It was also found that clerics had a
    higher odds of having worst general health. When no variables were
    controled, clerics had a lower chance of suffering from diabets. Moreover, clerics
-   also had a lower chance of suffering from falling a sleep problems in the 
+   also had a lower chance of suffering from falling a sleep problems in the
    last month as compared with sample collected during the second wave of
-   COVID - 19 pandemic (in crude effect). Finally, clerics being night owls had a 
-   significantly higher chance of suffering from worst general health when no variables were controled.         
+   COVID - 19 pandemic (in crude effect). Finally, clerics being night owls had a
+   significantly higher chance of suffering from worst general health when no variables were controled.
 keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
   to the article, yet reasonably common within the subject discipline.).
@@ -657,22 +657,21 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 Persons who consecrated themselves through their lifelong commitment to God and to a certain religious institute represent a minority group belonging mostly to the Roman Catholic Church [@holtz2006geschichte;@frank1988geschichte]. This group differs from the major society in more aspects and its way of life arouses many questions [@cist2019living;@elias2019monasticism]. To the main specifics of living in a religious institute belong the fundamental role of spirituality [@bussing2017validation] and religiosity [@quartier2017monastic], the hierarchical structured community and subordination to the authority, the binding statutes and daily routine [@wrobel2018duties;@fernandez2019convents], gender uniformity and resignation on sexual relationships and family life [@huel2018missionaries]. Expected is also a high level of social engagement [@bickerton2013spiritual] as well as a certain social isolation and/or self-excluding from the mainstream [@jewdokimow2019transcending;@meawad2020sexuality]. Catholic order members can be regarded as a homogenous population with a number of common characteristics on individual and socioeconomic level [@bowen2018community].  
 Research on health among consecrated people attracts some attention but the studies are sparse and rather ambiguous. The majority of the existing studies brings positive conclusions. The religious order members might be at lower risk of mental health disorders [@rogowska2020investigating], more successful in achieving physical and mental well-being [@corwin2014lord] and able to care systematically for their health [@huck1996health]. The prevalence of positive emotions was observed among the nuns [@skrzypinska2012intricacies] as well as a higher level of personal happiness [@francis2018happiness] and satisfaction at work engagement [@ariza2018work] together with lower tendence to professional burnout [@chirico2020spirituality]. Several studies chose the religious communities as a sample of people living a meaningful and cognitive stimulating life and came to the results of lower risk of Alzheimer disease or dementia among them [@keohane2019nun;@schott2019stability]. It corresponds to the findings about higher ability of consecrated persons to age meaningful [@corwin2020care] and about their longevity [@weinstein2019autonomous;@danner2001positive]. On the contrary, there are very few studies pointing at some deficits in health practises of religious order members [@meurer1990exploratory], at the danger of exhausting the spiritual resources through excessive work engagement [@bickerton2013spiritual] or at the impact the community conflicts have on the health of individuals [@bowen2018community]. 
 However, the existing results cannot be generalized. There is need of more data from different countries and social-political contexts. Most of the previous research studies were carried out in the USA, some of them in Poland, Germany and Italy. In all these countries, in spite of the advanced secularisation in some of them, the presence and the social engagement of religious institutes have an established tradition and a high level of public credit, which seems to play some role [@rogowska2020investigating]. On the contrary, data from secular post-communist countries are missing as well as data from African, Asian or South American communities. We presume, there are also some other bias to consider, such as a high level of social desirability and non-representative samples because the voluntary questionnaires are rarely completed by all members of the community. The healthier and more active persons are more likely to participate. 
-The current study examines the general health characteristics of religious brothers and sisters in the Czech Republic in comparison to control samples of the Czech population and a sample of consecrated persons from the Slovak Republic. The Czech Republic as the country with the highest percentage (76,4%) of religiously unaffiliated people in the world (Pew Research Center 2014) represents a not very supportive milieu towards the Roman Catholic Church and religious institutes. Slovakia belongs traditionally to the Catholic countries (62% Roman Catholics and 13,4% atheists in the census 2011) and the consecrated persons are more numerous and more appreciated than in the Czech Republic. Nevertheless, the modern history of these two countries is firmly connected and the convents and monasteries in both of them are still carrying the consequences of the long persecution, overworking and forced isolation during the communist regime. Compared to the previous studies, in view of these facts, we suppose a higher level of negative health affecting factors and lower scores of well-being and life satisfaction among the members of the Czech, possibly Slovak religious communities. We also presume some slight differences between the Czechs and Slovaks.  
-Therefore, the aim of this study is to explore the possible relations between the membership in a convent or monastery religious community in a highly secular post-communist country and both the physical and mental health of the individuals. 
+The current study examines the general health characteristics of religious brothers and sisters in the former Czechoslovakia in comparison to control samples of the Czech population. The Czech Republic as the country with the highest percentage (76,4%) of religiously unaffiliated people in the world (Pew Research Center 2014) represents a not very supportive milieu towards the Roman Catholic Church and religious institutes. Slovakia belongs traditionally to the Catholic countries (62% Roman Catholics and 13,4% atheists in the census 2011) and the consecrated persons are more numerous and more appreciated than in the Czech Republic. Nevertheless, the modern history of these two countries is firmly connected and the convents and monasteries in both of them are still carrying the consequences of the long persecution, overworking and forced isolation during the communist regime. Compared to the previous studies, in view of these facts, we suppose a higher level of negative health affecting factors and lower scores of well-being and life satisfaction among the members of the Czech and Slovak religious communities, presuming some slight differences between the Czechs and Slovaks. Further, in view of the fact that the daily routine of the religious communities in this region is strongly oriented to getting up early and going to bed early without considering individual chronotype, we also suppose night owls being in some measure handicapped by this regime, having higher tendency to health complaints.
+Therefore, the aim of this study is to explore the possible relations between the membership in a convent or monastery religious community in two post-communist countries and the general health characteristics of the individuals, and to find out if the chronotype can play some role in health of consecrated persons.
 
 # Methods
 
-
 ## Measures
 
-### Health complains 
-  The frequency of recent health complains was assessed by the 12-item measure: headache, stomachache, backache, intestinal problems, feeling depressed, irritability/bad mood, nervousness, trouble falling asleep, dizziness, sore throat/cold, heart pounding/chest pain, tingling in limbs or face. The question was: “In the past month, how often have you had the following issues?“ Each item was answered on a five-point scale: never (1), about once or twice (2), approximately once a week (3), more than once a week (4), every day (5).  For analytical purposes, participants responses were dichotomised. Answers ranging from  1: "never" up to 3: "approximately once a week" were recoded as "Not many times per week" and answers ranging from 4: "More than once a week" up to 5: "every day" were recoded as "Many times a week".  
+### Health complaints
+  The frequency of recent health complaints was assessed by the 6-item measure: headache, stomachache, backache, intestinal problems, trouble falling asleep, dizziness. The question was: “In the past month, how often have you had the following issues?“ Each item was answered on a five-point scale: never (1), about once or twice (2), approximately once a week (3), more than once a week (4), every day (5).  For analytical purposes, participants responses were dichotomised. Answers ranging from  1: "never" up to 3: "approximately once a week" were recoded as "Not many times per week" and answers ranging from 4: "More than once a week" up to 5: "every day" were recoded as "Many times a week".
   
-### Long lasting ilnessess
-  For the occurrence of chronic illnesses, a 18-item measure was used introduced by the question: “Do you have a long-term illness or disability? Please tick all that apply to you.“ The illnesses are listed in table 3. 
+### Long lasting illnesses
+  For the occurrence of chronic illnesses, an 18-item measure was used introduced by the question: “Do you have a long-term illness or disability? Please tick all that apply to you.“ The illnesses are listed in table 3.
   
 ### General health (GH)
-  The GH was assessed by composite variable created by summing up number of chronic illnesses. This variable was consequently divided into several categories based on the following approch: having < 1 desease was clasified as "no deseases", 1 - 2 deseases was clasified as "fiew deseases" 3 - 5 deseases as "several deseases" and more than 6 as "many deseases".    
+  The GH was assessed by composite variable created by summing up number of chronic illnesses. This variable was consequently divided into several categories based on the following approch: having < 1 disease was classified as "no diseases", 1-2 diseases was classified as "few diseases" 3-5 diseases as "several diseases" and more than 6 as "many diseases".
   
 ### Chronotype 
   Daily energy was measured by choosing between two possibilities – an early bird who wakes up early but is tired in the evening, or a night owl who has problem with waking up early but enjoys working in the evening. 
@@ -681,22 +680,22 @@ Therefore, the aim of this study is to explore the possible relations between th
 ## Participants
    
 ### Sample one
-  First sample (*n* = `r nrow(data.rep)`, Age: *M* = `r mean(data.rep$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.rep$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s1[["Female"]]*100,digits = 2)`%) consisted of participants from Czech nationally representative sample of the study on health, life experience, attitudes and lifestyle collected in 2016 [@malinakova2020religiosity]. In this dataset we did not find subjects responding incongruently to the control items i.e. feeling the God presence despite being Non-religious or atheist. Thus, no participant was excluded from a dataset. 
+  First sample (*n* = `r nrow(data.rep)`, Age: *M* = `r mean(data.rep$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.rep$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s1[["Female"]]*100,digits = 2)`%) consisted of participants from Czech nationally representative sample of the study on health, life experience, attitudes and lifestyle collected in 2016 [@malinakova2020religiosity]. In this dataset we did not find subjects responding incongruently to the control items i.e. feeling the God presence despite being non-religious or atheist. Thus, no participant was excluded from the dataset.
 
 ### Sample two
-   The second sample was collected in April 2020. It was a survey made in the Czech population during the first Covid 19-lockdown. From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.hq)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders i.e. time spend filling questionnaire was < 10 min. The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimes). Hence, the number of participants was `r nrow(data.pa.out)`. Based on the results of outliers screening procedure (see statistical analysis section), we also removed subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%). 
-
-<!-- ### Sample three -->
-<!--   The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.        -->
+   The second sample was collected in April 2020. It was a survey made in the Czech population during the first Covid 19-lockdown. From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.hq)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders i.e. time spent on filling the questionnaire was < 10 min. The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimetres). Hence, the number of participants was `r nrow(data.pa.out)`. Based on the results of outliers screening procedure (see statistical analysis section), we also removed subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%).
 
 ### Sample three
+  The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.       
+
+### Sample four
 A sample of Catholic order members in the Czech Republic and in the Slovak Republic was recruited to take part in a survey regarding various aspects of today´s consecrated life. The respondents were recruited by contacting the major superiors of all male and female religious institutes in both countries. After six weeks, the information about the survey was sent directly into the local communities in order to increase the number of respondents. The research was done under the auspices of the Conference of Major Religious Superiors of the Czech and Slovak Republic. The superiors were asked to spread an online or a paper-and-pencil questionnaire among the members of their communities and to support its completing. Data was collected from March to May 2021. 
-  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (n = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (n = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (n = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: M = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, SD = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample. The mean duration of being part of a religious community was `r round(mean(data.cons$religious_age.y,na.rm = T),digits = 2)`.   
+  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (n = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished the questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled the questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (n = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (n = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: M = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, SD = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample. The mean duration of being part of a religious community was `r round(mean(data.cons$religious_age.y,na.rm = T),digits = 2)` years.
 
 ## Statistical analysis
-  As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non - parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.   
+  As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non-parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.
   
-  To explore differences in health status among clerics and non - clerics, we compared in logistic regression models long lasting illnesses of clerics to chronic illnesses of participants from representative sample. In these models, long lasting illness were set as dependent variables. Grouping variable distinguishing clerics from non - clerics was a regressor. Covariates consisted of gender, education and age. Ordinal logistic regression was used to compare clerincs and non - clerics in the GH. The same regressin type was applied to explore associations between chronotype and GH in clerics. In the orinal regression models, the following variables were controled: age, education, gender and length of a life in clerical order. The Brant test indicated that proportional odds assumption holded for each of the orinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. The VIF values < 10 indicated acceptable degree association between variables [@TAY2017]. Bonferroni correction was used to correct p-values in all regression models. When the significnance was lost after correction, we used the term "trends" to describe relationships after correction. The `r cite_r()` was utilized for all analysis.
+  To explore differences in health status among consecrated and non-consecrated persons, we compared in logistic regression models long lasting illnesses of religious Brothers/Sisters to chronic illnesses of participants from the representative sample. In these models, long lasting illnesses were set as dependent variables. Grouping variable distinguishing consecrated from non-consecrated persons was a regressor. Covariates consists of gender, education and age. Ordinal logistic regression was used to compare consecrated and non-consecrated persons in the GH. The same regressin type was applied to explore associations between chronotype and GH in the sample of religious Brothers/Sisters. In the ordinal regression models, the following variables were controlled: age, education, gender and length of life in a religious order. Brant test indicated that proportional odds assumption holded for each of the ordinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. The VIF values < 10 indicates acceptable association between variables [@TAY2017]. The `r cite_r()` was utilized for all analysis.
 
 # Results
 
@@ -726,7 +725,7 @@ data = bind_rows(data.rep,
 # aov(General_health ~ Source, data = data) %>% TukeyHSD()
 ```
 
-The table 1 depicts basic socio-demographic characteristics of the study samples.  
+The table 1 depicts basic socio-demographic characteristics of the study samples. 
 
 \newpage
 
@@ -746,7 +745,7 @@ cs.tab.2=data.pa %>%
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2,) 
 
-cs.tab.3=data.cons %>% 
+cs.tab.3=data.cons %>%
   dplyr::select(Gender, Education, ) %>%
   tbl_summary( missing = "no",
                   statistic = list(all_continuous() ~  "{mean}({sd})",
@@ -756,7 +755,7 @@ cs.tab.3=data.cons %>%
 tbl_merge(tbls = list(cs.tab.1, cs.tab.2,cs.tab.3),
           tab_spanner = c("**Sample 1**",
                           "**Sample 2**",
-                          "**Sample 3 (CZ,SK)**")) %>% 
+                          "**Sample 3 (CZ,SK)**")) %>%
     modify_footnote(update = everything() ~ NA) %>% 
   modify_caption("Socio-demographic table") %>% 
   as_kable_extra(format = "latex",
@@ -767,7 +766,7 @@ tbl_merge(tbls = list(cs.tab.1, cs.tab.2,cs.tab.3),
 \newpage
 
 ## Chronic illness differences
-  The table 2 presents differences in chronic diseases between clerics and representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of diabetes in crude effect. Moreover, there was significant positive relationship between being cleric and obesity and also in pain in a small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 3, there can be found prevalence of chronic diseases across the study samples.
+  The table 2 presents differences in chronic diseases between consecrated persons and the representative sample. It was revealed that there is a significant positive relationship between being a consecrated person and lower probability of chronic illnesses such as diabetes in crude effect. However, there was positive relationship between being a consecrated person and obesity in crude and adjusted effect, pain in the small pelvis in both crude and adjusted effect. After Bonferroni correction, no further significant results were found. In the table 3, prevalence   of chronic diseases among the study samples can be found.
 
 <!-- Chronic illnesses -->
 ```{r frist regression, include=FALSE}
@@ -1148,7 +1147,7 @@ tr.4=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and chronic deseases (Sample 1 and 3)") %>% 
+  knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in a religious community and chronic diseases") %>%
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
@@ -1156,11 +1155,11 @@ tr.4=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
 # in the variable source there is need to cut "Consecrated" groups into Czech and Slovak participants
 vars.prev.tab = data %>% 
-  mutate(sec_Source = as.numeric(Source)) %>% 
+  mutate(sec_Source = as.numeric(Source)) %>%
   mutate(sec_Source = dplyr::recode(sec_Source,
                                     "1" = "Sample 1",
                                     "2" = "Sample 2",
-                                    "3" = "Sample 3")) 
+                                    "3" = "Sample 3"))
  
 # renaming of the variables to be included in the table 
 
@@ -1193,7 +1192,7 @@ vars.prev.tab  %>%
   statistic = list(all_continuous() ~  "{mean} ({sd})",
                                    all_categorical() ~ "{n} ({p}%)"),
               digits = all_continuous() ~ 2) %>% 
-  modify_footnote(update = everything() ~ "ICHS = Ischemic heart disease, In the General helath variable, values refers to M(SD)") %>% 
+  modify_footnote(update = everything() ~ "ICHS = Ischemic heart disease, In the General helath variable, values refers to M(SD)") %>%
   modify_caption("General health and chronic ilnesses among study samples") %>% 
   as_kable_extra(format = "latex",
                  booktabs = TRUE) %>% 
@@ -1404,7 +1403,7 @@ table.3 = expss::setnames(x = table.3.tib, new = names.tab3)
 # tab.wide.3 %>% ncol()
 
 tr.b.1=tab.wide.3[,c(5,0:2)] %>% as_tibble(rownames = NA)
-tr.b.4=tab.wide.3[,c(3,4,6)] %>% as_tibble(rownames = NA)         
+tr.b.4=tab.wide.3[,c(3,4,6)] %>% as_tibble(rownames = NA)
          
          tab2.b = bind_rows(tr.b.1,tr.b.4)
          tab2.b = tab2.b %>% 
@@ -1421,10 +1420,10 @@ $$\\[1in]$$
 $$\\[1in]$$
 
 ## Health complains 
-  Table 4 refers to associations between health complains in clerics as compared to sample 2. Logistic regression indicated significant relationship between clerics and sleep problems: in crude effect, clerics had a lower odds of having trouble falling asleep. No further significant associations were found.       
+  Table 4 refers to associations between health complains in clerics as compared to sample 2. Logistic regression indicated significant relationship between clerics and sleep problems: in crude effect, clerics had a lower odds of having trouble falling asleep. No further significant associations were found.
 
 ```{r Print regres tab 2, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 2 and 3)") %>% 
+  knitr::kable(tab2.b, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in clerical life and health complains in the last month (Sample 2 and 3)") %>%
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
@@ -1512,7 +1511,7 @@ MASS::polr(cut_General_health  ~ Source + Age + Education  + Gender, data = data
   brant() # in Brand test, value in column Probability in omnibus test must not be < 0.05 - in this case multinom needs to be used. In our case, value is ok  # for interpretation of the Brant test see: https://rpubs.com/rslbliss/r_logistic_ws
 #.......................
 ```
-  In the next step, we compared clerics with representative sample in the General health. It was found that clerics had significantly higher odds of having lower GH in crude effect (`r inline_text(ra.e.2, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the varible GH and chronotype, there is no need to use Bonferroni --> Moreover, in the adjusted effect, the odds of having lower GH slightly increased (`r inline_text(ra.e.1, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).  
+  In the next step, we compared clerics with representative sample in the General health. It was found that clerics had significantly higher odds of having lower GH in crude effect (`r inline_text(ra.e.2, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`). <!-- As this is the first use of the varible GH and chronotype, there is no need to use Bonferroni --> Moreover, in the adjusted effect, the odds of having lower GH slightly increased (`r inline_text(ra.e.1, variable = Source, pattern = "OR {estimate}; 95% CI ({conf.low}, {conf.high}); {p.value}")`).
 
 ## Chronotype and health complains
   In the table 5 there can be found associations between early birds and night owls in health complains in clerical sample. The following trends were found after Bonferroni correction: night owls had higher probability of suffering from problems of falling into sleep and backache as compared to early birds (in both crude and adjusted effect).   
@@ -1728,7 +1727,7 @@ tr.d.4=tab.wide.4[,c(4:6)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r Print regres tab 5, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab2.d, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns and health complains (Sample 3)") %>% 
+  knitr::kable(tab2.d, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns and health complains (Sample 3)") %>%
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and yeas being in clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
@@ -2093,12 +2092,78 @@ tr.3.3=tab.wide.3[,c(14:18)] %>% as_tibble(rownames = NA)
 ```
 
 ```{r Print regres tab 6, echo=FALSE, message=FALSE, warning=FALSE}
-  knitr::kable(tab_3, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases (Sample 3)") %>% 
+  knitr::kable(tab_3, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between eary bird and night owns clerics and chronical mental and physical deseases (Sample 3)") %>%
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and number of years being part of the clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because regression model containing this variable not converge."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
-$$\\[1in]$$
+
+<!-- source(knitr::purl("regres_chronotype_chron_ilness_both_binary.rmd", quiet=TRUE))  -->
+
+
+## Subsection Heading Here
+
+<!-- Subsection text here. -->
+
+### Subsubsection Heading Here
+
+Bulleted lists look like this:
+
+<!-- * First bullet -->
+<!-- * Second bullet -->
+<!-- * Third bullet -->
+
+<!-- Numbered lists can be added as follows: -->
+
+<!-- 1. First item -->
+<!-- 2. Second item -->
+<!-- 3. Third item -->
+
+<!-- The text continues here. -->
+
+<!-- All figures and tables should be cited in the main text as Figure 1, Table 1, etc. -->
+
+<!-- \begin{figure}[H] -->
+<!-- \centering -->
+<!-- \includegraphics[width=3 cm]{logo-mdpi} -->
+<!-- \caption{This is a figure, Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.} -->
+<!-- \end{figure} -->
+
+
+<!-- \begin{table}[H] -->
+<!-- \caption{This is a table caption. Tables should be placed in the main text near to the first time they are cited.} -->
+<!-- \centering -->
+<!-- %% \tablesize{} %% You can specify the fontsize here, e.g.  \tablesize{\footnotesize}. If commented out \small will be used. -->
+<!-- \begin{tabular}{ccc} -->
+<!-- \toprule -->
+<!-- \textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\ -->
+<!-- \midrule -->
+<!-- entry 1		& data			& data\\ -->
+<!-- entry 2		& data			& data\\ -->
+<!-- \bottomrule -->
+<!-- \end{tabular} -->
+<!-- \end{table} -->
+
+<!-- This is an example of an equation: -->
+
+<!-- \begin{equation} -->
+<!-- \mathbb{S} -->
+<!-- \end{equation} -->
+<!-- If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph. -->
+
+<!-- Please punctuate equations as regular text. Theorem-type environments (including propositions, lemmas, corollaries etc.) can be formatted as follows: -->
+<!-- Example of a theorem: -->
+<!-- \begin{Theorem} -->
+<!-- Example text of a theorem. -->
+<!-- \end{Theorem} -->
+
+<!-- The text continues here. Proofs must be formatted as follows: -->
+
+<!-- Example of a proof: -->
+<!-- \begin{proof}[Proof of Theorem 1] -->
+<!-- Text of the proof. Note that the phrase `of Theorem 1' is optional if it is clear which theorem is being referred to. -->
+<!-- \end{proof} -->
+<!-- The text continues here. -->
 
 # Discussion
 

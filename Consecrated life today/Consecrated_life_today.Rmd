@@ -686,16 +686,12 @@ Therefore, the aim of this study is to explore the possible relations between th
    The second sample was collected in April 2020. It was a survey made in the Czech population during the first Covid 19-lockdown. From the original dataset (*n* = `r nrow(data.pa.raw)`), we excluded `r nrow(data.pa.raw)-nrow(data.pa.hq)` participants who responded incongruently to 3 repeatedly asked questions and those, who were speeders i.e. time spent on filling the questionnaire was < 10 min. The three control questions included age (difference > 2 years), weight and height (difference > 2 kilogram and centimetres). Hence, the number of participants was `r nrow(data.pa.out)`. Based on the results of outliers screening procedure (see statistical analysis section), we also removed subjects, which responded to large number of questions in the same way (*n* = `r length(pa.cod.rem)`). Therefore, the final number of participants was `r nrow(data.pa)` (Age: *M* = `r mean(data.pa$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.pa$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s2[["Female"]]*100,digits = 2)`%).
 
 ### Sample three
-  The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.       
-
-### Sample four
-A sample of Catholic order members in the Czech Republic and in the Slovak Republic was recruited to take part in a survey regarding various aspects of today´s consecrated life. The respondents were recruited by contacting the major superiors of all male and female religious institutes in both countries. After six weeks, the information about the survey was sent directly into the local communities in order to increase the number of respondents. The research was done under the auspices of the Conference of Major Religious Superiors of the Czech and Slovak Republic. The superiors were asked to spread an online or a paper-and-pencil questionnaire among the members of their communities and to support its completing. Data was collected from March to May 2021. 
-  This sample initially consisted of `r nrow(data.cons.raw)` participants. In the first step, we excluded participants (n = `r nrow(data.cons.raw) - nrow(data.cons.raw.hq)`) who were classified as speeders i.e. finished the questionnaire typically lasting more than 30 minutes in < 10 minutes. After this exclusion, `r nrow(data.cons.raw.hq)` participants remained. We also removed participants who filled the questionnaire multiple times (*n* = `r nrow(data.cons.raw.hq) -  nrow(filter(data.cons.raw.hq, duplicities == "0"))`) resulting in (n = `r nrow(data.cons.dups.rem)`) of subjects . This sample consisted of `r nrow(data.cons.cz)` Czech participants and `r nrow(data.cons.sk)` Slovak participants. Other than Czech and Slovak participants were excluded (n = `r nrow(data.cons.dups.rem)-nrow(data.cons)`) resulting in `r nrow(data.cons)` subjects (Age: M = `r mean(data.cons$Age, na.rm = T) %>% round(digits = 2)`, SD = `r sd(data.cons$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s4[["Female"]]*100,digits = 2)`%). No uniform pattern of responding was detected in this sample. The mean duration of being part of a religious community was `r round(mean(data.cons$religious_age.y,na.rm = T),digits = 2)` years.
+  The third sample (*n* = `r nrow(data.vacc.raw)`) was collected during May 2021 (zde moc psl dopln další info). After data were collected, we excluded participants (*n* = `r nrow(data.vacc.raw)-nrow(data.vacc)`) reporting incongruent answers and those who were classified as speeders. The criteria were the same as in the second sample. This resulted in `r nrow(data.vacc)` (Age: *M* = `r mean(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, *SD* = `r sd(data.vacc$Age, na.rm = T) %>% round(digits = 2)`, Females: `r round(per.male_female.s3[["Female"]]*100,digits = 2)`%) participants. No participant with uniform responses was detected.
 
 ## Statistical analysis
   As suggested by Shapiro-Wilk test and by histograms, normality assumption was broken in all samples. Thus, non-parametric methods were used. Homogenity of variances was equal in all samples as indicated by the Breusch-Pagan test. As the null hypotheses of the MCAR test in all our surveys was not rejected, we deleted missing values listwise. Outliers were explored by the Median Absolute Deviation (MAD). Outliers identified by the MED were consequently screened and if there were signs of uniform pattern of responding i.e. answering the number of items in the same manner, than outlier were removed from the dataset.
-  
-  To explore differences in health status among consecrated and non-consecrated persons, we compared in logistic regression models long lasting illnesses of religious Brothers/Sisters to chronic illnesses of participants from the representative sample. In these models, long lasting illnesses were set as dependent variables. Grouping variable distinguishing consecrated from non-consecrated persons was a regressor. Covariates consists of gender, education and age. Ordinal logistic regression was used to compare consecrated and non-consecrated persons in the GH. The same regressin type was applied to explore associations between chronotype and GH in the sample of religious Brothers/Sisters. In the ordinal regression models, the following variables were controlled: age, education, gender and length of life in a religious order. Brant test indicated that proportional odds assumption holded for each of the ordinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. The VIF values < 10 indicates acceptable association between variables [@TAY2017]. The `r cite_r()` was utilized for all analysis.
+
+To explore differences in health status among consecrated and non-consecrated persons, we compared in logistic regression models long lasting illnesses of religious Brothers/Sisters to chronic illnesses of participants from the representative sample. In these models, long lasting illnesses were set as dependent variables. Grouping variable distinguishing consecrated from non-consecrated persons was a regressor. Covariates consists of gender, education and age. Ordinal logistic regression was used to compare consecrated and non-consecrated persons in the GH. The same regressin type was applied to explore associations between chronotype and GH in the sample of religious Brothers/Sisters. In the ordinal regression models, the following variables were controlled: age, education, gender and length of life in a religious order. Brant test indicated that proportional odds assumption holded for each of the ordinal regression models. Variance inflation factor (VIF) used to assess multicolinearity in all regression models. The VIF values < 10 indicates acceptable association between variables [@TAY2017]. The `r cite_r()` was utilized for all analysis.
 
 # Results
 
@@ -725,7 +721,7 @@ data = bind_rows(data.rep,
 # aov(General_health ~ Source, data = data) %>% TukeyHSD()
 ```
 
-The table 1 depicts basic socio-demographic characteristics of the study samples. 
+The table 1 depicts the basic socio-demographic characteristics of the study samples.
 
 \newpage
 
@@ -1149,7 +1145,7 @@ tr.4=tab.wide.1[,c(10:12,13)] %>% as_tibble(rownames = NA)
 ```{r Print regres tab 1, echo=FALSE, message=FALSE, warning=FALSE}
   knitr::kable(tab, "latex", booktabs=T, linesep = "", caption = "Depicts associations (in Odds rations) between living in a religious community and chronic diseases") %>%
   kableExtra::kable_styling(latex_options = c("scale_down","hold_position"),   font_size = 7) %>%  # full_width = T or longtable = T (to the Kable command)
-  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
+  kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender and Education. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results in the first row (execpt Thyroid disease) and variable obesity remained significant. Other relationships were non - significant."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 <!-- Prevalence table -->
 ```{r prevalence table, echo=FALSE, message=FALSE, warning=FALSE}
@@ -2097,73 +2093,7 @@ tr.3.3=tab.wide.3[,c(14:18)] %>% as_tibble(rownames = NA)
   kableExtra::footnote(general = c("p < 0.05 *, p < 0.01 ** p < 0.001 ***, Adjusted effect was calculated using the following variables as a covariates: Age, Gender, Education and number of years being part of the clerical order. Values in brackets indicates 95% confidence interval. After Bonferroni correction all results were non - significant. Variable stroke was excldued from analysis, because regression model containing this variable not converge."), general_title = "Note:", title_format = c("italic"), threeparttable=T, footnote_as_chunk = T)
 ```
 
-
-<!-- source(knitr::purl("regres_chronotype_chron_ilness_both_binary.rmd", quiet=TRUE))  -->
-
-
-## Subsection Heading Here
-
-<!-- Subsection text here. -->
-
-### Subsubsection Heading Here
-
-Bulleted lists look like this:
-
-<!-- * First bullet -->
-<!-- * Second bullet -->
-<!-- * Third bullet -->
-
-<!-- Numbered lists can be added as follows: -->
-
-<!-- 1. First item -->
-<!-- 2. Second item -->
-<!-- 3. Third item -->
-
-<!-- The text continues here. -->
-
-<!-- All figures and tables should be cited in the main text as Figure 1, Table 1, etc. -->
-
-<!-- \begin{figure}[H] -->
-<!-- \centering -->
-<!-- \includegraphics[width=3 cm]{logo-mdpi} -->
-<!-- \caption{This is a figure, Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.} -->
-<!-- \end{figure} -->
-
-
-<!-- \begin{table}[H] -->
-<!-- \caption{This is a table caption. Tables should be placed in the main text near to the first time they are cited.} -->
-<!-- \centering -->
-<!-- %% \tablesize{} %% You can specify the fontsize here, e.g.  \tablesize{\footnotesize}. If commented out \small will be used. -->
-<!-- \begin{tabular}{ccc} -->
-<!-- \toprule -->
-<!-- \textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\ -->
-<!-- \midrule -->
-<!-- entry 1		& data			& data\\ -->
-<!-- entry 2		& data			& data\\ -->
-<!-- \bottomrule -->
-<!-- \end{tabular} -->
-<!-- \end{table} -->
-
-<!-- This is an example of an equation: -->
-
-<!-- \begin{equation} -->
-<!-- \mathbb{S} -->
-<!-- \end{equation} -->
-<!-- If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph. -->
-
-<!-- Please punctuate equations as regular text. Theorem-type environments (including propositions, lemmas, corollaries etc.) can be formatted as follows: -->
-<!-- Example of a theorem: -->
-<!-- \begin{Theorem} -->
-<!-- Example text of a theorem. -->
-<!-- \end{Theorem} -->
-
-<!-- The text continues here. Proofs must be formatted as follows: -->
-
-<!-- Example of a proof: -->
-<!-- \begin{proof}[Proof of Theorem 1] -->
-<!-- Text of the proof. Note that the phrase `of Theorem 1' is optional if it is clear which theorem is being referred to. -->
-<!-- \end{proof} -->
-<!-- The text continues here. -->
+$$\\[1in]$$
 
 # Discussion
 

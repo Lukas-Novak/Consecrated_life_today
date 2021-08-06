@@ -19,6 +19,7 @@ before_script:
   - echo "options(Ncpus = $(nproc --all))" >> /usr/local/lib/R/etc/Rprofile.site
   - mkdir -p ~/.local/share/renv
   - R -e 'renv::restore()'
+  # there is need to impot infro from test CI 
 
 # setup steps
 run:

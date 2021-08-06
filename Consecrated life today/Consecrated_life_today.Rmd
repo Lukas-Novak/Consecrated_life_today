@@ -1,5 +1,5 @@
 ---
-title: Czech and Slovak members of religious institutes: their health in comparison to general population
+title: Czech and Slovak members of religious institutes their health in comparison to general population
 author:
   - name: Dana Jaksicova
     affil: 1,\ddagger,
@@ -7,6 +7,9 @@ author:
   - name: Klara Malinakova
     affil: 1,\ddagger,
     orcid: 0000-0001-6939-1204
+  - name: Lukas Novak
+    affil: 1,\ddagger,*
+    orcid: 0000-0002-7582-2098
   - name: Peter Tavel
     affil: 1,\ddagger,
     orcid: 0000-0001-7072-001X
@@ -17,7 +20,6 @@ affiliation:
       Social Health Institute
       Correspondence Univerzitni 244/22, 771 11, Olomouc, Czech Republic
     email: lukas.novak@oushi.upol.cz
-# firstnote to eighthnote
 firstnote: |
   Current address: Updated affiliation
 secondnote: |
@@ -32,8 +34,7 @@ appendix: appendix.tex
 simplesummary: |
   A Simple summary goes here.
 abstract: |
-  The study examines the general health of consecrated persons (CP) in the Czech Republic (CZ) and in Slovakia (SK) compared to control samples of Czech population. Compared to the previous studies from some western countries, we expected a higher level of adverse health affecting factors among CP in post-communist CZ and SK. The sample of 293 CP participants (age: M = 47.52, SD = 9.57, females: 78.88%, 180 Czechs, 213 Slovaks) was compared with two control samples, one was nationally representative.
-Comparing CP with general population, we measured the frequency of recent health complains, the occurrence of chronic illnesses, the general health and the individual chronotype. CP compared to the representative sample had a higher chance of suffering from small pelvis pain and obesity, but a lower chance of diabetes. Further, CP had higher odds of having worse general health. Comparing “larks” with “night owls” among CP, “night owls” had a significantly higher chance of suffering from worse general health. “Night owl CP” also seem to suffer more from backache and depression/anxiety and to have more problems with falling asleep. Compared to the major society, CP in CZ and SK tend to have a similar or a slightly worse general health. The results differ from the US findings pointing at the positive health effects of spiritual experience and structured daily routine of CP. Thus, this study shows the importance of more detailed research on the way of life of Czech and Slovak CP to determine the factors with the most negative health effects.
+  The study examines the general health of consecrated persons (CP) in the Czech Republic (CZ) and in Slovakia (SK) compared to control samples of Czech population. Compared to the previous studies from some western countries, we expected a higher level of adverse health affecting factors among CP in post-communist CZ and SK. The sample of 293 CP participants (age: M = 47.52, SD = 9.57, females: 78.88%, 180 Czechs, 213 Slovaks) was compared with two control samples, one was nationally representative. Comparing CP with general population, we measured the frequency of recent health complains, the occurrence of chronic illnesses, the general health and the individual chronotype. CP compared to the representative sample had a higher chance of suffering from small pelvis pain and obesity, but a lower chance of diabetes. Further, CP had higher odds of having worse general health. Comparing “larks” with “night owls” among CP, “night owls” had a significantly higher chance of suffering from worse general health. “Night owl CP” also seem to suffer more from backache and depression/anxiety and to have more problems with falling asleep. Compared to the major society, CP in CZ and SK tend to have a similar or a slightly worse general health. The results differ from the US findings pointing at the positive health effects of spiritual experience and structured daily routine of CP. Thus, this study shows the importance of more detailed research on the way of life of Czech and Slovak CP to determine the factors with the most negative health effects.
 keywords: |
   spirituality; consecrated person; health; religious institutes; Czech; Slovak
 acknowledgement: |
@@ -1558,7 +1559,7 @@ ra.d.6 <-
   bold_p(t = 0.0002040816) 
 #_____________________________________________________________
 ra.d.7 <-
-  glm(obtize_4a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  glm(obtize_4a ~ Chronotype + Age + Education + Gender, family = binomial, data = data.reg.3) %>%
   tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
                  label = list(Chronotype ~ "Intestinal problems"))%>%
   bold_p(t = 0.0002040816) 
@@ -1581,7 +1582,7 @@ ra.d.16 <-
 #_____________________________________________________________
 
 ra.d.17 <-
-  glm(obtize_9a ~ Chronotype + Age + Education + Gender + religious_age.y, family = binomial, data = data.reg.3) %>%
+  glm(obtize_9a ~ Chronotype + Age + Gender, family = binomial, data = data.reg.3) %>%
   tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
                  label = list(Chronotype ~ "Dizziness"))%>%
   bold_p(t = 0.0002040816) 
@@ -1755,7 +1756,7 @@ ra.c.2 <-
   bold_p(t = 0.0005813953) 
 #_____________________________________________________________
 ra.c.3 <-
-  glm(hlth_diabetes ~ Chronotype + Age + Education + Gender, family = binomial, data = data.reg.relig) %>%
+  glm(hlth_diabetes ~ Chronotype + Age, family = binomial, data = data.reg.relig) %>%
   tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
                  label = list(Chronotype ~ "Diabetes"))%>%
   bold_p(t = 0.0005813953) 
@@ -1832,7 +1833,7 @@ ra.c.18 <-
   bold_p(t = 0.0005813953) 
 #___________________________________________________________________________________________________________________
 ra.c.19 <-
-  glm(hlth_gastric_or_duodenal_ulcers ~ Chronotype + Age + Education + Gender, family = binomial, data = data.reg.relig) %>%
+  glm(hlth_gastric_or_duodenal_ulcers ~ Chronotype + Gender, family = binomial, data = data.reg.relig) %>%
   tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
                  label = list(Chronotype ~ "Gastric or duodenal ulcers"))%>%
   bold_p(t = 0.0005813953) 
@@ -1843,7 +1844,7 @@ ra.c.20 <-
   bold_p(t = 0.0005813953) 
 #_____________________________________________________________
 ra.c.21 <-
-  glm(hlth_chronic_lung_disease ~ Chronotype + Age + Education + Gender, family = binomial, data = data.reg.relig) %>%
+  glm(hlth_chronic_lung_disease ~ Chronotype + Age, family = binomial, data = data.reg.relig) %>%
   tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
                  label = list(Chronotype ~ "Chronic lung disease"))%>%
   bold_p(t = 0.0005813953) 
@@ -1910,7 +1911,7 @@ ra.c.32 <-
   bold_p(t = 0.0005813953) 
 #_____________________________________________________________
 ra.c.33 <-
-  glm(hlth_cancer ~ Chronotype + Age + Education + Gender, family = binomial, data = data.reg.relig) %>%
+  glm(hlth_cancer ~ Chronotype + Age, family = binomial, data = data.reg.relig) %>%
   tbl_regression(exponentiate = TRUE, include = "Chronotype", show_single_row = "Chronotype", 
                  label = list(Chronotype ~ "Cancer"))%>%
   bold_p(t = 0.0005813953) 

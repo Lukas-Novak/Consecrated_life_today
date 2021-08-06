@@ -762,6 +762,7 @@ tbl_merge(tbls = list(cs.tab.1, cs.tab.2,cs.tab.3),
                  booktabs = TRUE) %>% 
   kableExtra::kable_styling(latex_options = "scale_down")
 ```
+# now merge should be working
 
 \newpage
 

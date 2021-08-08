@@ -1,11 +1,11 @@
 ---
 title: Czech and Slovak members of religious institutes their health in comparison to general population
 author:
-  - name: Dana Jaksicova
+  - name: Dana Jaksicova*
     affil: 1,\ddagger,
     orcid: 0000-0001-6087-9545
   - name: Lukas Novak
-    affil: 1,\ddagger,*
+    affil: 1,\ddagger,
     orcid: 0000-0002-7582-2098   
   - name: Vit Husek
     affil: 1,\ddagger,

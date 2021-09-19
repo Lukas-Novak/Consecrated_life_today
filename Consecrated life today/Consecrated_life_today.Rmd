@@ -117,6 +117,28 @@ path.to.dat = paste0(getwd(),"/study data")
 # data.rep = read_sav(paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.sav"))
 
 data.rep=read_excel(path = paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.xlsx"))
+data.rep= data.rep %>% 
+  select(marital_status_all_groups,sex,economical_status_all_groups,education,
+         Faith, CISLO_DOTAZNIKU,IHD, "IBD", "asthma",
+"diabetes", "Vek",
+ "artritis",
+"back_pain", 
+"allergy",
+ "depression_anxiety",
+ "obesity", "GD_ulcus",
+"thyroid_gland_illness",
+ "hypertension",
+"migrena",
+"ekzema",
+"IHD",
+"stroke",
+ "pelvic_pain",
+"pain_unclear_origin",
+ "cancer","DSES1","DSES15") 
+
+data.rep %>% saveRDS(file = "data.rep.Rds")
+
+data.rep = readRDS("data.rep.Rds")
 #(....................................................................................)
 
 # recording variable
@@ -153,6 +175,7 @@ data.rep = data.rep %>%
          "Family_status" = "marital_status_all_groups",
          "Economical_status" = "economical_status_all_groups",
          "Education" = "education",
+         "Age" = "Vek",
          "code" = "CISLO_DOTAZNIKU",
          "hlth_ICHS" = "IHD",
 "hlth_chronic_lung_disease" = "IBD",
@@ -213,6 +236,13 @@ per.male_female.s1=table(data.rep$Gender)/length(data.rep$Gender)
 <!-- ----------------------------------------- -->
 ```{r data loading - PA dataset, include=FALSE}
 data.pa.raw = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
+data.pa.raw = data.pa.raw %>% 
+  select(starts_with(c("code","low_q_res","economical_status","education","gender","age","family_status","obtize_","hlth_","daily_energy")))
+
+data.pa.raw %>% saveRDS(file = "data.pa.raw.Rds")
+
+data.pa.raw = readRDS("data.pa.raw.Rds")
+
 
 data.pa.hq = data.pa.raw %>% 
   mutate(Source = as.factor("Panel")) %>% 
@@ -230,12 +260,10 @@ data.pa.hq = data.pa.raw %>%
                                        "Divorced" = "Divorced",
                                        "Widow" = "Widow/Widower")) %>% 
   
-  mutate(across(starts_with(c("obtize_","OASIS_","ODSIS_","hlth_")), ~ as.numeric(.))) %>% 
+  mutate(across(starts_with(c("obtize_","hlth_")), ~ as.numeric(.))) %>% 
   mutate(across(starts_with(c("hlth_")), ~ dplyr::recode(., 
                                                   "1" = 0,
                                                   "2" = 1 ))) %>% 
-  mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
-  mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) %>% 
   mutate(Education = recode_factor(Education,
                                    "Basic school" = "Basic school",
                                    "Vocational school or non - maturity high school" = "Vocational school or non - maturity high school", 
@@ -256,10 +284,7 @@ data.pa.hq = data.pa.raw %>%
                                             "Without work" = "Without work")) %>% 
   mutate(daily_energy = recode_factor(daily_energy,
                                       "1" = "Early bird",
-                                      "2" = "Night own"),
-                  psychotherapy = recode_factor(psychotherapy,
-                                       "1" = "Yes",
-                                       "2" = "No")) %>% 
+                                      "2" = "Night own")) %>%  
   mutate(across(starts_with("obtize_"), ~ dplyr::recode(.,
                                                 "1" = "Not many times per week",
                                                 "2" = "Not many times per week",
@@ -297,10 +322,9 @@ c("Gender","Age",
 "hlth_cancer",
 "obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
 "obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a",
-"daily_energy", "Family_status",
-"psychotherapy","OASIS","ODSIS","code","Source")))
+"daily_energy", "Family_status","code","Source")))
 
-# summ of all deseases
+# summ of all diseases
 data.pa.out = data.pa.out %>% 
   mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
 ```
@@ -315,9 +339,9 @@ data.pa.out = data.pa.out %>%
 ```{r outliers screening and inconsistent responding detection pa, include=FALSE}
 # calculating MAD 
 # OASIS
-out_MAD.OA.pa=outliers_mad(data.pa.out$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-# ODSIS
-out_MAD.OD.pa=outliers_mad(data.pa.out$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+# out_MAD.OA.pa=outliers_mad(data.pa.out$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+# # ODSIS
+# out_MAD.OD.pa=outliers_mad(data.pa.out$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
 
 # creating dataset only with outliers for screening purposes
 # data.pa.out %>% filter(OASIS %in% out_MAD.OA.pa$outliers) %>% view()
@@ -333,17 +357,17 @@ per.male_female.s2=table(data.pa$Gender)/length(data.pa$Gender)
 
 ```{r missing data analysis pa, include=FALSE}
 # Mcar test from different package which can del with more than 50 variables
-MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age","hlth_"))))
+MCAR.pa.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.pa, starts_with(c("Age","hlth_"))))
 
 MCAR.pa.data.mis.mech # MCAR holds 
 ```
 
 ```{r multivariate normality pa, include=FALSE}
 # MULTIVARIATE NORMALITY:
-# mvn(data = select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age","daily_energy","psychotherapy","hlth_"))), mvnTest = "mardia", univariatePlot = "histogram")
+# mvn(data = select(.data = data.pa, starts_with(c("Age","daily_energy","psychotherapy","hlth_"))), mvnTest = "mardia", univariatePlot = "histogram")
     
 # inspection indicated skewness problems with items: 
-Mard=mvn(data= select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age","hlth_"))),mvnTest = "mardia")    
+Mard=mvn(data= select(.data = data.pa, starts_with(c("Age","hlth_"))),mvnTest = "mardia")    
 
 # summary: # in both datasets, normality in OASIS and ODSIS cen be rejectd
 ```
@@ -352,135 +376,7 @@ Mard=mvn(data= select(.data = data.pa, starts_with(c("OASIS","ODSIS","Age","hlth
 # OASIS - PA dataset 
 # fake regression 
 random=rchisq(nrow(data.pa), 7) # generate random data
-fake_regres=lm(random~., data = select(data.pa, starts_with(c("OASIS","ODSIS","Age", "obtize_","daily_energy","psychotherapy","hlth_", "Gender", "Education")))) # run fake regression
-# run diagnostics plots 
-plot(fake_regres)
-# testing homogenity of variances
-lmtest::bptest(fake_regres) # homogenity of variances can be assumed 
-```
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-```{r data loading - VACC dataset, include=FALSE}
-data.vacc.raw = readRDS(paste0(path.to.dat,"/data.vacc.cons.life.Rds"))
-
-data.vacc = data.vacc.raw %>% 
-  filter(low_q_res == "HQ") %>% 
-  rename("Faith" = "Religiosity") %>% 
-  mutate(Source = as.factor("Vacctination")) %>% 
-  mutate(across(starts_with(c("obtize_","hlth_","OASIS_","ODSIS_")), ~ as.numeric(.))) %>%   
-  mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
-  mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) %>% 
-  rename(hlth_for_wom_pain_in_the_small_ = hlth_women_pain_in_small_etc) %>% 
-  mutate(Education = recode_factor(Education, 
-                                   "Basic school" = "Basic school", 
-                                   "Vocational school or non - maturity high school" = "Vocational school or non - maturity high school",
-                                   "High school" = "High school",
-                                   "Higher vocational school" = "Higher vocational school or University",
-                                   "University bachelor" = "Higher vocational school or University",
-                                   "University master" = "Higher vocational school or University",
-                                   "University Dr" = "Higher vocational school or University",
-                                   "other: Ph.D." = "Higher vocational school or University"), 
-                    Economical_status = recode_factor(Economical_status, 
-                                            "Student" = "Without work",
-                                            "Invalidy pensioner" = "Pensioner", 
-                                            "Employed" = "Working",
-                                            "Enterpreanuer" = "Working",
-                                            "Not working" = "Without work",
-                                            "Pensioner"="Pensioner",
-                                            "Maternity leave"="Without work",
-                                            "Without work" = "Without work",
-                                            "In household" = "Without work",
-                                            "other: invalidní duchod" = "Pensioner",
-                                             .default = NA_character_),
-         Faith = recode_factor(Faith,
-                               "Yes, I am a member or church/rel.society" = "Yes, I am a member of church",
-                               "Yes, but I am not a member of church/rel.society" = "Yes, but I am not a member of a church"))
-
-
-data.vacc = data.vacc %>% 
-    mutate(hlth_depression_anxiety = case_when(
-    hlth_psych_anxiety == "1" | 
-      hlth_psych_depress == "1" ~ 1, 
-    TRUE ~ 0
-  )) %>% 
-  select(starts_with(c("Age","Gender",
-  "Education",
-  "Faith",
-  "Economical_status" ,
-  "hlth_ICHS",
-  "Family_status",
-"hlth_chronic_lung_disease",
-"hlth_diabetes", 
-"hlth_astma" ,
-"hlth_arthritis",
-"hlth_back_pain", 
-"hlth_allergy",
-"hlth_depression_anxiety",
-"hlth_obesity", 
-"hlth_gastric_or_duodenal_ulcers",
-"hlth_thyroid_disease",
-"hlth_hypertension",
-"hlth_migraine",
-"hlth_skin_diseases_eczema",
-"hlth_ICHS",
-"hlth_stroke", 
-"hlth_for_wom_pain_in_the_small_", 
-"hlth_pain_of_unclear_origin",
-"hlth_cancer", "daily_energy",
-"obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
-"obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", 
-"obtize_10a", "obtize_11a", "obtize_12a",  # variable "psychotherapy" was not selected because in this survey it also includes "psychiatrist" while in the panel data and consecrated dataset not 
-"OASIS","ODSIS","code","Source"))) %>% 
-select(!ends_with("education_type")) %>% 
-  select(!starts_with("Source_"))
-
-# summ of all deseases
-data.vacc = data.vacc %>% 
-  mutate(General_health = rowSums(across(starts_with(c("hlth_")))))
-
-per.male_female.s3=table(data.vacc$Gender)/length(data.vacc$Gender) 
-```
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- Data screening VACC dataset ---------------->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-<!-- ----------------------------------------- -->
-```{r outliers screening and inconsistent responding detection, include=FALSE}
-# calculating MAD 
-# OASIS
-out_MAD.OA.vacc=outliers_mad(data.vacc$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-# ODSIS
-out_MAD.OD.vacc=outliers_mad(data.vacc$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-
-# creating dataset only with outliers for screening purposes
-# data.vacc %>% filter(OASIS %in% out_MAD.OA.vacc$outliers) %>% view()
-# data.vacc %>% filter(ODSIS %in% out_MAD.OD.vacc$outliers) %>% view()
-
-# screening was conducted via examination of the uniform pattern of responding across deseases and OASIS and ODSIS score - if particpants responded that he or she suffers from all deseases and the report extreme scores in OASIS or ODSIS, than this respondent was labeled as low quality respondet 
-```
-
-```{r missing data analysis, include=FALSE}
-MCAR.vacc.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.vacc, starts_with(c("OASIS_","ODSIS_","obtize_", "Age")))) # MCAR holds
-```
-
-```{r multivariate normality, include=FALSE}
-# mvn(data = select(.data = data.vacc, starts_with(c("OASIS","ODSIS","obtize_","hlth_","Age"))), mvnTest = "mardia", univariatePlot = "histogram")
-# inspection indicated skewness problems with items: 
-Mard=mvn(data= select(.data = data.vacc, starts_with(c("OASIS","ODSIS","hlth_", "Age"))),mvnTest = "mardia")    
-
-# summary: # in both datasets, normality in OASIS and ODSIS can be rejected
-```
-
-```{r Homoscedasticity_and_other_assumptions, include=FALSE}
-# fake regression 
-random=rchisq(nrow(data.vacc), 7) # generate random data
-fake_regres=lm(random~., data= data.vacc %>% select(starts_with(c("OASIS","ODSIS","obtize_","hlth_", "Age", "Gender", "Education")))) # run fake regression
+fake_regres=lm(random~., data = select(data.pa, starts_with(c("Age", "obtize_","daily_energy","psychotherapy","hlth_", "Gender", "Education")))) # run fake regression
 # run diagnostics plots 
 plot(fake_regres)
 # testing homogenity of variances
@@ -498,10 +394,19 @@ data.cons.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"
 data.cons.long = readRDS(paste0(path.to.dat,"/data.cons.Rds"))
 
 # merging datasets together
+data.cons.long = data.cons.long %>% 
+  select(starts_with(c("duplicities","hlth_","obtize_","religious_age","low_q_res","daily_energy","country","Gender","Gender","Education","Age","Economical_status","code")))
+
+
 data.cons.raw = full_join(x = data.cons.from.G,
                            y = data.cons.long, by = "code") %>% 
   mutate(Source = as.factor("Consecrated")) %>% 
-  mutate(across(starts_with(c("obtize_","hlth_")), ~ as.numeric(.)))
+  mutate(across(starts_with(c("obtize_","hlth_")), ~ as.numeric(.))) 
+
+
+data.cons.long %>% saveRDS(file = "data.cons.long.Rds")
+
+data.cons.long = readRDS("data.cons.long.Rds")
 #............................................................................................
 
 data.cons.raw = data.cons.raw %>% 
@@ -512,7 +417,7 @@ data.cons.raw = data.cons.raw %>%
                                                 "3" = "Not many times per week",
                                                 "4" = "Many times a week",
                                                 "5" = "Many times a week"))) %>% 
-  mutate(across(starts_with(c("hlth_","OASIS_","ODSIS_","religious_age")), ~ as.numeric(.))) %>% 
+  mutate(across(starts_with(c("hlth_","religious_age")), ~ as.numeric(.))) %>% 
     mutate(Education = recode_factor(Education, 
                                    "Basic school" = "Basic school", 
                                    "Vocational school or non - maturity high school" = "Vocational school or non - maturity high school",
@@ -554,8 +459,6 @@ data.cons = data.cons.dups.rem %>%
   filter(country %in% c("SK","CZ"))
   
   data.cons = data.cons %>% 
-  mutate(OASIS = rowSums(across(starts_with("OASIS_")))) %>% 
-  mutate(ODSIS = rowSums(across(starts_with("ODSIS_")))) %>% 
   select(starts_with(c("Gender",
   "Education","Age",
   "Economical_status" ,
@@ -580,9 +483,7 @@ data.cons = data.cons.dups.rem %>%
 "hlth_cancer",
 "obtize_1a", "obtize_2a", "obtize_3a", "obtize_4a", "obtize_5a", 
 "obtize_6a", "obtize_7a", "obtize_8a", "obtize_9a", "obtize_10a", "obtize_11a", "obtize_12a",
-"daily_energy","country",
-"psychotherapy",
-"OASIS","ODSIS","code","religious_age","code","Source"))) %>% 
+"daily_energy","country","code","religious_age","code","Source"))) %>% 
   select(!starts_with(c("education.x","education.y","religious_age.x")))
 
 # sum of all diseases
@@ -606,8 +507,8 @@ per.male_female.s4=table(data.cons$Gender)/length(data.cons$Gender)
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 ```{r outliers screening and inconsistent responding detection cons, include=FALSE}
-out_MAD.OA.cons=outliers_mad(data.cons$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
-out_MAD.OD.cons=outliers_mad(data.cons$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+# out_MAD.OA.cons=outliers_mad(data.cons$OASIS, b = 1.4826,threshold = 2.5, na.rm = T) 
+# out_MAD.OD.cons=outliers_mad(data.cons$ODSIS, b = 1.4826,threshold = 2.5, na.rm = T) 
 
 # creating dataset only with outliers for screening purposes
 # data.cons %>% filter(OASIS %in% out_MAD.OA.cons$outliers) %>% view()
@@ -615,7 +516,7 @@ out_MAD.OD.cons=outliers_mad(data.cons$ODSIS, b = 1.4826,threshold = 2.5, na.rm 
 ```
 
 ```{r missing data analysis cons, eval=FALSE, include=FALSE}
-MCAR.cons.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.cons, starts_with(c("OASIS_","ODSIS_",
+MCAR.cons.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.cons, starts_with(c(
                                                                                                  "hlth_","Age",
                                                                                                  "daily_energy",
                                                                                                  "psychotherapy",
@@ -624,9 +525,9 @@ MCAR.cons.data.mis.mech=MissMech::TestMCARNormality(data = select(.data = data.c
 
 ```{r multivariate normality cons, include=FALSE}
 # MULTIVARIATE NORMALITY:
-# mvn(data = select(.data = data.cons, starts_with(c("OASIS","ODSIS", "obtize_","hlth_","Age","religious_age"))), mvnTest = "mardia", univariatePlot = "histogram")
+# mvn(data = select(.data = data.cons, starts_with(c("obtize_","hlth_","Age","religious_age"))), mvnTest = "mardia", univariatePlot = "histogram")
 # inspection indicated skewness problems with items: 
-Mard=mvn(data= select(.data = data.cons, starts_with(c("OASIS","ODSIS",
+Mard=mvn(data= select(.data = data.cons, starts_with(c(
                              "hlth_","Age","religious_age"))),mvnTest = "mardia")    
 
 # summary: # in both datasets, normality in OASIS and ODSIS cen be rejectd
@@ -635,7 +536,7 @@ Mard=mvn(data= select(.data = data.cons, starts_with(c("OASIS","ODSIS",
 ```{r Homoscedasticity_and_other_assumptions cons, include=FALSE}
 # fake regression 
 random=rchisq(nrow(data.cons), 7) # generate random data
-fake_regres=lm(random~., data= data.cons %>% select(starts_with(c("OASIS","ODSIS","obtize_",
+fake_regres=lm(random~., data= data.cons %>% select(starts_with(c("obtize_",
                              "hlth_","Age","religious_age")))) # run fake regression
 # run diagnostics plots 
 plot(fake_regres)

@@ -116,27 +116,27 @@ library("papaja")
 path.to.dat = paste0(getwd(),"/study data")
 # data.rep = read_sav(paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.sav"))
 
-data.rep=read_excel(path = paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.xlsx"))
-data.rep= data.rep %>% 
-  select(marital_status_all_groups,sex,economical_status_all_groups,education,
-         Faith, CISLO_DOTAZNIKU,IHD, "IBD", "asthma",
-"diabetes", "Vek",
- "artritis",
-"back_pain", 
-"allergy",
- "depression_anxiety",
- "obesity", "GD_ulcus",
-"thyroid_gland_illness",
- "hypertension",
-"migrena",
-"ekzema",
-"IHD",
-"stroke",
- "pelvic_pain",
-"pain_unclear_origin",
- "cancer","DSES1","DSES15") 
-
-data.rep %>% saveRDS(file = "data.rep.Rds")
+# data.rep=read_excel(path = paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.xlsx"))
+# data.rep= data.rep %>% 
+#   select(marital_status_all_groups,sex,economical_status_all_groups,education,
+#          Faith, CISLO_DOTAZNIKU,IHD, "IBD", "asthma",
+# "diabetes", "Vek",
+#  "artritis",
+# "back_pain", 
+# "allergy",
+#  "depression_anxiety",
+#  "obesity", "GD_ulcus",
+# "thyroid_gland_illness",
+#  "hypertension",
+# "migrena",
+# "ekzema",
+# "IHD",
+# "stroke",
+#  "pelvic_pain",
+# "pain_unclear_origin",
+#  "cancer","DSES1","DSES15") 
+# 
+# data.rep %>% saveRDS(file = "data.rep.Rds")
 
 data.rep = readRDS("data.rep.Rds")
 #(....................................................................................)
@@ -235,11 +235,11 @@ per.male_female.s1=table(data.rep$Gender)/length(data.rep$Gender)
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 ```{r data loading - PA dataset, include=FALSE}
-data.pa.raw = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
-data.pa.raw = data.pa.raw %>% 
-  select(starts_with(c("code","low_q_res","economical_status","education","gender","age","family_status","obtize_","hlth_","daily_energy")))
-
-data.pa.raw %>% saveRDS(file = "data.pa.raw.Rds")
+# data.pa.raw = readRDS(paste0(path.to.dat,"/data.panel.cons.life.Rds"))
+# data.pa.raw = data.pa.raw %>% 
+#   select(starts_with(c("code","low_q_res","economical_status","education","gender","age","family_status","obtize_","hlth_","daily_energy")))
+# 
+# data.pa.raw %>% saveRDS(file = "data.pa.raw.Rds")
 
 data.pa.raw = readRDS("data.pa.raw.Rds")
 
@@ -390,23 +390,23 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 # loading of the recoded data by Gelma
 data.cons.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
   
-# loading of data downloaded from server 
-data.cons.long = readRDS(paste0(path.to.dat,"/data.cons.Rds"))
+# # loading of data downloaded from server 
+# data.cons.long = readRDS(paste0(path.to.dat,"/data.cons.Rds"))
 
 # merging datasets together
-data.cons.long = data.cons.long %>% 
-  select(starts_with(c("duplicities","hlth_","obtize_","religious_age","low_q_res","daily_energy","country","Gender","Gender","Education","Age","Economical_status","code")))
+# data.cons.long = data.cons.long %>% 
+#   select(starts_with(c("duplicities","hlth_","obtize_","religious_age","low_q_res","daily_energy","country","Gender","Gender","Education","Age","Economical_status","code")))
+# 
+# 
+# data.cons.long %>% saveRDS(file = "data.cons.long.Rds")
 
+data.cons.long = readRDS("data.cons.long.Rds")
 
 data.cons.raw = full_join(x = data.cons.from.G,
                            y = data.cons.long, by = "code") %>% 
   mutate(Source = as.factor("Consecrated")) %>% 
   mutate(across(starts_with(c("obtize_","hlth_")), ~ as.numeric(.))) 
 
-
-data.cons.long %>% saveRDS(file = "data.cons.long.Rds")
-
-data.cons.long = readRDS("data.cons.long.Rds")
 #............................................................................................
 
 data.cons.raw = data.cons.raw %>% 

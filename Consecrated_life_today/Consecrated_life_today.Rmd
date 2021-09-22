@@ -362,6 +362,7 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 path.to.dat = paste0(getwd(),"/Data")
 data.cons.from.G = readxl::read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
 
+
 data.cons.long = readRDS("Data/data.cons.long.Rds")
 
 data.cons.raw = full_join(x = data.cons.from.G,

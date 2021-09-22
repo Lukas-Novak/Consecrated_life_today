@@ -116,7 +116,7 @@ library("papaja")
 path.to.dat = paste0(getwd(),"/study data")
 # data.rep = read_sav(paste0(path.to.dat,"/Databáze Sadílek 3 - 1800.sav"))
 
-data.rep = readRDS("data.rep.Rds")
+data.rep = readRDS("Data/data.rep.Rds")
 #(....................................................................................)
 
 # recording variable
@@ -213,8 +213,7 @@ per.male_female.s1=table(data.rep$Gender)/length(data.rep$Gender)
 <!-- ----------------------------------------- -->
 <!-- ----------------------------------------- -->
 ```{r data loading - PA dataset, include=FALSE}
-data.pa.raw = readRDS("data.pa.raw.Rds")
-
+data.pa.raw = readRDS("Data/data.pa.raw.Rds")
 
 data.pa.hq = data.pa.raw %>% 
   mutate(Source = as.factor("Panel")) %>% 
@@ -362,7 +361,7 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 # loading of the recoded data by Gelma
 data.cons.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
 
-data.cons.long = readRDS("data.cons.long.Rds")
+data.cons.long = readRDS("Data/data.cons.long.Rds")
 
 data.cons.raw = full_join(x = data.cons.from.G,
                            y = data.cons.long, by = "code") %>% 

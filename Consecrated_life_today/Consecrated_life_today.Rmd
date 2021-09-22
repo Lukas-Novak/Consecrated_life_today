@@ -359,7 +359,8 @@ lmtest::bptest(fake_regres) # homogenity of variances can be assumed
 <!-- ----------------------------------------- -->
 ```{r data loading - Concecrated dataset 2011, include=FALSE}
 # loading of the recoded data by Gelma
-data.cons.from.G = read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
+path.to.dat = paste0(getwd(),"/Data")
+data.cons.from.G = readxl::read_excel(path = paste0(path.to.dat,"/data.cons.from.G.xlsx"))
 
 data.cons.long = readRDS("Data/data.cons.long.Rds")
 
